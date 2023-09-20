@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework", "..\_src\GameFramework\GameFramework.csproj", "{9F4391F4-089B-4406-9A2F-073DFA2337B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.Impl", "..\_src\GameFramework.Impl\GameFramework.Impl.csproj", "{DCE17AA8-B8AD-4E51-A5EA-7C2FCA917A20}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F4391F4-089B-4406-9A2F-073DFA2337B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F4391F4-089B-4406-9A2F-073DFA2337B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F4391F4-089B-4406-9A2F-073DFA2337B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F4391F4-089B-4406-9A2F-073DFA2337B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCE17AA8-B8AD-4E51-A5EA-7C2FCA917A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE17AA8-B8AD-4E51-A5EA-7C2FCA917A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCE17AA8-B8AD-4E51-A5EA-7C2FCA917A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCE17AA8-B8AD-4E51-A5EA-7C2FCA917A20}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
