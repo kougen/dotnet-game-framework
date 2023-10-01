@@ -48,5 +48,5 @@ jobs:
 
     - name: Publish
       run: |
-        dotnet nuget push .\Tools\Packages\${{ steps.get_version.outputs.version }}\*.nupkg --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}}
-        dotnet nuget push .\Tools\Packages\${{ steps.get_version.outputs.version }}\*.nupkg --source 'https://nuget.pkg.github.com/joshika39/index.json' --api-key ${{secrets.GIT_API_KEY}}
+        dotnet nuget push .\Nuget\Packages\${{ steps.get_version.outputs.version }}\*.nupkg --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}}
+        dotnet nuget push .\Nuget\Packages\${{ steps.get_version.outputs.version }}\*.nupkg --source 'https://nuget.pkg.github.com/joshika39/index.json' --api-key ${{secrets.GIT_API_KEY}}
