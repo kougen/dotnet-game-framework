@@ -21,4 +21,8 @@
     <ItemGroup>
       <ProjectReference Include="..\GameFramework\GameFramework.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="joshika39.Core" Version="1.0.0-preview0001" />
+    </ItemGroup>
 </Project>

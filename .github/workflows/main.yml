@@ -6,39 +6,8 @@ on:
       - 'v*'
     
 jobs:
-  build:
-    name: 'Build'
-    env:
-      BUILD_CONFIG: 'Release'
-      SOLUTION: '_Solutions/GameFramework.sln'
-
-    runs-on: windows-latest
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
-
-    - name: Restore dependencies
-      run: nuget restore $env:SOLUTION
-
-    - name: Build
-      run: dotnet build $env:SOLUTION --configuration $env:BUILD_CONFIG --no-restore
-
-    - name: Run tests
-      run: dotnet test $env:SOLUTION /p:Configuration=$env:BUILD_CONFIG --no-restore --no-build --verbosity normal
   deploy:
-    name: 'Deploy'
-    needs: [build]
+    name: 'Build, Test & Deploy'
     env:
       BUILD_CONFIG: 'Release'
       SOLUTION: '_Solutions/GameFramework.sln'
@@ -50,6 +19,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+        submodules: recursive
 
     - name: 'Get Version'
       id: get_version
@@ -69,9 +39,12 @@ jobs:
     - name: Build
       run: dotnet build $env:SOLUTION --configuration $env:BUILD_CONFIG -p:PackageVersion=${{ steps.get_version.outputs.version-without-v }} --no-restore
 
+    - name: Run tests
+      run: dotnet test $env:SOLUTION /p:Configuration=$env:BUILD_CONFIG --no-restore --no-build --verbosity normal
+
     - name: Pack Modules
       shell: pwsh
-      run: '& .\Tools\PushArtifact.ps1 -Version ${{ steps.get_version.outputs.version-without-v }} -WorkDir .\Tools\ -Configuration Release'
+      run: '& .\dotnet-tools\PushArtifact.ps1 -Version ${{ steps.get_version.outputs.version-without-v }} -EnvFile .\.env'
 
     - name: Publish
       run: |

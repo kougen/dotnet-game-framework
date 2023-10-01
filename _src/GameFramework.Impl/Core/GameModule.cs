@@ -1,6 +1,7 @@
 ﻿using GameFramework.Configuration;
 using GameFramework.Core;
 using GameFramework.Impl.Configuration;
+using Infrastructure.Module;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GameFramework.Impl.Core
