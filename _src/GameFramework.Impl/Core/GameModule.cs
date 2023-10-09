@@ -2,6 +2,9 @@
 using GameFramework.Core;
 using GameFramework.Core.Factories;
 using GameFramework.Impl.Configuration;
+using GameFramework.Impl.Core.Factories;
+using Infrastructure.Application;
+using Infrastructure.Configuration.Factories;
 using Infrastructure.Module;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +14,12 @@ namespace GameFramework.Impl.Core
     {
         public void LoadModules(IServiceCollection collection)
         {
-            collection.AddSingleton<IConfigurationService, ConfigurationService>(_ => new ConfigurationService(30));
+            collection.AddSingleton<IConfigurationService, ConfigurationService>(p =>
+            {
+                var appSettings = p.GetRequiredService<IApplicationSettings>();
+                var confQueryFactory = p.GetRequiredService<IConfigurationQueryFactory>();
+                return new ConfigurationService(appSettings, confQueryFactory);
+            });
             collection.AddSingleton<IPositionFactory, PositionFactory>();
         }
     }

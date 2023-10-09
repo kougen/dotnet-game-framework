@@ -15,6 +15,7 @@
 
 
 	<files>
-		<file src="..\..\Binaries\{CONFIGURATION}\net6.0\joshika39.*.dll" target="lib\net6.0" />
+		<file src="..\..\Binaries\{CONFIGURATION}\net6.0\joshika39.GameFramework.dll" target="lib\net6.0" />
+		<file src="..\..\Binaries\{CONFIGURATION}\net6.0\joshika39.GameFramework.Impl.dll" target="lib\net6.0" />
 	</files>
 </package>

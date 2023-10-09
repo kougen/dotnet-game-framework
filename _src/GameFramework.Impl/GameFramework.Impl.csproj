@@ -23,6 +23,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="joshika39.Core" Version="1.0.0-preview0001" />
+      <PackageReference Include="joshika39.Core" Version="1.1.3" />
     </ItemGroup>
 </Project>

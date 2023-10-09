@@ -2,7 +2,7 @@
 
 namespace GameFramework.Impl.Core
 {
-    public class Position3D : Position2D, IPosition3D
+    internal class Position3D : Position2D, IPosition3D
     {
         public int Z { get; }
 

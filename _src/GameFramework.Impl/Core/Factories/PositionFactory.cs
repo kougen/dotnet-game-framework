@@ -1,7 +1,7 @@
 ﻿using GameFramework.Core;
 using GameFramework.Core.Factories;
 
-namespace GameFramework.Impl.Core
+namespace GameFramework.Impl.Core.Factories
 {
     internal class PositionFactory : IPositionFactory
     {
