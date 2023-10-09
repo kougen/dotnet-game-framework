@@ -2,6 +2,6 @@
 {
     public interface IConfigurationService
     {
-        int Dimension { get; }
+        int Dimension { get; set; }
     }
 }
