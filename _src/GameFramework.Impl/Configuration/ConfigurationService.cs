@@ -10,13 +10,24 @@ namespace GameFramework.Impl.Configuration
         private readonly IConfigurationQuery _configurationQuery;
         public int Dimension
         {
-            get => _configurationQuery.GetIntAttribute("config.dimension") ?? 30;
+            get => GetDimension();
             set => _configurationQuery.SetAttribute("config.dimension", value);
         }
         
         public ConfigurationService(IApplicationSettings applicationSettings, IConfigurationQueryFactory configurationQueryFactory)
         {
             _configurationQuery = configurationQueryFactory.CreateConfigurationQuery(Path.Join(applicationSettings.ConfigurationFolder, "game-settings.json"));
+        }
+
+        private int GetDimension()
+        {
+            var dimension = _configurationQuery.GetIntAttribute("config.dimension");
+            if (dimension is null)
+            {
+                Dimension = 30;
+                return 30;
+            }
+            return (int)dimension;
         }
     }
 }
