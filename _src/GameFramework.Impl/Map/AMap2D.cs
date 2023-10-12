@@ -38,7 +38,7 @@ namespace GameFramework.Impl.Map
                 case Move2D.Backward:
                     if (unit2D.Position.Y + 1 < SizeY)
                     {
-                        var target = objects[(unit2D.Position.Y - 1) * SizeX + unit2D.Position.X];
+                        var target = objects[(unit2D.Position.Y + 1) * SizeX + unit2D.Position.X];
                         if (!target.IsObstacle)
                         {
                             target.SteppedOn(unit2D);
