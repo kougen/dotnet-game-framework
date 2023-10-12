@@ -9,10 +9,10 @@ namespace GameFramework.Impl.Map
     {
         public int SizeX { get; }
         public int SizeY { get; }
-        public IEnumerable<IUnit2D> Entities { get; }
+        public ICollection<IUnit2D> Entities { get; }
         public IEnumerable<IMapObject2D> MapObjects { get; }
 
-        protected AMap2D(int sizeX, int sizeY, IEnumerable<IUnit2D> entities, IEnumerable<IMapObject2D> mapObjects)
+        protected AMap2D(int sizeX, int sizeY, ICollection<IUnit2D> entities, IEnumerable<IMapObject2D> mapObjects)
         {
             SizeX = sizeX;
             SizeY = sizeY;
@@ -28,7 +28,7 @@ namespace GameFramework.Impl.Map
                 case Move2D.Forward:
                     if (unit2D.Position.Y - 1 >= 0)
                     {
-                        var target = objects[(unit2D.Position.Y - 1) * unit2D.Position.X + unit2D.Position.X];
+                        var target = objects[(unit2D.Position.Y - 1) * SizeX + unit2D.Position.X];
                         if (!target.IsObstacle)
                         {
                             target.SteppedOn(unit2D);
@@ -38,7 +38,7 @@ namespace GameFramework.Impl.Map
                 case Move2D.Backward:
                     if (unit2D.Position.Y + 1 < SizeY)
                     {
-                        var target = objects[(unit2D.Position.Y - 1) * unit2D.Position.X + unit2D.Position.X];
+                        var target = objects[(unit2D.Position.Y - 1) * SizeX + unit2D.Position.X];
                         if (!target.IsObstacle)
                         {
                             target.SteppedOn(unit2D);
@@ -48,7 +48,7 @@ namespace GameFramework.Impl.Map
                 case Move2D.Left:
                     if (unit2D.Position.X - 1 >= 0)
                     {
-                        var target = objects[(unit2D.Position.Y * unit2D.Position.X) + (unit2D.Position.X - 1)];
+                        var target = objects[unit2D.Position.Y * SizeX + (unit2D.Position.X - 1)];
                         if (!target.IsObstacle)
                         {
                             target.SteppedOn(unit2D);
@@ -58,7 +58,7 @@ namespace GameFramework.Impl.Map
                 case Move2D.Right:
                     if (unit2D.Position.X + 1 < SizeX)
                     {
-                        var target = objects[unit2D.Position.Y * unit2D.Position.X + (unit2D.Position.X + 1)];
+                        var target = objects[unit2D.Position.Y * SizeX + (unit2D.Position.X + 1)];
                         if (!target.IsObstacle)
                         {
                             target.SteppedOn(unit2D);
@@ -66,6 +66,11 @@ namespace GameFramework.Impl.Map
                     }
                     break;
             }
+        }
+        
+        public void RegisterUnit(IUnit2D unit2D)
+        {
+            Entities.Add(unit2D);
         }
     }
 }

@@ -8,8 +8,9 @@ namespace GameFramework.Map
     {
         int SizeX { get; }
         int SizeY { get; }
-        IEnumerable<IUnit2D> Entities { get; }
+        ICollection<IUnit2D> Entities { get; }
         IEnumerable<IMapObject2D> MapObjects { get; }
         void MoveUnit(IUnit2D unit2D, Move2D move);
+        void RegisterUnit(IUnit2D unit2D);
     }
 }
