@@ -1,13 +1,15 @@
-﻿using GameFramework.Entities;
+﻿using GameFramework.Core.Motion;
+using GameFramework.Entities;
 using GameFramework.Map.MapObject;
 
 namespace GameFramework.Map
 {
     public interface IMap2D
     {
-        public int SizeX { get; }
-        public int SizeY { get; }
-        public IEnumerable<IPlayer2D> Players { get; }
-        public IEnumerable<IMapObject2D> MapObjects { get; }
+        int SizeX { get; }
+        int SizeY { get; }
+        IEnumerable<IUnit2D> Entities { get; }
+        IEnumerable<IMapObject2D> MapObjects { get; }
+        void MoveUnit(IUnit2D unit2D, Move2D move);
     }
 }

@@ -19,7 +19,7 @@ namespace GameFramework.Unit.Tests.Configuration
         [Fact]
         public void CT_0001()
         {
-            var configuration = _provider.GetRequiredService<IConfigurationService>();
+            var configuration = _provider.GetRequiredService<IConfigurationService2D>();
             configuration.Dimension = 15;
         }
     }

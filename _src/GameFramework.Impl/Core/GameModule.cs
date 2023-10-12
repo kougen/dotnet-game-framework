@@ -14,11 +14,11 @@ namespace GameFramework.Impl.Core
     {
         public void LoadModules(IServiceCollection collection)
         {
-            collection.AddSingleton<IConfigurationService, ConfigurationService>(p =>
+            collection.AddSingleton<IConfigurationService2D, ConfigurationService2D>(p =>
             {
                 var appSettings = p.GetRequiredService<IApplicationSettings>();
                 var confQueryFactory = p.GetRequiredService<IConfigurationQueryFactory>();
-                return new ConfigurationService(appSettings, confQueryFactory);
+                return new ConfigurationService2D(appSettings, confQueryFactory);
             });
             collection.AddSingleton<IPositionFactory, PositionFactory>();
         }
