@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using GameFramework.Core;
 using GameFramework.Core.Motion;
 using GameFramework.Entities;
 using GameFramework.Map;
@@ -22,52 +24,49 @@ namespace GameFramework.Impl.Map
 
         public virtual void MoveUnit(IUnit2D unit2D, Move2D move)
         {
+            var mapObject = SimulateMove(unit2D.Position, move);
+            if (mapObject is null || mapObject.IsObstacle)
+            {
+                return;
+            }
+            
+            unit2D.Step(mapObject);
+        }
+        
+        public IMapObject2D? SimulateMove(IPosition2D position, Move2D move)
+        {
             var objects = MapObjects.ToArray();
             switch (move)
             {
                 case Move2D.Forward:
-                    if (unit2D.Position.Y - 1 >= 0)
+                    if (position.Y - 1 >= 0)
                     {
-                        var target = objects[(unit2D.Position.Y - 1) * SizeX + unit2D.Position.X];
-                        if (!target.IsObstacle)
-                        {
-                            target.SteppedOn(unit2D);
-                        }
+                        return objects[(position.Y - 1) * SizeX + position.X];
                     }
                     break;
                 case Move2D.Backward:
-                    if (unit2D.Position.Y + 1 < SizeY)
+                    if (position.Y + 1 < SizeY)
                     {
-                        var target = objects[(unit2D.Position.Y + 1) * SizeX + unit2D.Position.X];
-                        if (!target.IsObstacle)
-                        {
-                            target.SteppedOn(unit2D);
-                        }
+                        return objects[(position.Y + 1) * SizeX + position.X];
                     }
                     break;
                 case Move2D.Left:
-                    if (unit2D.Position.X - 1 >= 0)
+                    if (position.X - 1 >= 0)
                     {
-                        var target = objects[unit2D.Position.Y * SizeX + (unit2D.Position.X - 1)];
-                        if (!target.IsObstacle)
-                        {
-                            target.SteppedOn(unit2D);
-                        }
+                        return objects[position.Y * SizeX + (position.X - 1)];
                     }
                     break;
                 case Move2D.Right:
-                    if (unit2D.Position.X + 1 < SizeX)
+                    if (position.X + 1 < SizeX)
                     {
-                        var target = objects[unit2D.Position.Y * SizeX + (unit2D.Position.X + 1)];
-                        if (!target.IsObstacle)
-                        {
-                            target.SteppedOn(unit2D);
-                        }
+                        return objects[position.Y * SizeX + (position.X + 1)];
                     }
                     break;
+                default: throw new InvalidEnumArgumentException("Unsupported move!");
             }
+            return default;
         }
-        
+
         public void RegisterUnit(IUnit2D unit2D)
         {
             Entities.Add(unit2D);
