@@ -2,7 +2,7 @@
 using GameFramework.Core;
 using GameFramework.Core.Factories;
 using GameFramework.Impl.Configuration;
-using GameFramework.Impl.Core.Factories;
+using GameFramework.Impl.Core.Position.Factories;
 using Infrastructure.Application;
 using Infrastructure.Configuration.Factories;
 using Infrastructure.Module;

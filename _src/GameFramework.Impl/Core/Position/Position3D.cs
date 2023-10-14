@@ -1,6 +1,6 @@
 ﻿using GameFramework.Core.Factories;
 
-namespace GameFramework.Impl.Core
+namespace GameFramework.Impl.Core.Position
 {
     internal class Position3D : Position2D, IPosition3D
     {

@@ -6,7 +6,8 @@ namespace GameFramework.Configuration
     {
         int Dimension { get; set; }
         bool GameIsRunning { get; set; }
-        IMap2D? ActiveMap { get; }
-        void SetActiveMap(IMap2D map2D);
+        
+        T? GetActiveMap<T>() where T : IMap2D;
+        void SetActiveMap<T>(T map2D) where T : IMap2D;
     }
 }
