@@ -1,5 +1,4 @@
 ﻿using GameFramework.Configuration;
-using GameFramework.Core;
 using GameFramework.Core.Factories;
 using GameFramework.Impl.Configuration;
 using GameFramework.Impl.Core.Position.Factories;
@@ -7,12 +6,11 @@ using GameFramework.Impl.Time;
 using GameFramework.Time;
 using Infrastructure.Application;
 using Infrastructure.Configuration.Factories;
-using Infrastructure.Module;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GameFramework.Impl.Core
 {
-    public class GameModule : IModule
+    public class GameModule
     {
         public void LoadModules(IServiceCollection collection, CancellationTokenSource cancellationTokenSource)
         {
@@ -24,11 +22,6 @@ namespace GameFramework.Impl.Core
             });
 
             collection.AddSingleton<IStopwatch>(_ => new DefaultStopwatch(cancellationTokenSource.Token));
-            LoadModules(collection);
-        }
-        
-        public void LoadModules(IServiceCollection collection)
-        {
             collection.AddSingleton<IPositionFactory, PositionFactory>();
         }
     }
