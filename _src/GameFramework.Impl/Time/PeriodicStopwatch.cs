@@ -29,7 +29,7 @@ namespace GameFramework.Impl.Time
             {
                 while (!_cancellationToken.IsCancellationRequested && _stopwatch.IsRunning)
                 {
-                    if (Elapsed.TotalMilliseconds > _periodInMilliseconds)
+                    if (_stopwatch.Elapsed.TotalMilliseconds > _periodInMilliseconds)
                     {
                         foreach (var listener in _listeners)
                         {
