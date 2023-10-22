@@ -8,8 +8,11 @@
         <Title>Game Framework</Title>
         <AssemblyName>joshika39.GameFramework.Impl</AssemblyName>
     </PropertyGroup>
-
-
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="GameFramework.Unit.Tests" />
+    </ItemGroup>
+    
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
       <OutputPath>..\..\Binaries\Debug\</OutputPath>
     </PropertyGroup>

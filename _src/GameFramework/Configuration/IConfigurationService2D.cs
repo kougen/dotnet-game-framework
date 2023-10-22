@@ -9,5 +9,7 @@ namespace GameFramework.Configuration
         
         T? GetActiveMap<T>() where T : IMap2D;
         void SetActiveMap<T>(T map2D) where T : IMap2D;
+        
+        CancellationTokenSource CancellationTokenSource { get; }
     }
 }
