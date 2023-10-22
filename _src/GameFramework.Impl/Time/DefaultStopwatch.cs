@@ -41,7 +41,22 @@ namespace GameFramework.Impl.Time
                 }
             }, _cancellationToken);
         }
-        
+        public async Task WaitAsync(int periodInMilliseconds, ITickListener listener)
+        {
+            await Task.Run(() =>
+            {
+                var startedTime = Elapsed;
+                while (!_cancellationToken.IsCancellationRequested)
+                {
+                    if (Elapsed.TotalMilliseconds > startedTime.TotalMilliseconds + periodInMilliseconds)
+                    {
+                        listener.RaiseTick(0);
+                        break;
+                    }
+                }
+            }, _cancellationToken);
+        }
+
         public void Start()
         {
             _stopwatch.Start();

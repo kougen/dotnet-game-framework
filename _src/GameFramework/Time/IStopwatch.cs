@@ -7,6 +7,7 @@ namespace GameFramework.Time
         TimeSpan Elapsed { get; }
         
         void Wait(int periodInMilliseconds, ITickListener listener);
+        Task WaitAsync(int periodInMilliseconds, ITickListener listener);
         
         void Start();
         void Stop();
