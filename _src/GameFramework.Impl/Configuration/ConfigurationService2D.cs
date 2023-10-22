@@ -8,6 +8,7 @@ namespace GameFramework.Impl.Configuration
 {
     internal class ConfigurationService2D : IConfigurationService2D
     {
+        public CancellationTokenSource CancellationTokenSource { get; }
         private readonly IConfigurationQuery _configurationQuery;
         private IMap2D? _activeMap;
 
@@ -28,8 +29,9 @@ namespace GameFramework.Impl.Configuration
             return default;
         }
 
-        public ConfigurationService2D(IApplicationSettings applicationSettings, IConfigurationQueryFactory configurationQueryFactory)
+        public ConfigurationService2D(IApplicationSettings applicationSettings, IConfigurationQueryFactory configurationQueryFactory, CancellationTokenSource cancellationTokenSource)
         {
+            CancellationTokenSource = cancellationTokenSource ?? throw new ArgumentNullException(nameof(cancellationTokenSource));
             _configurationQuery = configurationQueryFactory.CreateConfigurationQuery(Path.Join(applicationSettings.ConfigurationFolder, "game-settings.json"));
             GameIsRunning = false;
         }
