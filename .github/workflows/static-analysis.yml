@@ -10,6 +10,9 @@ on:
 jobs:
   build:
     name: Build
+    env:
+      BUILD_CONFIG: 'Debug'
+      SOLUTION: '_Solutions/GameFramework.sln'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
@@ -39,16 +42,29 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+    
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@v1.0.2
+
       - name: Install dotCover Global
         shell: powershell
         run: |
           dotnet tool install --global JetBrains.dotCover.GlobalTool
+
+      - name: Restore dependencies
+        run: nuget restore $env:SOLUTION
+
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ secrets.PROJECT_KEY }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
-          dotnet build
-          dotnet dotcover test --dcReportType=HTML --dotCoverFilters="-:*Tests;-:testhost"
+          dotnet build $env:SOLUTION --configuration $env:BUILD_CONFIG
+          dotnet dotcover test $env:SOLUTION --dcReportType=HTML --dotCoverFilters="-:*Tests;-:testhost"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
