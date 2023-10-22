@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     name: Build
+    env:
+      BUILD_CONFIG: 'Release'
+      SOLUTION: '_Solutions/GameFramework.sln'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
@@ -52,17 +55,15 @@ jobs:
           
           Write-Output ${{ steps.get_version.outputs.version-without-v }}
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ secrets.PROJECT_KEY }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /v:"${{ steps.get_version.outputs.version-without-v }}"
-          dotnet build
-          dotnet dotcover test --dcReportType=HTML --dotCoverFilters="-:*Tests;-:testhost"
+          dotnet build $env:SOLUTION --configuration $env:BUILD_CONFIG
+          dotnet dotcover test $env:SOLUTION --dcReportType=HTML --dotCoverFilters="-:*Tests;-:testhost"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
   deploy:
     name: 'Build, Test & Deploy'
     env:
       BUILD_CONFIG: 'Release'
       SOLUTION: '_Solutions/GameFramework.sln'
-
     runs-on: windows-latest
-
     steps:
     - name: Checkout
       uses: actions/checkout@v3
