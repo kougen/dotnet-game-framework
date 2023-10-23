@@ -29,7 +29,6 @@ namespace GameFramework.Impl.Map
             {
                 return;
             }
-            
             unit2D.Step(mapObject);
         }
         

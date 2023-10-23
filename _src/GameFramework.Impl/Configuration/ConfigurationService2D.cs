@@ -17,8 +17,6 @@ namespace GameFramework.Impl.Configuration
             get => GetDimension();
             set => _configurationQuery.SetAttribute("config.dimension", value);
         }
-
-        public bool GameIsRunning { get; set; }
         public T? GetActiveMap<T>() where T : IMap2D
         {
             if (_activeMap is T map)
@@ -33,7 +31,6 @@ namespace GameFramework.Impl.Configuration
         {
             CancellationTokenSource = cancellationTokenSource ?? throw new ArgumentNullException(nameof(cancellationTokenSource));
             _configurationQuery = configurationQueryFactory.CreateConfigurationQuery(Path.Join(applicationSettings.ConfigurationFolder, "game-settings.json"));
-            GameIsRunning = false;
         }
 
         public void SetActiveMap<T>(T map2D) where T : IMap2D

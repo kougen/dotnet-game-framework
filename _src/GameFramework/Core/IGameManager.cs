@@ -5,11 +5,15 @@ namespace GameFramework.Core
 {
     public interface IGameManager
     {
+        GameState State { get; }
+        
         IStopwatch Timer { get; }
         
-        void GameStarted(IGameplayFeedback feedback);
-        void GameFinished(IGameplayFeedback feedback, GameResolution resolution);
-        void GamePaused();
+        void StartGame(IGameplayFeedback feedback);
+        void EndGame(IGameplayFeedback feedback, GameResolution resolution);
+        void PauseGame();
+        void ResumeGame();
+        void ResetGame();
         
         void AttachListener(IGameManagerSubscriber listener);
     }
