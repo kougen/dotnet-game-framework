@@ -4,6 +4,7 @@ namespace GameFramework.Time
 {
     public interface IStopwatch : IDisposable
     {
+        bool IsRunning { get; }
         TimeSpan Elapsed { get; }
         
         void Wait(int periodInMilliseconds, ITickListener listener);

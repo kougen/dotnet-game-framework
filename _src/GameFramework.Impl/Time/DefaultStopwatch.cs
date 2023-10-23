@@ -11,6 +11,8 @@ namespace GameFramework.Impl.Time
         private readonly ICollection<PeriodicStopwatch> _periodicStopwatches;
         private bool _disposed;
         private readonly ICollection<ITickListener> _listeners;
+        
+        public bool IsRunning => _stopwatch.IsRunning;
         public TimeSpan Elapsed { get; private set; }
 
         public DefaultStopwatch(CancellationToken cancellationToken)
