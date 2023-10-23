@@ -4,7 +4,7 @@ using GameFramework.Time.Listeners;
 
 namespace GameFramework.Impl.Time
 {
-    public class PeriodicStopwatch : IPeriodicStopwatch
+    internal class PeriodicStopwatch : IPeriodicStopwatch
     {
         private readonly Stopwatch _stopwatch;
         private int _periodInMilliseconds;

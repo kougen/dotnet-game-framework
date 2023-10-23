@@ -4,7 +4,7 @@ using GameFramework.Time;
 
 namespace GameFramework.Impl.Core
 {
-    public class GameManager : IGameManager
+    internal class GameManager : IGameManager
     {
         private readonly ICollection<IGameManagerSubscriber> _listeners;
 

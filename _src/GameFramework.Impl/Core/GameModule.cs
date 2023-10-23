@@ -1,4 +1,5 @@
 ﻿using GameFramework.Configuration;
+using GameFramework.Core;
 using GameFramework.Core.Factories;
 using GameFramework.Impl.Configuration;
 using GameFramework.Impl.Core.Position.Factories;
@@ -23,6 +24,7 @@ namespace GameFramework.Impl.Core
 
             collection.AddSingleton<IStopwatch>(_ => new DefaultStopwatch(cancellationTokenSource.Token));
             collection.AddSingleton<IPositionFactory, PositionFactory>();
+            collection.AddSingleton<IGameManager, GameManager>();
         }
     }
 }

@@ -2,7 +2,7 @@ using GameFramework.Time.Listeners;
 
 namespace GameFramework.Unit.Tests.Time
 {
-    public class DummyListener : ITickListener
+    internal class DummyListener : ITickListener
     {
         public void RaiseTick(int round)
         {
