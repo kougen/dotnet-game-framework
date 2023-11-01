@@ -1,1 +1,4 @@
-GameFramework
+GameFramework.Core
+GameFramework.UI.Desktop
+GameFramework.UI.Android
+GameFramework.UI.WPF
