@@ -73,7 +73,7 @@ namespace GameFramework.Impl.Map.Source
                 for (var j = 0; j < row.Count; j++)
                 {
                     var value = row[j];
-                    var position = _positionFactory.CreatePosition(i, j);
+                    var position = _positionFactory.CreatePosition(j, i);
                     if (!Enum.TryParse(value.ToString(), out T type))
                     {
                         continue;

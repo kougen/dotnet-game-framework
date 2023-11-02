@@ -14,7 +14,7 @@ namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas.TestUnitVisuals
     public class TestUnit : IUnit2D, ITickListener
     {
         public Guid Id { get; }
-        public IPosition2D Position { get; }
+        public IPosition2D Position { get; private set; }
         public IDynamicMapObjectView View { get; }
         public bool IsObstacle => false;
         public TimeSpan ElapsedTime { get; set; }
@@ -32,7 +32,7 @@ namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas.TestUnitVisuals
         
         public void Step(IMapObject2D mapObject)
         {
-            mapObject.SteppedOn(this);
+            Position = mapObject.Position;
             View.UpdatePosition(Position);
         }
         

@@ -12,7 +12,7 @@ namespace GameFramework.ManualTests.Desktop.WPF
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App2D : GameApp2D
+    public partial class App : GameApp2D
     {
         protected override IServiceProvider LoadModules(ServiceCollection collection)
         {

@@ -1,10 +1,7 @@
-﻿<core:GameApp2D x:Class="GameFramework.ManualTests.Desktop.WPF.App2D"
+﻿<core:GameApp2D x:Class="GameFramework.ManualTests.Desktop.WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GameFramework.ManualTests.Desktop.WPF"
              xmlns:core="clr-namespace:GameFramework.UI.WPF.Core;assembly=GameFramework.UI.WPF"
              StartupUri="MainWindow.xaml">
-    <core:GameApp2D.Resources>
-         
-    </core:GameApp2D.Resources>
 </core:GameApp2D>

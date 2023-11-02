@@ -20,8 +20,11 @@ namespace GameFramework.UI.WPF
 
         public virtual void UpdatePosition(IPosition2D position)
         {
-            Canvas.SetLeft(this, position.X * ConfigurationService.Dimension);
-            Canvas.SetTop(this, position.Y * ConfigurationService.Dimension);
+            Dispatcher.Invoke(() =>
+            {
+                Canvas.SetLeft(this, position.X * ConfigurationService.Dimension);
+                Canvas.SetTop(this, position.Y * ConfigurationService.Dimension);
+            });
         }
         
         public void ViewLoaded()
