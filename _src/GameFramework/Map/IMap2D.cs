@@ -1,11 +1,15 @@
 ﻿using GameFramework.Core;
 using GameFramework.Map.MapObject;
+using GameFramework.Visuals;
 
 namespace GameFramework.Map
 {
-    public interface IMap2D<out T> : IUnitMap2D where T : IMapSource2D
+    public interface IMap2D<out TSource, out TView> : IHasUnits2D 
+        where TSource : IMapSource2D
+        where TView : IMapView2D
     {
-        T MapSource { get; }
+        TView View { get; }
+        TSource MapSource { get; }
         
         int SizeX { get; }
         int SizeY { get; }
@@ -18,6 +22,6 @@ namespace GameFramework.Map
         void SaveProgress();
     }
 
-    public interface IMap2D : IMap2D<IMapSource2D>
+    public interface IMap2D : IMap2D<IMapSource2D, IMapView2D>
     { }
 }

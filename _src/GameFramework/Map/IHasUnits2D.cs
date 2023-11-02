@@ -5,7 +5,7 @@ using GameFramework.Map.MapObject;
 
 namespace GameFramework.Map
 {
-    public interface IUnitMap2D
+    public interface IHasUnits2D
     {
         ICollection<IUnit2D> Units { get; }
         IEnumerable<IUnit2D> SelectedUnits { get; }

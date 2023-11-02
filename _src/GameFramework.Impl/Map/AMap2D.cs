@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using GameFramework.Core;
 using GameFramework.Core.Factories;
@@ -5,29 +6,42 @@ using GameFramework.Core.Motion;
 using GameFramework.Entities;
 using GameFramework.Map;
 using GameFramework.Map.MapObject;
+using GameFramework.Visuals;
 
 namespace GameFramework.Impl.Map
 {
-    public abstract class AMap2D<T> : IMap2D<T> where T : IMapSource2D
+    public abstract class AMap2D<TSource, TView> : IMap2D<TSource, TView>
+        where TSource : class, IMapSource2D
+        where TView : class, IMapView2D
     {
         private readonly IPositionFactory _positionFactory;
-        public T MapSource { get; }
+        private readonly ObservableCollection<IUnit2D> _units;
+        private readonly ObservableCollection<IMapObject2D> _mapObjects;
+        
+        public TView View { get; }
+        public TSource MapSource { get; }
         public int SizeX { get; }
         public int SizeY { get; }
-        public ICollection<IUnit2D> Units { get; }
+        public ICollection<IUnit2D> Units => _units;
         public IEnumerable<IUnit2D> SelectedUnits { get; }
-        public IEnumerable<IMapObject2D> MapObjects { get; }
+        public IEnumerable<IMapObject2D> MapObjects => _mapObjects;
         public IMapObject2D? SelectedObject { get; set; }
 
-        protected AMap2D(T mapSource, IPositionFactory positionFactory)
+        protected AMap2D(TSource mapSource, TView view, IPositionFactory positionFactory)
         {
             _positionFactory = positionFactory ?? throw new ArgumentNullException(nameof(positionFactory));
             MapSource = mapSource ?? throw new ArgumentNullException(nameof(mapSource));
+            View = view ?? throw new ArgumentNullException(nameof(view));
             SizeX = MapSource.ColumnCount;
             SizeY = MapSource.RowCount;
-            Units = MapSource.Units;
-            MapObjects = MapSource.MapObjects;
+            _units = new ObservableCollection<IUnit2D>(MapSource.Units);
+            View.EntityViews = new ObservableCollection<IDynamicMapObjectView>(Units.Select(u => u.View));
+            _mapObjects = new ObservableCollection<IMapObject2D>(MapSource.MapObjects);
+            View.MapObjects = new ObservableCollection<IMapObject2D>(MapObjects);
             SelectedUnits = new List<IUnit2D>();
+            
+            _units.CollectionChanged += (_, _) => View.EntityViews = new ObservableCollection<IDynamicMapObjectView>(Units.Select(u => u.View));
+            _mapObjects.CollectionChanged += (_, _) => View.MapObjects = new ObservableCollection<IMapObject2D>(MapObjects);
         }
 
         #region MapObjects
@@ -64,7 +78,7 @@ namespace GameFramework.Impl.Map
             {
                 units.AddRange(Units.Where(unit => unit.Position == mapObject.Position));
             }
-            
+
             return units;
         }
 
@@ -73,27 +87,27 @@ namespace GameFramework.Impl.Map
             var portion = MapPortion(topLeft, bottomRight);
             return GetUnitsAtPortion(portion);
         }
-        
+
         public IEnumerable<TUnit> GetUnitsOfTypeAtPortion<TUnit>(IEnumerable<IMapObject2D> mapObjects) where TUnit : IUnit2D
         {
             throw new NotImplementedException();
         }
-        
+
         public IEnumerable<TUnit> GetAllUnitsOfType<TUnit>() where TUnit : IUnit2D
         {
             throw new NotImplementedException();
         }
-        
+
         public TUnit? GetUnit<TUnit>(Guid id) where TUnit : IUnit2D
         {
             foreach (var unit in Units)
             {
-                if(unit.Id.Equals(id) && unit is TUnit unit2D)
+                if (unit.Id.Equals(id) && unit is TUnit unit2D)
                 {
                     return unit2D;
                 }
             }
-            
+
             return default;
         }
 
@@ -111,7 +125,7 @@ namespace GameFramework.Impl.Map
             }
             unit2D.Step(mapObject);
         }
-        
+
         public IMapObject2D? SimulateMove(IPosition2D position, Move2D move)
         {
             var objects = MapObjects.ToArray();
@@ -149,12 +163,20 @@ namespace GameFramework.Impl.Map
         public void RegisterUnit(IUnit2D unit2D)
         {
             Units.Add(unit2D);
+            View.EntityViews = new ObservableCollection<IDynamicMapObjectView>(Units.Select(u => u.View));
         }
         #endregion
-        
+
         public void SaveProgress()
         {
             MapSource.SaveLayout(MapObjects, Units);
         }
+    }
+    
+    public abstract class AMap2D : AMap2D<IMapSource2D, IMapView2D>, IMap2D
+    {
+        protected AMap2D(IMapSource2D mapSource, IMapView2D view, IPositionFactory positionFactory) 
+            : base(mapSource, view, positionFactory)
+        { }
     }
 }

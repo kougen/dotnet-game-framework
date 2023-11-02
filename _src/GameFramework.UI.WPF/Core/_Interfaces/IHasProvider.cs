@@ -1,7 +1,7 @@
 using System;
 using System.Windows;
 
-namespace GameFramework.UI.WPF.Core._Interfaces
+namespace GameFramework.UI.WPF.Core
 {
     public interface IHasProvider
     {

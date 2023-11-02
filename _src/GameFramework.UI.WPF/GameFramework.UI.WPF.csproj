@@ -7,7 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\GameFramework.Impl\GameFramework.Impl.csproj" />
       <ProjectReference Include="..\GameFramework\GameFramework.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="GameFramework.ManualTests.Desktop.WPF" />
     </ItemGroup>
 
 </Project>

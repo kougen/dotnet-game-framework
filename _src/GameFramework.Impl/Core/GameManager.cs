@@ -1,25 +1,29 @@
 using System.Diagnostics;
+using GameFramework.Configuration;
 using GameFramework.Core;
 using GameFramework.GameFeedback;
+using GameFramework.Map;
 using GameFramework.Time;
 
 namespace GameFramework.Impl.Core
 {
     internal class GameManager : IGameManager
     {
+        private readonly IConfigurationService2D _configurationService;
         private readonly ICollection<IGameManagerSubscriber> _listeners;
 
         public GameState State { get; private set; }
         public IStopwatch Timer { get; }
         
-        public GameManager(IStopwatch stopwatch)
+        public GameManager(IStopwatch stopwatch, IConfigurationService2D configurationService)
         {
+            _configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             Timer = stopwatch ?? throw new ArgumentNullException(nameof(stopwatch));
             _listeners = new List<IGameManagerSubscriber>();
             State = GameState.NotStarted;
         }
         
-        public void StartGame(IGameplayFeedback feedback)
+        public void StartGame<T>(IGameplayFeedback feedback, T map2D) where T : IMap2D
         {
             if(State is GameState.InProgress)
             {
@@ -28,6 +32,7 @@ namespace GameFramework.Impl.Core
             }
             
             Timer.Start();
+            _configurationService.SetActiveMap(map2D);
             foreach (var gameFeedbackListener in _listeners)
             {
                 gameFeedbackListener.OnGameStarted(feedback);
