@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 	<metadata>
-		<id>joshika39.GameFramework</id>
+		<id>joshika39.GameFramework.Core</id>
 		<version>1.0.0.0-pre0001</version>
 		<description>Board based game creation logics</description>
 		<authors>joshika39</authors>

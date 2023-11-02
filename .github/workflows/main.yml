@@ -87,16 +87,16 @@ jobs:
       run: nuget restore $env:SOLUTION
 
     - name: Build
-      run: dotnet build $env:SOLUTION --configuration $env:BUILD_CONFIG -p:PackageVersion=${{ steps.get_version.outputs.version-without-v }} --no-restore
+      run: dotnet build $env:SOLUTION --configuration $env:BUILD_CONFIG --no-restore
 
     - name: Run tests
       run: dotnet test $env:SOLUTION /p:Configuration=$env:BUILD_CONFIG --no-restore --no-build --verbosity normal
 
     - name: Pack Modules
       shell: pwsh
-      run: '& .\dotnet-tools\PushArtifact.ps1 -Version ${{ steps.get_version.outputs.version-without-v }} -EnvFile .\.env'
+      run: '& .\dotnet-tools\PackPackages.ps1 -EnvFile .\.env -CustomProjectsFile .projects.conf' 
 
     - name: Publish
       run: |
-        dotnet nuget push .\Nuget\Packages\${{ steps.get_version.outputs.version }}\*.nupkg --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}}
-        dotnet nuget push .\Nuget\Packages\${{ steps.get_version.outputs.version }}\*.nupkg --source 'https://nuget.pkg.github.com/joshika39/index.json' --api-key ${{secrets.GIT_API_KEY}}
+        '& .\dotnet-tools\PushPackages.ps1 -CustomProjectsFile .projects.conf -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}' 
+        '& .\dotnet-tools\PushPackages.ps1 -CustomProjectsFile .projects.conf -Source 'https://nuget.pkg.github.com/joshika39/index.json' -ApiKey ${{secrets.GIT_API_KEY}}' 
