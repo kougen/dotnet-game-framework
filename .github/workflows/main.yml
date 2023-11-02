@@ -10,7 +10,7 @@ jobs:
     name: Build
     env:
       BUILD_CONFIG: 'Debug'
-      SOLUTION: '_Solutions/GameFramework.sln'
+      SOLUTION: '_Solutions/GameFramework.Windows.slnf'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
@@ -62,7 +62,7 @@ jobs:
     name: 'Build, Test & Deploy'
     env:
       BUILD_CONFIG: 'Release'
-      SOLUTION: '_Solutions/GameFramework.sln'
+      SOLUTION: '_Solutions/GameFramework.Windows.slnf'
     runs-on: windows-latest
     steps:
     - name: Checkout
@@ -98,5 +98,5 @@ jobs:
 
     - name: Publish
       run: |
-        '& .\dotnet-tools\PushPackages.ps1 -CustomProjectsFile .projects.conf -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}' 
-        '& .\dotnet-tools\PushPackages.ps1 -CustomProjectsFile .projects.conf -Source 'https://nuget.pkg.github.com/joshika39/index.json' -ApiKey ${{secrets.GIT_API_KEY}}' 
+        '& .\dotnet-tools\PushPackages.ps1 -CustomProjectsFile .projects.conf -Source https://api.nuget.org/v3/index.json -ApiKey ${{secrets.NUGET_API_KEY}}' 
+        '& .\dotnet-tools\PushPackages.ps1 -CustomProjectsFile .projects.conf -Source https://nuget.pkg.github.com/joshika39/index.json -ApiKey ${{secrets.GIT_API_KEY}}' 

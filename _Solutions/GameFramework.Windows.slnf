@@ -1,0 +1,13 @@
+{
+  "solution": {
+    "path": "GameFramework.sln",
+    "projects": [
+      "..\\_Tests\\GameFramework.ManualTests.Desktop.WPF\\GameFramework.ManualTests.Desktop.WPF.csproj",
+      "..\\_Tests\\GameFramework.Unit.Tests\\GameFramework.Unit.Tests.csproj",
+      "..\\_src\\GameFramework.Impl\\GameFramework.Impl.csproj",
+      "..\\_src\\GameFramework.UI.Avalonia\\GameFramework.UI.Avalonia\\GameFramework.UI.Avalonia.csproj",
+      "..\\_src\\GameFramework.UI.WPF\\GameFramework.UI.WPF.csproj",
+      "..\\_src\\GameFramework\\GameFramework.csproj"
+    ]
+  }
+}

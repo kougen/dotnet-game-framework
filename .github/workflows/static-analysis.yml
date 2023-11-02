@@ -12,7 +12,7 @@ jobs:
     name: Build
     env:
       BUILD_CONFIG: 'Debug'
-      SOLUTION: '_Solutions/GameFramework.sln'
+      SOLUTION: '_Solutions/GameFramework.Windows.slnf'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
