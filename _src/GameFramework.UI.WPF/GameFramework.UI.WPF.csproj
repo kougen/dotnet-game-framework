@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+        <AssemblyName>joshika39.GameFramework.UI.WPF</AssemblyName>
+        <Company>joshika39.GameFramework.UI.WPF</Company>
+        <Product>joshika39.GameFramework.UI.WPF</Product>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <OutputPath>..\..\Binaries\Debug\</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <OutputPath>..\..\Binaries\Release\</OutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GameFramework.Impl\GameFramework.Impl.csproj" />
+      <ProjectReference Include="..\GameFramework\GameFramework.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="GameFramework.ManualTests.Desktop.WPF" />
+    </ItemGroup>
+
+</Project>

@@ -4,6 +4,7 @@ using GameFramework.Core.Factories;
 using GameFramework.Impl.Configuration;
 using GameFramework.Impl.Core.Position.Factories;
 using GameFramework.Impl.Time;
+using GameFramework.Map.MapObject;
 using GameFramework.Time;
 using Infrastructure.Application;
 using Infrastructure.Configuration.Factories;
