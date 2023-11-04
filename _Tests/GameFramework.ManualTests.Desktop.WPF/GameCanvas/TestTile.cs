@@ -19,5 +19,17 @@ namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas
         {
             throw new System.NotImplementedException();
         }
+
+        public override void OnHovered()
+        {
+            base.OnHovered();
+            Fill = new SolidColorBrush(Colors.Coral);
+        }
+        
+        public override void OnHoverLost()
+        {
+            base.OnHoverLost();
+            Fill = new SolidColorBrush(Colors.Chocolate);
+        }
     }
 }

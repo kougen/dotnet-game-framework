@@ -11,7 +11,6 @@ namespace GameFramework.Impl.Map.Source
 {
     public class JsonMapSource2D<T> : AMapSource2D where T : struct, Enum
     {
-        private readonly IConfigurationQuery _query;
         private readonly IReader _reader;
         private readonly IPositionFactory _positionFactory;
         private readonly string _mapDataBase64;
@@ -19,13 +18,16 @@ namespace GameFramework.Impl.Map.Source
 
         public sealed override IEnumerable<IMapObject2D> MapObjects { get; protected set; }
         public sealed override ICollection<IUnit2D> Units { get; protected set; }
+        
+        protected readonly IConfigurationQuery Query;
+
 
         protected JsonMapSource2D(IServiceProvider provider, string filePath, int[,] data, ICollection<IUnit2D> units, int col, int row)
         {
             Units = units ?? throw new ArgumentNullException(nameof(units));
 
             filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
-            _query = provider.GetRequiredService<IConfigurationQueryFactory>().CreateConfigurationQuery(filePath);
+            Query = provider.GetRequiredService<IConfigurationQueryFactory>().CreateConfigurationQuery(filePath);
             _positionFactory = provider.GetRequiredService<IPositionFactory>();
             _reader = provider.GetRequiredService<IReader>();
             _tileConverter = provider.GetRequiredService<IMapObject2DConverter>();
@@ -39,15 +41,15 @@ namespace GameFramework.Impl.Map.Source
         {
             var queryFactory = provider.GetRequiredService<IConfigurationQueryFactory>();
             filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
-            _query = queryFactory.CreateConfigurationQuery(filePath);
+            Query = queryFactory.CreateConfigurationQuery(filePath);
             _positionFactory = provider.GetRequiredService<IPositionFactory>();
             _reader = provider.GetRequiredService<IReader>();
             _tileConverter = provider.GetRequiredService<IMapObject2DConverter>();
-            ColumnCount = _query.GetIntAttribute("row") ??  throw new InvalidOperationException("Draft config is missing a 'row;");
-            RowCount = _query.GetIntAttribute("col") ??  throw new InvalidOperationException("Draft config is missing a 'col'");
-            _mapDataBase64 = _query.GetStringAttribute("data") ??  throw new InvalidOperationException("Draft config is missing the 'data'");
+            ColumnCount = Query.GetIntAttribute("row") ??  throw new InvalidOperationException("Draft config is missing a 'row;");
+            RowCount = Query.GetIntAttribute("col") ??  throw new InvalidOperationException("Draft config is missing a 'col'");
+            _mapDataBase64 = Query.GetStringAttribute("data") ??  throw new InvalidOperationException("Draft config is missing the 'data'");
             
-            Units = _query.GetObject<List<IUnit2D>>("units") ?? new List<IUnit2D>();
+            Units = Query.GetObject<List<IUnit2D>>("units") ?? new List<IUnit2D>();
             MapObjects = ConvertDataToObjects();
         }
         
@@ -55,7 +57,7 @@ namespace GameFramework.Impl.Map.Source
         {
             Units = updatedUnits.ToList();
             MapObjects = updatedMapObjects;
-            _query.SetObject("units", Units);
+            Query.SetObject("units", Units);
         }
         
         private IEnumerable<IMapObject2D> ConvertDataToObjects()

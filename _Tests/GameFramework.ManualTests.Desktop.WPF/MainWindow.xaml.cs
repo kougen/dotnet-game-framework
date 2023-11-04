@@ -31,7 +31,7 @@ namespace GameFramework.ManualTests.Desktop.WPF
             var data = new int[5, 7];
             var mapView = new TestMapView();
             var mapSource = new JsonMapSource2D(GameApp2D.Current.Services, @"C:\Users\JoshH\OneDrive\File\Documents\test.json", data, new List<IUnit2D>(), 7, 5);
-            IMap2D map = new TestMap(mapSource, mapView, new PositionFactory());
+            IMap2D map = new TestMap(mapSource, mapView, new PositionFactory(), GameApp2D.Current.ConfigurationService);
             Map.Content = map.View;
             GameApp2D.Current.Manager.StartGame(new GameplayFeedback(FeedbackLevel.Info, "Game test started"), map);
 
