@@ -7,5 +7,6 @@ namespace GameFramework.Visuals
     {
         public ObservableCollection<IMapObject2D> MapObjects { get; set; }
         public ObservableCollection<IDynamicMapObjectView> EntityViews { get; set; }
+        void Attach(IMouseHandler mouseHandler);
     }
 }

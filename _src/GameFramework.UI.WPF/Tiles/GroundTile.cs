@@ -4,10 +4,11 @@ using GameFramework.Configuration;
 using GameFramework.Core;
 using GameFramework.Entities;
 using GameFramework.GameFeedback;
+using GameFramework.Visuals;
 
 namespace GameFramework.UI.WPF.Tiles
 {
-    internal class GroundTile : ATile
+    internal class GroundTile : ATile, IClickable
     {
         private readonly IGameManager _gameManager;
         public override bool IsObstacle => false;
@@ -24,6 +25,30 @@ namespace GameFramework.UI.WPF.Tiles
             {
                 unit2D.Step(this);
             }
+        }
+        
+        public override void OnHovered()
+        {
+            base.OnHovered();
+            if (IsHovered)
+            {
+                return;
+            }
+            
+            Fill = new SolidColorBrush(Colors.LightGreen);
+        }
+
+        public override void OnHoverLost()
+        {
+            base.OnHoverLost();
+            Fill = new SolidColorBrush(Colors.Green);
+        }
+
+        public bool IsClickEnabled { get; set; }
+        
+        public void OnClicked()
+        {
+            
         }
     }
 }

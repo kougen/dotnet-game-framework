@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using GameFramework.Configuration;
 using GameFramework.Core;
 using GameFramework.Core.Factories;
 using GameFramework.Core.Motion;
@@ -10,14 +11,15 @@ using GameFramework.Visuals;
 
 namespace GameFramework.Impl.Map
 {
-    public abstract class AMap2D<TSource, TView> : IMap2D<TSource, TView>
+    public abstract class AMap2D<TSource, TView> : IMap2D<TSource, TView>, IMouseHandler
         where TSource : class, IMapSource2D
         where TView : class, IMapView2D
     {
         private readonly IPositionFactory _positionFactory;
+        private readonly IConfigurationService2D _configurationService2D;
         private readonly ObservableCollection<IUnit2D> _units;
         private readonly ObservableCollection<IMapObject2D> _mapObjects;
-        
+
         public TView View { get; }
         public TSource MapSource { get; }
         public int SizeX { get; }
@@ -27,9 +29,10 @@ namespace GameFramework.Impl.Map
         public IEnumerable<IMapObject2D> MapObjects => _mapObjects;
         public IMapObject2D? SelectedObject { get; set; }
 
-        protected AMap2D(TSource mapSource, TView view, IPositionFactory positionFactory)
+        protected AMap2D(TSource mapSource, TView view, IPositionFactory positionFactory, IConfigurationService2D configurationService2D)
         {
             _positionFactory = positionFactory ?? throw new ArgumentNullException(nameof(positionFactory));
+            _configurationService2D = configurationService2D ?? throw new ArgumentNullException(nameof(configurationService2D));
             MapSource = mapSource ?? throw new ArgumentNullException(nameof(mapSource));
             View = view ?? throw new ArgumentNullException(nameof(view));
             SizeX = MapSource.ColumnCount;
@@ -39,9 +42,10 @@ namespace GameFramework.Impl.Map
             _mapObjects = new ObservableCollection<IMapObject2D>(MapSource.MapObjects);
             View.MapObjects = new ObservableCollection<IMapObject2D>(MapObjects);
             SelectedUnits = new List<IUnit2D>();
-            
+
             _units.CollectionChanged += (_, _) => View.EntityViews = new ObservableCollection<IDynamicMapObjectView>(Units.Select(u => u.View));
             _mapObjects.CollectionChanged += (_, _) => View.MapObjects = new ObservableCollection<IMapObject2D>(MapObjects);
+            View.Attach(this);
         }
 
         #region MapObjects
@@ -171,12 +175,96 @@ namespace GameFramework.Impl.Map
         {
             MapSource.SaveLayout(MapObjects, Units);
         }
+
+        public void OnMouseMove(IScreenSpacePosition screenSpacePosition)
+        {
+            foreach (var mapObject in MapObjects)
+            {
+                var pos = mapObject.ScreenSpacePosition;
+                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
+                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
+                {
+                    mapObject.OnHovered();
+                    continue;
+                }
+
+                if (mapObject.IsHovered)
+                {
+                    mapObject.OnHoverLost();
+                }
+            }
+
+            foreach (var unit in Units)
+            {
+                var pos = unit.ScreenSpacePosition;
+                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
+                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
+                {
+                    unit.OnHovered();
+                    continue;
+                }
+
+                if (unit.IsHovered)
+                {
+                    unit.OnHoverLost();
+                }
+            }
+        }
+        public void OnMouseLeftClick(IScreenSpacePosition screenSpacePosition)
+        {
+            foreach (var mapObject in MapObjects)
+            {
+                var pos = mapObject.ScreenSpacePosition;
+                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
+                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
+                {
+                    if (mapObject is not IFocusable focusable || mapObject == SelectedObject)
+                    {
+                        continue;
+                    }
+                    if (SelectedObject is IFocusable previousFocusable)
+                    {
+                        previousFocusable.OnFocusLost();
+                    }
+                    
+                    focusable.OnClicked();
+                    SelectedObject = mapObject;
+                    focusable.OnFocused();
+                }
+            }
+
+            foreach (var unit in Units)
+            {
+                var pos = unit.ScreenSpacePosition;
+                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
+                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
+                {
+                    if (unit is not IClickable clickable || unit == SelectedObject)
+                    {
+                        continue;
+                    }
+
+                    clickable.OnClicked();
+                    SelectedObject = unit;
+                }
+            }
+        }
+
+        public void OnMouseRightClick()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnMouseLeftDoubleClick()
+        {
+            throw new NotImplementedException();
+        }
     }
-    
+
     public abstract class AMap2D : AMap2D<IMapSource2D, IMapView2D>, IMap2D
     {
-        protected AMap2D(IMapSource2D mapSource, IMapView2D view, IPositionFactory positionFactory) 
-            : base(mapSource, view, positionFactory)
+        protected AMap2D(IMapSource2D mapSource, IMapView2D view, IPositionFactory positionFactory, IConfigurationService2D configurationService)
+            : base(mapSource, view, positionFactory, configurationService)
         { }
     }
 }
