@@ -3,7 +3,7 @@ using GameFramework.Visuals;
 
 namespace GameFramework.Entities
 {
-    public interface IUnit2D : IMapObject2D
+    public interface IUnit2D : IMapObject2D, IDisposable
     {
         
         Guid Id { get; }

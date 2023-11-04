@@ -49,5 +49,10 @@ namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas.TestUnitVisuals
                 map?.MoveUnit(this, Move2D.Right);
             }
         }
+        
+        public void Dispose()
+        {
+            View.Dispose();
+        }
     }
 }

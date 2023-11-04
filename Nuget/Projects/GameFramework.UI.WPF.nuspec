@@ -6,19 +6,25 @@
 		<description>Board based game creation logics</description>
 		<authors>joshika39</authors>
 		<dependencies>
-			<group targetFramework="net6.0-windows64">
+			<group targetFramework="net6.0-windows10">
 				<dependency id="Microsoft.Extensions.DependencyInjection" version="7.0.0" />
 				<dependency id="joshika39.GameFramework.Core" version="1.4.0" />
 			</group>
-			<group targetFramework="net6.0-windows32">
+			<group targetFramework="net6.0-windows6">
+				<dependency id="Microsoft.Extensions.DependencyInjection" version="7.0.0" />
+				<dependency id="joshika39.GameFramework.Core" version="1.4.0" />
+			</group>
+			<group targetFramework="net6.0-windows7">
 				<dependency id="Microsoft.Extensions.DependencyInjection" version="7.0.0" />
 				<dependency id="joshika39.GameFramework.Core" version="1.4.0" />
 			</group>
 		</dependencies>
+		
 	</metadata>
 
 	<files>
-		<file src="..\..\Binaries\{CONFIGURATION}\net6.0-windows\joshika39.GameFramework.UI.WPF.dll" target="lib\net6.0-windows64" />
-		<file src="..\..\Binaries\{CONFIGURATION}\net6.0-windows\joshika39.GameFramework.UI.WPF.dll" target="lib\net6.0-windows32" />
+		<file src="..\..\Binaries\{CONFIGURATION}\net6.0-windows\joshika39.GameFramework.UI.WPF.dll" target="lib\net6.0-windows6" />
+		<file src="..\..\Binaries\{CONFIGURATION}\net6.0-windows\joshika39.GameFramework.UI.WPF.dll" target="lib\net6.0-windows7" />
+		<file src="..\..\Binaries\{CONFIGURATION}\net6.0-windows\joshika39.GameFramework.UI.WPF.dll" target="lib\net6.0-windows10" />
 	</files>
 </package>
