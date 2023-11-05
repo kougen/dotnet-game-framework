@@ -11,7 +11,6 @@ namespace GameFramework.Impl.Map.Source
 {
     public class JsonMapSource2D<T> : AMapSource2D where T : struct, Enum
     {
-        private readonly IReader _reader;
         private readonly IPositionFactory _positionFactory;
         private readonly string _mapDataBase64;
         private readonly IMapObject2DConverter _tileConverter;
@@ -20,6 +19,7 @@ namespace GameFramework.Impl.Map.Source
         public sealed override ICollection<IUnit2D> Units { get; protected set; }
         
         protected readonly IConfigurationQuery Query;
+        private readonly IDataParser _dataParser;
 
 
         protected JsonMapSource2D(IServiceProvider provider, string filePath, int[,] data, ICollection<IUnit2D> units, int col, int row)
@@ -29,7 +29,7 @@ namespace GameFramework.Impl.Map.Source
             filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
             Query = provider.GetRequiredService<IConfigurationQueryFactory>().CreateConfigurationQuery(filePath);
             _positionFactory = provider.GetRequiredService<IPositionFactory>();
-            _reader = provider.GetRequiredService<IReader>();
+            _dataParser = provider.GetRequiredService<IDataParser>();
             _tileConverter = provider.GetRequiredService<IMapObject2DConverter>();
             ColumnCount = col;
             RowCount = row;
@@ -43,7 +43,7 @@ namespace GameFramework.Impl.Map.Source
             filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
             Query = queryFactory.CreateConfigurationQuery(filePath);
             _positionFactory = provider.GetRequiredService<IPositionFactory>();
-            _reader = provider.GetRequiredService<IReader>();
+            _dataParser = provider.GetRequiredService<IDataParser>();
             _tileConverter = provider.GetRequiredService<IMapObject2DConverter>();
             ColumnCount = Query.GetIntAttribute("row") ??  throw new InvalidOperationException("Draft config is missing a 'row;");
             RowCount = Query.GetIntAttribute("col") ??  throw new InvalidOperationException("Draft config is missing a 'col'");
@@ -62,12 +62,9 @@ namespace GameFramework.Impl.Map.Source
         
         private IEnumerable<IMapObject2D> ConvertDataToObjects()
         {
-            var id = Guid.NewGuid();
-            var tempPath = Path.Join(Path.GetTempPath(), $"{id}.txt");
-            File.Create(tempPath).Close();
-            File.WriteAllText(tempPath, Encoding.UTF8.GetString(Convert.FromBase64String(_mapDataBase64)));
-            using var stream = new StreamReader(tempPath);
-            var mapLayout = _reader.ReadAllLines<int>(stream, int.TryParse, ' ').ToList();
+            var mapLayout = 
+                _dataParser.MultiTryParse<int>(Encoding.UTF8.GetString(Convert.FromBase64String(_mapDataBase64)), int.TryParse, out _, ' ').ToList();
+
             var list = new List<IMapObject2D>();
             for (var i = 0; i < mapLayout.Count; i++)
             {

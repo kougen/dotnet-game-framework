@@ -8,6 +8,7 @@
 		<dependencies>
 			<group targetFramework="net6.0">
 				<dependency id="Microsoft.Extensions.DependencyInjection" version="7.0.0" />
+				<dependency id="joshika39.Core" version="1.2.1" />
 			</group>
 		</dependencies>
 
