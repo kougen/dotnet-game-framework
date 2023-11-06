@@ -23,7 +23,6 @@ namespace GameFramework.Impl.Core
                 return new ConfigurationService2D(appSettings, confQueryFactory, cancellationTokenSource);
             });
 
-            collection.AddSingleton<IStopwatch>(_ => new DefaultStopwatch(cancellationTokenSource.Token));
             collection.AddSingleton<IPositionFactory, PositionFactory>();
             collection.AddSingleton<IGameManager, GameManager>();
         }
