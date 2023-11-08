@@ -8,7 +8,7 @@ using GameFramework.Visuals;
 
 namespace GameFramework.UI.WPF.Tiles
 {
-    internal class GroundTile : ATile, IClickable
+    internal class GroundTile : ATile, IClickable, IFocusable
     {
         private readonly IGameManager _gameManager;
         public override bool IsObstacle => false;
@@ -44,6 +44,18 @@ namespace GameFramework.UI.WPF.Tiles
         public void OnClicked()
         {
             
+        }
+        
+        public void OnFocused()
+        {
+            Stroke = new SolidColorBrush(Colors.Maroon);
+            StrokeThickness = 1;
+        }
+        
+        public void OnFocusLost()
+        {
+            Stroke = new SolidColorBrush(Colors.Transparent);
+            StrokeThickness = 0;
         }
     }
 }

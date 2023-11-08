@@ -3,6 +3,7 @@ using GameFramework.Configuration;
 using GameFramework.Core;
 using GameFramework.GameFeedback;
 using GameFramework.Map;
+using GameFramework.Visuals;
 using Infrastructure.Time;
 
 namespace GameFramework.Impl.Core
@@ -23,7 +24,7 @@ namespace GameFramework.Impl.Core
             State = GameState.NotStarted;
         }
         
-        public void StartGame<T>(IGameplayFeedback feedback, T map2D) where T : IMap2D
+        public void StartGame<T>(IGameplayFeedback feedback, T map2D) where T : IMap2D<IMapSource2D, IMapView2D>
         {
             if(State is GameState.InProgress)
             {
