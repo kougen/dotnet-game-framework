@@ -2,20 +2,17 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using GameFramework.Configuration;
 using GameFramework.Entities;
 using GameFramework.GameFeedback;
 using GameFramework.Impl.Core.Position;
 using GameFramework.Impl.Core.Position.Factories;
 using GameFramework.Impl.GameFeedback;
 using GameFramework.Impl.Map.Source;
-using GameFramework.Impl.Time;
 using GameFramework.ManualTests.Desktop.WPF.GameCanvas;
 using GameFramework.ManualTests.Desktop.WPF.GameCanvas.TestUnitVisuals;
 using GameFramework.Map;
-using GameFramework.Map.MapObject;
-using GameFramework.Time;
 using GameFramework.UI.WPF.Core;
+using Infrastructure.Time;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GameFramework.ManualTests.Desktop.WPF
@@ -45,7 +42,7 @@ namespace GameFramework.ManualTests.Desktop.WPF
             map.Units.Add(unit);
             
             var cancellationTokenSource = new CancellationTokenSource();
-            using IStopwatch stopwatch = new DefaultStopwatch(cancellationTokenSource.Token);
+            var stopwatch = GameApp2D.Current.Services.GetRequiredService<IStopwatch>();
             stopwatch.Start();
             for (var i = 0; i < 6; i++)
             {

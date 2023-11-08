@@ -25,7 +25,9 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Folder Include="Time\" />
+      <Reference Include="joshika39.Infrastructure">
+        <HintPath>..\..\..\..\..\..\Users\JoshH\.nuget\packages\joshika39.core\1.3.0\lib\net6.0\joshika39.Infrastructure.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>
