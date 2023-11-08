@@ -1,5 +1,6 @@
 ﻿using GameFramework.Configuration;
 using GameFramework.Map;
+using GameFramework.Visuals;
 using Infrastructure.Application;
 using Infrastructure.Configuration;
 using Infrastructure.Configuration.Factories;
@@ -10,7 +11,7 @@ namespace GameFramework.Impl.Configuration
     {
         public CancellationTokenSource CancellationTokenSource { get; }
         private readonly IConfigurationQuery _configurationQuery;
-        private IMap2D? _activeMap;
+        private IMap2D<IMapSource2D, IMapView2D>? _activeMap;
 
         public int Dimension
         {
@@ -33,7 +34,7 @@ namespace GameFramework.Impl.Configuration
             _configurationQuery = configurationQueryFactory.CreateConfigurationQuery(Path.Join(applicationSettings.ConfigurationFolder, "game-settings.json"));
         }
 
-        public void SetActiveMap<T>(T map2D) where T : IMap2D
+        public void SetActiveMap<T>(T map2D) where T : IMap2D<IMapSource2D, IMapView2D>
         {
             _activeMap = map2D ?? throw new ArgumentNullException(nameof(map2D));
         }

@@ -35,15 +35,15 @@ namespace GameFramework.ManualTests.Desktop.WPF
             TestMove(map);
         }
 
-        private async static Task TestMove(IHasUnits2D map)
+        private static async Task TestMove(IHasUnits2D map)
         {
             var unitView = new TestUnitView(new Position2D(0,0), GameApp2D.Current.ConfigurationService);
             var unit = new TestUnit(unitView, new Position2D(0,0));
             map.Units.Add(unit);
             
-            var cancellationTokenSource = new CancellationTokenSource();
             var stopwatch = GameApp2D.Current.Services.GetRequiredService<IStopwatch>();
             stopwatch.Start();
+            
             for (var i = 0; i < 6; i++)
             {
                 await stopwatch.WaitAsync(1000, unit);

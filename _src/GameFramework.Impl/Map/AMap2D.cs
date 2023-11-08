@@ -218,18 +218,24 @@ namespace GameFramework.Impl.Map
                 if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
                     screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
                 {
-                    if (mapObject is not IFocusable focusable || mapObject == SelectedObject)
+                    if (mapObject is not IClickable clickable || mapObject == SelectedObject)
                     {
                         continue;
                     }
+                    
                     if (SelectedObject is IFocusable previousFocusable)
                     {
                         previousFocusable.OnFocusLost();
                     }
                     
-                    focusable.OnClicked();
+                    clickable.OnClicked();
                     SelectedObject = mapObject;
-                    focusable.OnFocused();
+                    
+                    if (mapObject is IFocusable focusable)
+                    {
+                        focusable.OnFocused();
+                    }
+
                 }
             }
 
