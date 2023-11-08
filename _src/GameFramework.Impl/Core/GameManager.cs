@@ -3,7 +3,7 @@ using GameFramework.Configuration;
 using GameFramework.Core;
 using GameFramework.GameFeedback;
 using GameFramework.Map;
-using GameFramework.Time;
+using Infrastructure.Time;
 
 namespace GameFramework.Impl.Core
 {

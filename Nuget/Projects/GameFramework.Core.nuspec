@@ -5,17 +5,23 @@
 		<version>1.0.0.0-pre0001</version>
 		<description>Board based game creation logics</description>
 		<authors>joshika39</authors>
+		<icon>images\core-logo.png</icon>
+		<projectUrl>https://github.com/joshika39/game-framework</projectUrl>
+		<license type="expression">MIT</license>
+		<readme>docs\README.md</readme>
 		<dependencies>
 			<group targetFramework="net6.0">
 				<dependency id="Microsoft.Extensions.DependencyInjection" version="7.0.0" />
+				<dependency id="joshika39.Core" version="1.3.3" />
 			</group>
 		</dependencies>
 
 	</metadata>
 
-
 	<files>
 		<file src="..\..\Binaries\{CONFIGURATION}\net6.0\joshika39.GameFramework.dll" target="lib\net6.0" />
 		<file src="..\..\Binaries\{CONFIGURATION}\net6.0\joshika39.GameFramework.Impl.dll" target="lib\net6.0" />
+		<file src="..\..\README.md" target="docs\" />
+		<file src="..\..\core-logo.png" target="images\" />
 	</files>
 </package>

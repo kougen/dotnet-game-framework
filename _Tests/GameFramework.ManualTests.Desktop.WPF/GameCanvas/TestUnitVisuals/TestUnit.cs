@@ -6,9 +6,9 @@ using GameFramework.GameFeedback;
 using GameFramework.Impl.Core.Position;
 using GameFramework.Map;
 using GameFramework.Map.MapObject;
-using GameFramework.Time.Listeners;
 using GameFramework.UI.WPF.Core;
 using GameFramework.Visuals;
+using Infrastructure.Time.Listeners;
 
 namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas.TestUnitVisuals
 {

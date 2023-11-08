@@ -11,8 +11,11 @@ namespace GameFramework.Unit.Tests.Configuration
         public ConfigurationServiceTests()
         {
             var collection = new ServiceCollection();
-            new CoreModule().LoadModules(collection, "game-framework-tests");
-            new GameModule().LoadModules(collection, new CancellationTokenSource());
+            var source = new CancellationTokenSource();
+            var core = new CoreModule(collection, source);
+            core.RegisterServices("gf-cs-tests");
+            core.RegisterOtherServices(new GameFrameworkCore(collection, source));
+            
             _provider = collection.BuildServiceProvider();
         }
 

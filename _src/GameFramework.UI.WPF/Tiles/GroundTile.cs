@@ -30,11 +30,6 @@ namespace GameFramework.UI.WPF.Tiles
         public override void OnHovered()
         {
             base.OnHovered();
-            if (IsHovered)
-            {
-                return;
-            }
-            
             Fill = new SolidColorBrush(Colors.LightGreen);
         }
 
