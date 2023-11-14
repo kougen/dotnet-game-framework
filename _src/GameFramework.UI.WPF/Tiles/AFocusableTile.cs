@@ -2,21 +2,17 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using GameFramework.Configuration;
 using GameFramework.Core;
+using GameFramework.Core.Position;
 using GameFramework.Visuals;
 
 namespace GameFramework.UI.WPF.Tiles
 {
-    public abstract class AFocusableTile : AGeneralTile, IFocusable
+    public abstract class AFocusableTile : AClickableTile, IFocusable
     {
         public virtual bool IsTileFocused { get; protected set; }
         
         protected AFocusableTile(IPosition2D position, IConfigurationService2D configurationService, Color color, bool hasBorder) : base(position, configurationService, color, hasBorder)
         { }
-        
-        public virtual void OnClicked()
-        {
-            
-        }
         
         public virtual void OnFocused()
         {

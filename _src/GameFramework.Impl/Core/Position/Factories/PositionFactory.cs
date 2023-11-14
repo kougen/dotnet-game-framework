@@ -1,5 +1,6 @@
 ﻿using GameFramework.Core;
 using GameFramework.Core.Factories;
+using GameFramework.Core.Position;
 
 namespace GameFramework.Impl.Core.Position.Factories
 {

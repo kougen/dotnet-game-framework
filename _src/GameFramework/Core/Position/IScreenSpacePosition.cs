@@ -1,4 +1,4 @@
-namespace GameFramework.Core
+namespace GameFramework.Core.Position
 {
     public interface IScreenSpacePosition
     {

@@ -1,4 +1,6 @@
-﻿namespace GameFramework.Core.Factories
+﻿using GameFramework.Core.Position;
+
+namespace GameFramework.Core.Factories
 {
     public interface IPositionFactory
     {

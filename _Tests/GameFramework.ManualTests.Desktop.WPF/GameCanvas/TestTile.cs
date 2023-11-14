@@ -1,19 +1,17 @@
 using System.Windows.Media;
 using GameFramework.Configuration;
-using GameFramework.Core;
+using GameFramework.Core.Position;
 using GameFramework.Entities;
 using GameFramework.UI.WPF;
-using GameFramework.Visuals;
+using GameFramework.UI.WPF.Tiles;
 
 namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas
 {
-    public class TestTile : ATile
+    public class TestTile : AHoverableTile
     {
 
-        public TestTile(IPosition2D position, IConfigurationService2D configurationService) : base(position, configurationService)
-        {
-            Fill = new SolidColorBrush(Colors.Chocolate);
-        }
+        public TestTile(IPosition2D position, IConfigurationService2D configurationService) : base(position, configurationService, Colors.Chocolate, false)
+        { }
         public override bool IsObstacle => false;
         
         public override void SteppedOn(IUnit2D unit2D)

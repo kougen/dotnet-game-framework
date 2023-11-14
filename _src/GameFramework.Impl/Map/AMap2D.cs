@@ -4,6 +4,7 @@ using GameFramework.Configuration;
 using GameFramework.Core;
 using GameFramework.Core.Factories;
 using GameFramework.Core.Motion;
+using GameFramework.Core.Position;
 using GameFramework.Entities;
 using GameFramework.Map;
 using GameFramework.Map.MapObject;
@@ -176,50 +177,87 @@ namespace GameFramework.Impl.Map
             MapSource.SaveLayout(MapObjects, Units);
         }
 
+        #region MouseMove
         public void OnMouseMove(IScreenSpacePosition screenSpacePosition)
+        {
+            MouseMoveOnUnit(screenSpacePosition);
+            MouseMoveOnMapObject(screenSpacePosition);
+        }
+
+        private void MouseMoveOnUnit(IScreenSpacePosition screenSpacePosition)
+        {
+            foreach (var unit in Units)
+            {
+                if(unit is not IHoverable hoverableUnit)
+                {
+                    continue;
+                }
+                
+                var pos = unit.ScreenSpacePosition;
+                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
+                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
+                {
+                    hoverableUnit.OnHovered();
+                    continue;
+                }
+
+                if (hoverableUnit.IsHovered)
+                {
+                    hoverableUnit.OnHoverLost();
+                }
+            }
+        }
+
+        private void MouseMoveOnMapObject(IScreenSpacePosition screenSpacePosition)
         {
             foreach (var mapObject in MapObjects)
             {
+                if(mapObject is not IHoverable hoverableMapObject)
+                {
+                    continue;
+                }
                 var pos = mapObject.ScreenSpacePosition;
                 if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
                     screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
                 {
-                    mapObject.OnHovered();
+                    hoverableMapObject.OnHovered();
                     continue;
                 }
 
-                if (mapObject.IsHovered)
+                if (hoverableMapObject.IsHovered)
                 {
-                    mapObject.OnHoverLost();
-                }
-            }
-
-            foreach (var unit in Units)
-            {
-                var pos = unit.ScreenSpacePosition;
-                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
-                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
-                {
-                    unit.OnHovered();
-                    continue;
-                }
-
-                if (unit.IsHovered)
-                {
-                    unit.OnHoverLost();
+                    hoverableMapObject.OnHoverLost();
                 }
             }
         }
+        #endregion
+
+        #region LeftClick
         
         public void OnMouseLeftClick(IScreenSpacePosition screenSpacePosition)
         {
+            if (ClickUnit(screenSpacePosition))
+            {
+                return;
+            }
+            
+            ClickMapObject(screenSpacePosition);
+        }
+
+        private bool ClickUnit(IScreenSpacePosition screenSpacePosition)
+        {
             foreach (var unit in Units)
             {
+                if(unit is not IClickable clickableUnit)
+                {
+                    continue;
+                }
+                
                 var pos = unit.ScreenSpacePosition;
                 if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
                     screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
                 {
-                    if (unit is not IClickable clickable || unit.Position == SelectedObject?.Position)
+                    if (unit.Position == SelectedObject?.Position)
                     {
                         continue;
                     }
@@ -229,24 +267,34 @@ namespace GameFramework.Impl.Map
                         focusableUnitView.OnFocusLost();
                     }
 
-                    clickable.OnClicked();
+                    clickableUnit.OnClicked();
                     SelectedObject = unit;
                     
                     if (unit.View is IFocusable focusable)
                     {
                         focusable.OnFocused();
-                        return;
+                        return true;
                     }
                 }
             }
             
+            return false;
+        }
+
+        private void ClickMapObject(IScreenSpacePosition screenSpacePosition)
+        {
             foreach (var mapObject in MapObjects)
             {
+                if(mapObject is not IClickable clickableMapObject)
+                {
+                    continue;
+                }
+                
                 var pos = mapObject.ScreenSpacePosition;
                 if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
                     screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
                 {
-                    if (mapObject is not IClickable clickable || mapObject == SelectedObject)
+                    if (mapObject == SelectedObject)
                     {
                         continue;
                     }
@@ -256,7 +304,7 @@ namespace GameFramework.Impl.Map
                         previousFocusable.OnFocusLost();
                     }
                     
-                    clickable.OnClicked();
+                    clickableMapObject.OnClicked();
                     SelectedObject = mapObject;
                     
                     if (mapObject is IFocusable focusable)
@@ -267,7 +315,9 @@ namespace GameFramework.Impl.Map
                 }
             }
         }
-
+        
+        #endregion
+        
         public void OnMouseRightClick()
         {
             throw new NotImplementedException();

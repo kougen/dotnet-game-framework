@@ -2,6 +2,7 @@
 using System.Windows.Media;
 using GameFramework.Configuration;
 using GameFramework.Core;
+using GameFramework.Core.Position;
 using GameFramework.Entities;
 using GameFramework.GameFeedback;
 using GameFramework.Impl.GameFeedback;
@@ -15,10 +16,9 @@ namespace GameFramework.UI.WPF.Tiles
         private readonly IGameManager _gameManager;
         public override bool IsObstacle => false;
 
-        public HoleTile(IPosition2D position, IConfigurationService2D configurationService, IGameManager gameManager) : base(position, configurationService)
+        public HoleTile(IPosition2D position, IConfigurationService2D configurationService, IGameManager gameManager) : base(position, configurationService, Colors.Black, false)
         {
             _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
-            Fill = new SolidColorBrush(Colors.Black);
         }
 
         public override void SteppedOn(IUnit2D unit2D)

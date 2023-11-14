@@ -1,5 +1,6 @@
 using GameFramework.Core;
 using GameFramework.Core.Motion;
+using GameFramework.Core.Position;
 using GameFramework.Entities;
 using GameFramework.Map.MapObject;
 

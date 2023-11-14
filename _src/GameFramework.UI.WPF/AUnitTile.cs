@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 using GameFramework.Configuration;
-using GameFramework.Core;
+using GameFramework.Core.Position;
 using GameFramework.UI.WPF.Tiles;
 using GameFramework.Visuals;
 

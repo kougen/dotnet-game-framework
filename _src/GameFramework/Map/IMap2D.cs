@@ -1,4 +1,5 @@
 ﻿using GameFramework.Core;
+using GameFramework.Core.Position;
 using GameFramework.Map.MapObject;
 using GameFramework.Visuals;
 

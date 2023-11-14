@@ -1,6 +1,6 @@
 using System.Windows.Media;
 using GameFramework.Configuration;
-using GameFramework.Core;
+using GameFramework.Core.Position;
 using GameFramework.Entities;
 using GameFramework.UI.WPF;
 

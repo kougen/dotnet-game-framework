@@ -1,4 +1,5 @@
 using GameFramework.Core;
+using GameFramework.Core.Position;
 
 namespace GameFramework.Impl.Core.Position
 {

@@ -1,10 +1,9 @@
-﻿using GameFramework.Core;
+﻿using GameFramework.Core.Position;
 using GameFramework.Entities;
-using GameFramework.Visuals;
 
 namespace GameFramework.Map.MapObject
 {
-    public interface IMapObject2D : IHoverable
+    public interface IMapObject2D
     {
         IPosition2D Position { get; }
         IScreenSpacePosition ScreenSpacePosition { get; }

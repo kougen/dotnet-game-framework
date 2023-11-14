@@ -1,6 +1,7 @@
 using System;
 using GameFramework.Configuration;
 using GameFramework.Core;
+using GameFramework.Core.Position;
 using GameFramework.Map.MapObject;
 using GameFramework.UI.WPF.Tiles;
 
