@@ -75,8 +75,6 @@ namespace GameFramework.UI.WPF.Map
                 mouseHandler.OnMouseLeftClick(new ScreenSpacePosition(position.X, position.Y));
             }
         }
-
-        
         
         private void UpdateEntities()
         {

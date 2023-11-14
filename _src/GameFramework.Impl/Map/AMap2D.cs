@@ -210,8 +210,36 @@ namespace GameFramework.Impl.Map
                 }
             }
         }
+        
         public void OnMouseLeftClick(IScreenSpacePosition screenSpacePosition)
         {
+            foreach (var unit in Units)
+            {
+                var pos = unit.ScreenSpacePosition;
+                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
+                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
+                {
+                    if (unit is not IClickable clickable || unit.Position == SelectedObject?.Position)
+                    {
+                        continue;
+                    }
+                    
+                    if (unit.View is IFocusable { IsTileFocused: true } focusableUnitView)
+                    {
+                        focusableUnitView.OnFocusLost();
+                    }
+
+                    clickable.OnClicked();
+                    SelectedObject = unit;
+                    
+                    if (unit.View is IFocusable focusable)
+                    {
+                        focusable.OnFocused();
+                        return;
+                    }
+                }
+            }
+            
             foreach (var mapObject in MapObjects)
             {
                 var pos = mapObject.ScreenSpacePosition;
@@ -236,22 +264,6 @@ namespace GameFramework.Impl.Map
                         focusable.OnFocused();
                     }
 
-                }
-            }
-
-            foreach (var unit in Units)
-            {
-                var pos = unit.ScreenSpacePosition;
-                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
-                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
-                {
-                    if (unit is not IClickable clickable || unit == SelectedObject)
-                    {
-                        continue;
-                    }
-
-                    clickable.OnClicked();
-                    SelectedObject = unit;
                 }
             }
         }

@@ -9,17 +9,16 @@ using GameFramework.Visuals;
 
 namespace GameFramework.UI.WPF.Tiles
 {
-    internal class GroundTile : ATile, IClickable, IFocusable
+    internal class GroundTile : AFocusableTile
     {
         private readonly IGameManager _gameManager;
         public override bool IsObstacle => false;
 
-        public GroundTile(IPosition2D position, IConfigurationService2D configurationService, IGameManager gameManager) : base(position, configurationService)
+        public GroundTile(IPosition2D position, IConfigurationService2D configurationService, IGameManager gameManager, bool hasBorder = true) : base(position, configurationService, Colors.Green, hasBorder)
         {
             _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
-            Fill = new SolidColorBrush(Colors.Green);
         }
-
+        
         public override void SteppedOn(IUnit2D unit2D)
         {
             if (_gameManager.State == GameState.InProgress)
@@ -38,25 +37,6 @@ namespace GameFramework.UI.WPF.Tiles
         {
             base.OnHoverLost();
             Fill = new SolidColorBrush(Colors.Green);
-        }
-
-        public bool IsClickEnabled { get; set; }
-        
-        public void OnClicked()
-        {
-            
-        }
-        
-        public void OnFocused()
-        {
-            Stroke = new SolidColorBrush(Colors.Maroon);
-            StrokeThickness = 1;
-        }
-        
-        public void OnFocusLost()
-        {
-            Stroke = new SolidColorBrush(Colors.Transparent);
-            StrokeThickness = 0;
         }
     }
 }

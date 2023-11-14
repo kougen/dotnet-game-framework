@@ -6,6 +6,7 @@
       "..\\_Tests\\GameFramework.Unit.Tests\\GameFramework.Unit.Tests.csproj",
       "..\\_src\\GameFramework.Impl\\GameFramework.Impl.csproj",
       "..\\_src\\GameFramework.UI.Avalonia\\GameFramework.UI.Avalonia\\GameFramework.UI.Avalonia.csproj",
+      "..\\_src\\GameFramework.UI.Forms\\GameFramework.UI.Forms.csproj",
       "..\\_src\\GameFramework.UI.WPF\\GameFramework.UI.WPF.csproj",
       "..\\_src\\GameFramework\\GameFramework.csproj"
     ]

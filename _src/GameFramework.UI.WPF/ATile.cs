@@ -7,7 +7,6 @@ using GameFramework.Core;
 using GameFramework.Entities;
 using GameFramework.Impl.Core.Position;
 using GameFramework.Map.MapObject;
-using GameFramework.Visuals;
 
 namespace GameFramework.UI.WPF
 {

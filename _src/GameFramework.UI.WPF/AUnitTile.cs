@@ -1,22 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using System.Windows.Media;
 using GameFramework.Configuration;
 using GameFramework.Core;
+using GameFramework.UI.WPF.Tiles;
 using GameFramework.Visuals;
 
 namespace GameFramework.UI.WPF
 {
-    public abstract class AUnitTile : ATile, IDynamicMapObjectView
+    public abstract class AUnitTile : AFocusableTile, IDynamicMapObjectView
     {
         private readonly ICollection<IViewLoadedSubscriber> _onLoadedSubscribers = new List<IViewLoadedSubscriber>();
         private readonly ICollection<IViewDisposedSubscriber> _onDisposedSubscribers = new List<IViewDisposedSubscriber>();
         private bool _disposed;
 
         public override bool IsObstacle => false;
-
-        protected AUnitTile(IPosition2D position, IConfigurationService2D configurationService) : base(position, configurationService)
-        { }
+        
 
         public virtual void UpdatePosition(IPosition2D position)
         {
@@ -26,6 +26,9 @@ namespace GameFramework.UI.WPF
                 Canvas.SetTop(this, position.Y * ConfigurationService.Dimension);
             });
         }
+        
+        protected AUnitTile(IPosition2D position, IConfigurationService2D configurationService, Color color, bool hasBorder) : base(position, configurationService, color, hasBorder)
+        { }
         
         public void ViewLoaded()
         {
@@ -45,7 +48,7 @@ namespace GameFramework.UI.WPF
             _onDisposedSubscribers.Add(subscriber);
         }
 
-        protected void Dispose(bool isDisposing)
+        private void Dispose(bool isDisposing)
         {
             if (_disposed)
             {
