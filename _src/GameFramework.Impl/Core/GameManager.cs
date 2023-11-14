@@ -12,15 +12,13 @@ namespace GameFramework.Impl.Core
 {
     internal class GameManager : IGameManager
     {
-        private readonly IConfigurationService2D _configurationService;
         private readonly ICollection<IGameStateChangedListener> _listeners;
 
         public GameState State { get; private set; }
         public IStopwatch Timer { get; }
         
-        public GameManager(IStopwatch stopwatch, IConfigurationService2D configurationService)
+        public GameManager(IStopwatch stopwatch)
         {
-            _configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             Timer = stopwatch ?? throw new ArgumentNullException(nameof(stopwatch));
             _listeners = new List<IGameStateChangedListener>();
             State = GameState.NotStarted;
@@ -35,12 +33,12 @@ namespace GameFramework.Impl.Core
             }
             
             Timer.Start();
-            
+            State = GameState.InProgress;
+
             foreach (var gameFeedbackListener in _listeners)
             {
                 gameFeedbackListener.OnGameStarted(feedback);
             }
-            State = GameState.InProgress;
         }
         
         public void EndGame(IGameplayFeedback feedback, GameResolution resolution)
@@ -51,8 +49,9 @@ namespace GameFramework.Impl.Core
                 return;
             }
             
-            State = GameState.Finished;
             Timer.Stop();
+            State = GameState.Finished;
+
             foreach (var gameFeedbackListener in _listeners)
             {
                 gameFeedbackListener.OnGameFinished(feedback, resolution);
@@ -67,11 +66,11 @@ namespace GameFramework.Impl.Core
                 return;
             }
             Timer.Stop();
+            State = GameState.Paused;
             foreach (var gameFeedbackListener in _listeners)
             {
                 gameFeedbackListener.OnGamePaused();
             }
-            State = GameState.Paused;
         }
         
         public void ResumeGame()
@@ -83,11 +82,11 @@ namespace GameFramework.Impl.Core
             }
             
             Timer.Start();
+            State = GameState.InProgress;
             foreach (var gameFeedbackListener in _listeners)
             {
                 gameFeedbackListener.OnGameResumed();
             }
-            State = GameState.InProgress;
         }
         
         public void ResetGame()
@@ -97,13 +96,12 @@ namespace GameFramework.Impl.Core
                 Debug.WriteLine("Game is not in progress. Cannot reset.");
                 return;
             }
-            
             Timer.Reset();
+            State = GameState.NotStarted;
             foreach (var gameFeedbackListener in _listeners)
             {
                 gameFeedbackListener.OnGameReset();
             }
-            State = GameState.NotStarted;
         }
 
         public void AttachListener(IGameStateChangedListener changedListener)

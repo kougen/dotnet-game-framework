@@ -74,6 +74,14 @@ namespace GameFramework.Impl.Map
         #endregion
         
         #region Units
+        public IEnumerable<IUnit2D> GetUnitsAtPortion(IMapObject2D mapObject)
+        {
+            return GetUnitsAtPortion(new[]
+            {
+                mapObject
+            });
+        }
+        
         public virtual IEnumerable<IUnit2D> GetUnitsAtPortion(IEnumerable<IMapObject2D> mapObjects)
         {
             var units = new List<IUnit2D>();
@@ -126,6 +134,12 @@ namespace GameFramework.Impl.Map
             {
                 return;
             }
+
+            foreach (var unit in GetUnitsAtPortion(mapObject))
+            {
+                unit2D.SteppedOn(unit);
+            }
+            
             unit2D.Step(mapObject);
         }
 

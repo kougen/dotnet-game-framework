@@ -13,6 +13,7 @@ namespace GameFramework.Map
         
         void MoveUnit(IUnit2D unit2D, Move2D move);
         IMapObject2D? SimulateMove(IPosition2D position, Move2D move);
+        IEnumerable<IUnit2D> GetUnitsAtPortion(IMapObject2D mapObject);
         IEnumerable<IUnit2D> GetUnitsAtPortion(IEnumerable<IMapObject2D> mapObjects);
         IEnumerable<IUnit2D> GetUnitsAtPortion(IPosition2D topLeft, IPosition2D bottomRight);
         IEnumerable<TUnit> GetUnitsOfTypeAtPortion<TUnit>(IEnumerable<IMapObject2D> mapObjects) where TUnit : IUnit2D;
