@@ -80,7 +80,7 @@ namespace GameFramework.UI.WPF.Map
         {
             foreach (var entityView in EntityViews)
             {
-                if (entityView is Shape shape)
+                if (entityView is Shape shape && !Children.Contains(shape))
                 {
                     Children.Add(shape);
                 }

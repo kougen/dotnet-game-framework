@@ -5,7 +5,7 @@ using GameFramework.Visuals;
 
 namespace GameFramework.Map
 {
-    public interface IMap2D<TSource, TView> : IHasUnits2D 
+    public interface IMap2D<out TSource, out TView> : IHasUnits2D 
         where TSource : IMapSource2D
         where TView : IMapView2D
     {
@@ -15,7 +15,7 @@ namespace GameFramework.Map
         int SizeX { get; }
         int SizeY { get; }
         
-        IEnumerable<IMapObject2D> MapObjects { get; }
+        ICollection<IMapObject2D> MapObjects { get; }
         IEnumerable<IMapObject2D> MapPortion(IPosition2D topLeft, IPosition2D bottomRight);
         IEnumerable<IMapObject2D> MapPortion(IPosition2D center, int radius);
         IMapObject2D? SelectedObject { get; set; }

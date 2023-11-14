@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using GameFramework.Configuration;
-using GameFramework.Core;
 using GameFramework.Core.Factories;
 using GameFramework.Core.Motion;
 using GameFramework.Core.Position;
@@ -16,8 +15,8 @@ namespace GameFramework.Impl.Map
         where TSource : class, IMapSource2D
         where TView : class, IMapView2D
     {
-        private readonly IPositionFactory _positionFactory;
-        private readonly IConfigurationService2D _configurationService2D;
+        protected readonly IPositionFactory PositionFactory;
+        protected readonly IConfigurationService2D ConfigurationService2D;
         private readonly ObservableCollection<IUnit2D> _units;
         private readonly ObservableCollection<IMapObject2D> _mapObjects;
 
@@ -26,14 +25,14 @@ namespace GameFramework.Impl.Map
         public int SizeX { get; }
         public int SizeY { get; }
         public ICollection<IUnit2D> Units => _units;
-        public IEnumerable<IUnit2D> SelectedUnits { get; }
-        public IEnumerable<IMapObject2D> MapObjects => _mapObjects;
+        public virtual IEnumerable<IUnit2D> SelectedUnits { get; }
+        public ICollection<IMapObject2D> MapObjects => _mapObjects;
         public IMapObject2D? SelectedObject { get; set; }
 
         protected AMap2D(TSource mapSource, TView view, IPositionFactory positionFactory, IConfigurationService2D configurationService2D)
         {
-            _positionFactory = positionFactory ?? throw new ArgumentNullException(nameof(positionFactory));
-            _configurationService2D = configurationService2D ?? throw new ArgumentNullException(nameof(configurationService2D));
+            PositionFactory = positionFactory ?? throw new ArgumentNullException(nameof(positionFactory));
+            ConfigurationService2D = configurationService2D ?? throw new ArgumentNullException(nameof(configurationService2D));
             MapSource = mapSource ?? throw new ArgumentNullException(nameof(mapSource));
             View = view ?? throw new ArgumentNullException(nameof(view));
             SizeX = MapSource.ColumnCount;
@@ -50,7 +49,7 @@ namespace GameFramework.Impl.Map
         }
 
         #region MapObjects
-        public IEnumerable<IMapObject2D> MapPortion(IPosition2D topLeft, IPosition2D bottomRight)
+        public virtual IEnumerable<IMapObject2D> MapPortion(IPosition2D topLeft, IPosition2D bottomRight)
         {
             var objects = MapObjects.ToArray();
             for (var y = topLeft.Y; y <= bottomRight.Y; y++)
@@ -62,21 +61,20 @@ namespace GameFramework.Impl.Map
             }
         }
 
-        public IEnumerable<IMapObject2D> MapPortion(IPosition2D center, int radius)
+        public virtual IEnumerable<IMapObject2D> MapPortion(IPosition2D center, int radius)
         {
             var top = center.Y - radius < 0 ? 0 : center.Y - radius;
             var bottom = center.Y + radius >= SizeY ? SizeY - 1 : center.Y + radius;
             var left = center.X - radius < 0 ? 0 : center.X - radius;
             var right = center.X + radius >= SizeX ? SizeX - 1 : center.X + radius;
-            var topLeftPos = _positionFactory.CreatePosition(left, top);
-            var bottomRightPos = _positionFactory.CreatePosition(right, bottom);
+            var topLeftPos = PositionFactory.CreatePosition(left, top);
+            var bottomRightPos = PositionFactory.CreatePosition(right, bottom);
             return MapPortion(topLeftPos, bottomRightPos);
         }
         #endregion
-
-
+        
         #region Units
-        public IEnumerable<IUnit2D> GetUnitsAtPortion(IEnumerable<IMapObject2D> mapObjects)
+        public virtual IEnumerable<IUnit2D> GetUnitsAtPortion(IEnumerable<IMapObject2D> mapObjects)
         {
             var units = new List<IUnit2D>();
             foreach (var mapObject in mapObjects)
@@ -87,23 +85,23 @@ namespace GameFramework.Impl.Map
             return units;
         }
 
-        public IEnumerable<IUnit2D> GetUnitsAtPortion(IPosition2D topLeft, IPosition2D bottomRight)
+        public virtual IEnumerable<IUnit2D> GetUnitsAtPortion(IPosition2D topLeft, IPosition2D bottomRight)
         {
             var portion = MapPortion(topLeft, bottomRight);
             return GetUnitsAtPortion(portion);
         }
 
-        public IEnumerable<TUnit> GetUnitsOfTypeAtPortion<TUnit>(IEnumerable<IMapObject2D> mapObjects) where TUnit : IUnit2D
+        public virtual IEnumerable<TUnit> GetUnitsOfTypeAtPortion<TUnit>(IEnumerable<IMapObject2D> mapObjects) where TUnit : IUnit2D
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<TUnit> GetAllUnitsOfType<TUnit>() where TUnit : IUnit2D
+        public virtual IEnumerable<TUnit> GetAllUnitsOfType<TUnit>() where TUnit : IUnit2D
         {
             throw new NotImplementedException();
         }
 
-        public TUnit? GetUnit<TUnit>(Guid id) where TUnit : IUnit2D
+        public virtual TUnit? GetUnit<TUnit>(Guid id) where TUnit : IUnit2D
         {
             foreach (var unit in Units)
             {
@@ -116,7 +114,7 @@ namespace GameFramework.Impl.Map
             return default;
         }
 
-        public IUnit2D? GetUnit(Guid id)
+        public virtual IUnit2D? GetUnit(Guid id)
         {
             return GetUnit<IUnit2D>(id);
         }
@@ -131,7 +129,7 @@ namespace GameFramework.Impl.Map
             unit2D.Step(mapObject);
         }
 
-        public IMapObject2D? SimulateMove(IPosition2D position, Move2D move)
+        public virtual IMapObject2D? SimulateMove(IPosition2D position, Move2D move)
         {
             var objects = MapObjects.ToArray();
             switch (move)
@@ -165,20 +163,20 @@ namespace GameFramework.Impl.Map
             return default;
         }
 
-        public void RegisterUnit(IUnit2D unit2D)
+        public virtual void RegisterUnit(IUnit2D unit2D)
         {
             Units.Add(unit2D);
             View.EntityViews = new ObservableCollection<IDynamicMapObjectView>(Units.Select(u => u.View));
         }
         #endregion
 
-        public void SaveProgress()
+        public virtual void SaveProgress()
         {
             MapSource.SaveLayout(MapObjects, Units);
         }
 
         #region MouseMove
-        public void OnMouseMove(IScreenSpacePosition screenSpacePosition)
+        public virtual void OnMouseMove(IScreenSpacePosition screenSpacePosition)
         {
             MouseMoveOnUnit(screenSpacePosition);
             MouseMoveOnMapObject(screenSpacePosition);
@@ -194,8 +192,8 @@ namespace GameFramework.Impl.Map
                 }
                 
                 var pos = unit.ScreenSpacePosition;
-                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
-                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
+                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + ConfigurationService2D.Dimension &&
+                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + ConfigurationService2D.Dimension)
                 {
                     hoverableUnit.OnHovered();
                     continue;
@@ -217,8 +215,8 @@ namespace GameFramework.Impl.Map
                     continue;
                 }
                 var pos = mapObject.ScreenSpacePosition;
-                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
-                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
+                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + ConfigurationService2D.Dimension &&
+                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + ConfigurationService2D.Dimension)
                 {
                     hoverableMapObject.OnHovered();
                     continue;
@@ -234,7 +232,7 @@ namespace GameFramework.Impl.Map
 
         #region LeftClick
         
-        public void OnMouseLeftClick(IScreenSpacePosition screenSpacePosition)
+        public virtual void OnMouseLeftClick(IScreenSpacePosition screenSpacePosition)
         {
             if (ClickUnit(screenSpacePosition))
             {
@@ -254,8 +252,8 @@ namespace GameFramework.Impl.Map
                 }
                 
                 var pos = unit.ScreenSpacePosition;
-                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
-                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
+                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + ConfigurationService2D.Dimension &&
+                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + ConfigurationService2D.Dimension)
                 {
                     if (unit.Position == SelectedObject?.Position)
                     {
@@ -291,8 +289,8 @@ namespace GameFramework.Impl.Map
                 }
                 
                 var pos = mapObject.ScreenSpacePosition;
-                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + _configurationService2D.Dimension &&
-                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + _configurationService2D.Dimension)
+                if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + ConfigurationService2D.Dimension &&
+                    screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + ConfigurationService2D.Dimension)
                 {
                     if (mapObject == SelectedObject)
                     {
@@ -318,12 +316,12 @@ namespace GameFramework.Impl.Map
         
         #endregion
         
-        public void OnMouseRightClick()
+        public virtual void OnMouseRightClick()
         {
             throw new NotImplementedException();
         }
 
-        public void OnMouseLeftDoubleClick()
+        public virtual void OnMouseLeftDoubleClick()
         {
             throw new NotImplementedException();
         }
