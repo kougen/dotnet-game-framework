@@ -5,6 +5,7 @@ using GameFramework.Core;
 using GameFramework.Entities;
 using GameFramework.GameFeedback;
 using GameFramework.Impl.GameFeedback;
+using GameFramework.Manager;
 using GameFramework.Tiles;
 
 namespace GameFramework.UI.WPF.Tiles

@@ -1,6 +1,6 @@
 using GameFramework.GameFeedback;
-using GameFramework.Map;
-using GameFramework.Visuals;
+using GameFramework.Manager;
+using GameFramework.Manager.State;
 using Infrastructure.Time;
 
 namespace GameFramework.Core
@@ -8,17 +8,14 @@ namespace GameFramework.Core
     public interface IGameManager
     {
         GameState State { get; }
-        
-       
         IStopwatch Timer { get; }
         
-        // TODO: Implement dimension supported game manager 
-        void StartGame<T>(IGameplayFeedback feedback, T map2D) where T : IMap2D<IMapSource2D, IMapView2D>;
+        void StartGame(IGameplayFeedback feedback);
         void EndGame(IGameplayFeedback feedback, GameResolution resolution);
         void PauseGame();
         void ResumeGame();
         void ResetGame();
         
-        void AttachListener(IGameManagerSubscriber listener);
+        void AttachListener(IGameStateChangedListener changedListener);
     }
 }

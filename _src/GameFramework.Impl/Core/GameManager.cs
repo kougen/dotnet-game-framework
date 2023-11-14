@@ -2,6 +2,8 @@ using System.Diagnostics;
 using GameFramework.Configuration;
 using GameFramework.Core;
 using GameFramework.GameFeedback;
+using GameFramework.Manager;
+using GameFramework.Manager.State;
 using GameFramework.Map;
 using GameFramework.Visuals;
 using Infrastructure.Time;
@@ -11,7 +13,7 @@ namespace GameFramework.Impl.Core
     internal class GameManager : IGameManager
     {
         private readonly IConfigurationService2D _configurationService;
-        private readonly ICollection<IGameManagerSubscriber> _listeners;
+        private readonly ICollection<IGameStateChangedListener> _listeners;
 
         public GameState State { get; private set; }
         public IStopwatch Timer { get; }
@@ -20,11 +22,11 @@ namespace GameFramework.Impl.Core
         {
             _configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             Timer = stopwatch ?? throw new ArgumentNullException(nameof(stopwatch));
-            _listeners = new List<IGameManagerSubscriber>();
+            _listeners = new List<IGameStateChangedListener>();
             State = GameState.NotStarted;
         }
         
-        public void StartGame<T>(IGameplayFeedback feedback, T map2D) where T : IMap2D<IMapSource2D, IMapView2D>
+        public void StartGame(IGameplayFeedback feedback)
         {
             if(State is GameState.InProgress)
             {
@@ -33,7 +35,7 @@ namespace GameFramework.Impl.Core
             }
             
             Timer.Start();
-            _configurationService.SetActiveMap(map2D);
+            
             foreach (var gameFeedbackListener in _listeners)
             {
                 gameFeedbackListener.OnGameStarted(feedback);
@@ -104,9 +106,9 @@ namespace GameFramework.Impl.Core
             State = GameState.NotStarted;
         }
 
-        public void AttachListener(IGameManagerSubscriber listener)
+        public void AttachListener(IGameStateChangedListener changedListener)
         {
-            _listeners.Add(listener);
+            _listeners.Add(changedListener);
         }
     }
 }

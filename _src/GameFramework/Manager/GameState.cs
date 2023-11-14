@@ -1,4 +1,4 @@
-namespace GameFramework.GameFeedback
+namespace GameFramework.Manager
 {
     public enum GameState
     {

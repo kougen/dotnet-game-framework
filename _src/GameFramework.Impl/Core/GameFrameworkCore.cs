@@ -1,4 +1,5 @@
-﻿using GameFramework.Configuration;
+﻿using GameFramework.Board;
+using GameFramework.Configuration;
 using GameFramework.Core;
 using GameFramework.Core.Factories;
 using GameFramework.Impl.Configuration;
@@ -26,11 +27,12 @@ namespace GameFramework.Impl.Core
             {
                 var appSettings = p.GetRequiredService<IApplicationSettings>();
                 var confQueryFactory = p.GetRequiredService<IConfigurationQueryFactory>();
-                return new ConfigurationService2D(appSettings, confQueryFactory, Source);
+                return new ConfigurationService2D(appSettings, confQueryFactory);
             });
 
             collection.AddSingleton<IPositionFactory, PositionFactory>();
             collection.AddSingleton<IGameManager, GameManager>();
+            collection.AddSingleton<IBoardService, BoardService>();
 
             return this;
         }

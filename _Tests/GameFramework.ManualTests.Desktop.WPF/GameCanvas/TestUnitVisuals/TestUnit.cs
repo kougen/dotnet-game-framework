@@ -4,6 +4,7 @@ using GameFramework.Core.Motion;
 using GameFramework.Entities;
 using GameFramework.GameFeedback;
 using GameFramework.Impl.Core.Position;
+using GameFramework.Manager;
 using GameFramework.Map;
 using GameFramework.Map.MapObject;
 using GameFramework.UI.WPF.Core;
@@ -50,7 +51,7 @@ namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas.TestUnitVisuals
 
         public void RaiseTick(int round)
         {
-            var map = GameApp2D.Current.ConfigurationService.GetActiveMap<IMap2D>();
+            var map = GameApp2D.Current.BoardService.GetActiveMap();
             if (GameApp2D.Current.Manager.State == GameState.InProgress)
             {
                 map?.MoveUnit(this, Move2D.Right);
