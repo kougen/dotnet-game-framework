@@ -9,7 +9,7 @@ namespace GameFramework.UI.WPF.Core
 {
     public abstract class GameApp2D : Application, IApplication2D
     {
-        public new static IApplication2D Current => (GameApp2D)Application.Current;
+        public static new IApplication2D Current => (GameApp2D)Application.Current;
         
         public IServiceProvider Services { get; }
         public IGameManager Manager { get; }
