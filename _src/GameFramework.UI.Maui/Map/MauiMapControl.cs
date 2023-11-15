@@ -7,7 +7,7 @@ using Microsoft.Maui.Controls.Shapes;
 
 namespace GameFramework.UI.Maui.Map
 {
-    internal class MauiMapControl : GraphicsView, IMapView2D, IViewDisposedSubscriber
+    internal class MauiMapControl : IDrawable, IMapView2D, IViewDisposedSubscriber
     {
         private ObservableCollection<IDynamicMapObjectView> _entityViews;
         private ObservableCollection<IMapObject2D> _mapObjects;
@@ -70,6 +70,11 @@ namespace GameFramework.UI.Maui.Map
                 //    Children.Add(shape);
                 //}
             }
+        }
+
+        public void Draw(ICanvas canvas, RectF dirtyRect)
+        {
+
         }
     }
 }
