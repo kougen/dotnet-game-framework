@@ -1,4 +1,4 @@
-﻿namespace GameFramework.ManualTest.CrossPlatform.Maui
+﻿namespace GameFramework.ManualTests.Maui
 {
     public partial class MainPage : ContentPage
     {

@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace GameFramework.ManualTest.CrossPlatform.Maui
+namespace GameFramework.ManualTests.Maui
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

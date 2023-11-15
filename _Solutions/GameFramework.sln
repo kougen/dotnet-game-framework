@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameFramework.UI.Forms", ".
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameFramework.UI.Maui", "..\_src\GameFramework.UI.Maui\GameFramework.UI.Maui.csproj", "{37E57AB0-39C6-48EB-BC86-B22B00D2C5D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.ManualTest.CrossPlatform.Maui", "..\_Tests\GameFramework.ManualTest.CrossPlatform.Maui\GameFramework.ManualTest.CrossPlatform.Maui.csproj", "{04CAA53F-6284-4109-B331-B40A5DFC8B0C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.ManualTests.Maui", "..\_Tests\GameFramework.ManualTests.Maui\GameFramework.ManualTests.Maui.csproj", "{F98808D0-4EFA-4287-ADB4-947A11E324F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,11 +55,12 @@ Global
 		{37E57AB0-39C6-48EB-BC86-B22B00D2C5D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37E57AB0-39C6-48EB-BC86-B22B00D2C5D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37E57AB0-39C6-48EB-BC86-B22B00D2C5D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04CAA53F-6284-4109-B331-B40A5DFC8B0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04CAA53F-6284-4109-B331-B40A5DFC8B0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04CAA53F-6284-4109-B331-B40A5DFC8B0C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{04CAA53F-6284-4109-B331-B40A5DFC8B0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04CAA53F-6284-4109-B331-B40A5DFC8B0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F98808D0-4EFA-4287-ADB4-947A11E324F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F98808D0-4EFA-4287-ADB4-947A11E324F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F98808D0-4EFA-4287-ADB4-947A11E324F7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F98808D0-4EFA-4287-ADB4-947A11E324F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F98808D0-4EFA-4287-ADB4-947A11E324F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F98808D0-4EFA-4287-ADB4-947A11E324F7}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,7 +68,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{89D67EFE-F754-47BE-9139-DEF2693CAD4E} = {454632A5-7829-4D0C-AE6C-04F0E41CA915}
 		{826EA653-FD6E-4C99-BEE5-AB28F33AB5A6} = {454632A5-7829-4D0C-AE6C-04F0E41CA915}
-		{04CAA53F-6284-4109-B331-B40A5DFC8B0C} = {454632A5-7829-4D0C-AE6C-04F0E41CA915}
+		{F98808D0-4EFA-4287-ADB4-947A11E324F7} = {454632A5-7829-4D0C-AE6C-04F0E41CA915}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C918B762-D589-4914-A081-E334A085CC9E}

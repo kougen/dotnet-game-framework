@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace GameFramework.ManualTest.CrossPlatform.Maui
+namespace GameFramework.ManualTests.Maui
 {
     public class Program
     {

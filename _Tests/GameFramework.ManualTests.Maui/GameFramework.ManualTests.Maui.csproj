@@ -6,17 +6,17 @@
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
-		<RootNamespace>GameFramework.ManualTest.CrossPlatform.Maui</RootNamespace>
+		<RootNamespace>GameFramework.ManualTests.Maui</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>GameFramework.ManualTest.CrossPlatform.Maui</ApplicationTitle>
+		<ApplicationTitle>GameFramework.ManualTests.Maui</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.gameframework.manualtest.crossplatform.maui</ApplicationId>
-		<ApplicationIdGuid>6a0b1b2a-47ce-429c-9c25-e650db8dc801</ApplicationIdGuid>
+		<ApplicationId>com.companyname.gameframework.manualtests.maui</ApplicationId>
+		<ApplicationIdGuid>e43c09ff-d634-4626-8fd0-f7494b66054a</ApplicationIdGuid>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>

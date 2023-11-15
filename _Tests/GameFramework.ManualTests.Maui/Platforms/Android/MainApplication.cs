@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace GameFramework.ManualTest.CrossPlatform.Maui
+namespace GameFramework.ManualTests.Maui
 {
     [Application]
     public class MainApplication : MauiApplication

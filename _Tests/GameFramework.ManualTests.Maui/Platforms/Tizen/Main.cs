@@ -2,7 +2,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using System;
 
-namespace GameFramework.ManualTest.CrossPlatform.Maui
+namespace GameFramework.ManualTests.Maui
 {
     internal class Program : MauiApplication
     {
