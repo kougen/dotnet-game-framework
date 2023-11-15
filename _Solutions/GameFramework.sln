@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameFramework.UI.Avalonia.B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameFramework.UI.Forms", "..\_src\GameFramework.UI.Forms\GameFramework.UI.Forms.csproj", "{8E7C4880-3A04-4DC3-A52D-2D6B7CAE1248}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.UI.Maui", "..\_src\GameFramework.UI.Maui\GameFramework.UI.Maui.csproj", "{7E2F970B-F9FB-4E00-9F09-C432B2A340E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.ManualTest.CrossPlatform.Maui", "..\_Tests\GameFramework.ManualTest.CrossPlatform.Maui\GameFramework.ManualTest.CrossPlatform.Maui.csproj", "{9D933CEA-D67A-4CB0-BB66-60855BA1FF79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,12 +79,12 @@ Global
 		{8E7C4880-3A04-4DC3-A52D-2D6B7CAE1248}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E7C4880-3A04-4DC3-A52D-2D6B7CAE1248}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E7C4880-3A04-4DC3-A52D-2D6B7CAE1248}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E2F970B-F9FB-4E00-9F09-C432B2A340E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E2F970B-F9FB-4E00-9F09-C432B2A340E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E2F970B-F9FB-4E00-9F09-C432B2A340E1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{7E2F970B-F9FB-4E00-9F09-C432B2A340E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E2F970B-F9FB-4E00-9F09-C432B2A340E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E2F970B-F9FB-4E00-9F09-C432B2A340E1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9D933CEA-D67A-4CB0-BB66-60855BA1FF79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D933CEA-D67A-4CB0-BB66-60855BA1FF79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D933CEA-D67A-4CB0-BB66-60855BA1FF79}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9D933CEA-D67A-4CB0-BB66-60855BA1FF79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D933CEA-D67A-4CB0-BB66-60855BA1FF79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D933CEA-D67A-4CB0-BB66-60855BA1FF79}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,5 +92,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{89D67EFE-F754-47BE-9139-DEF2693CAD4E} = {454632A5-7829-4D0C-AE6C-04F0E41CA915}
 		{826EA653-FD6E-4C99-BEE5-AB28F33AB5A6} = {454632A5-7829-4D0C-AE6C-04F0E41CA915}
+		{9D933CEA-D67A-4CB0-BB66-60855BA1FF79} = {454632A5-7829-4D0C-AE6C-04F0E41CA915}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C918B762-D589-4914-A081-E334A085CC9E}
 	EndGlobalSection
 EndGlobal
