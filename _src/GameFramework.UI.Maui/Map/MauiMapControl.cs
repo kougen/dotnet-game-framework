@@ -1,9 +1,7 @@
-﻿
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using GameFramework.Map.MapObject;
+﻿using GameFramework.Map.MapObject;
 using GameFramework.Visuals;
 using Microsoft.Maui.Controls.Shapes;
+using System.Collections.ObjectModel;
 
 namespace GameFramework.UI.Maui.Map
 {
@@ -11,46 +9,54 @@ namespace GameFramework.UI.Maui.Map
     {
         private ObservableCollection<IDynamicMapObjectView> _entityViews;
         private ObservableCollection<IMapObject2D> _mapObjects;
+        private readonly ICollection<IMouseHandler> _mouseHandlers = new List<IMouseHandler>();
 
-        public ObservableCollection<IMapObject2D> MapObjects { get; set; }
-        public ObservableCollection<IDynamicMapObjectView> EntityViews { get; set; }
-
-        private readonly List<IMouseHandler> _mouseHandlers;
-
-        public MauiMapControl()
+        public ObservableCollection<IDynamicMapObjectView> EntityViews
         {
-            _mouseHandlers = new List<IMouseHandler>();
-            EntityViews = _entityViews = new ObservableCollection<IDynamicMapObjectView>();
-            MapObjects = _mapObjects = new ObservableCollection<IMapObject2D>();
-            EntityViews.CollectionChanged += (sender, args) => UpdateEntities(args);
-            MapObjects.CollectionChanged += (sender, args) => UpdateMapObjects(args);
+            get => _entityViews;
+            set
+            {
+                _entityViews = value;
+                UpdateEntities();
+            }
         }
 
+        public ObservableCollection<IMapObject2D> MapObjects
+        {
+            get => _mapObjects;
+            set
+            {
+                _mapObjects = value;
+                UpdateMapObjects();
+            }
+        }
+
+        protected MauiMapControl()
+        {
+            EntityViews = _entityViews = new ObservableCollection<IDynamicMapObjectView>();
+            MapObjects = _mapObjects = new ObservableCollection<IMapObject2D>();
+            EntityViews.CollectionChanged += (sender, args) => UpdateEntities();
+            MapObjects.CollectionChanged += (sender, args) => UpdateMapObjects();
+        }
+
+        public void Attach(IMouseHandler mouseHandler)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Draw(ICanvas canvas, RectF dirtyRect)
+        {
+            //canvas.DrawRectangle();
+            //canvas.Update
+        }
 
         public void OnViewDisposed(IDynamicMapObjectView view)
         {
             throw new NotImplementedException();
         }
 
-        public void Attach(IMouseHandler mouseHandler)
+        private void UpdateEntities()
         {
-            if (!_mouseHandlers.Contains(mouseHandler))
-            {
-                _mouseHandlers.Add(mouseHandler);
-            }
-        }
-
-        private void UpdateEntities(NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            foreach (var item in notifyCollectionChangedEventArgs.OldItems ?? new List<IDynamicMapObjectView>())
-            {
-                if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Remove &&
-                    item is IDynamicMapObjectView entity)
-                {
-                    
-                }
-            }
-
             foreach (var entityView in EntityViews)
             {
                 //if (entityView is Shape shape && !Children.Contains(shape))
@@ -61,7 +67,7 @@ namespace GameFramework.UI.Maui.Map
             }
         }
 
-        private void UpdateMapObjects(NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        private void UpdateMapObjects()
         {
             foreach (var mapObject in MapObjects)
             {
@@ -70,11 +76,6 @@ namespace GameFramework.UI.Maui.Map
                 //    Children.Add(shape);
                 //}
             }
-        }
-
-        public void Draw(ICanvas canvas, RectF dirtyRect)
-        {
-
         }
     }
 }
