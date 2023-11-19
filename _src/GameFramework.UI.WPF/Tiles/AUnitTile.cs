@@ -4,10 +4,9 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using GameFramework.Configuration;
 using GameFramework.Core.Position;
-using GameFramework.UI.WPF.Tiles;
 using GameFramework.Visuals;
 
-namespace GameFramework.UI.WPF
+namespace GameFramework.UI.WPF.Tiles
 {
     public abstract class AUnitTile : AFocusableTile, IDynamicMapObjectView
     {

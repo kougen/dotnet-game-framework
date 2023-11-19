@@ -18,12 +18,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\GameFramework.Impl\GameFramework.Impl.csproj" />
-      <ProjectReference Include="..\GameFramework\GameFramework.csproj" />
+        <InternalsVisibleTo Include="GameFramework.ManualTests.Desktop.WPF" />
     </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="GameFramework.ManualTests.Desktop.WPF" />
+      <PackageReference Include="joshika39.GameFramework.Core" Version="1.6.0" />
     </ItemGroup>
 
 </Project>

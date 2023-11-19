@@ -1,22 +1,19 @@
-using System;
-using GameFramework.Application;
+﻿using GameFramework.Application;
 using GameFramework.Board;
 using GameFramework.Configuration;
 using GameFramework.Core;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GameFramework.UI.WPF.Core
+namespace GameFramework.UI.Forms.Core
 {
-    public abstract class GameApp2D : System.Windows.Application, IApplication2D
+    public abstract class ProgramCore2D : IApplication2D
     {
-        public static new IApplication2D Current => (GameApp2D)System.Windows.Application.Current;
-        
         public IServiceProvider Services { get; }
         public IGameManager Manager { get; }
         public IConfigurationService2D ConfigurationService { get; }
         public IBoardService BoardService { get; }
 
-        protected GameApp2D()
+        protected ProgramCore2D()
         {
             var collection = new ServiceCollection();
             Services = LoadModules(collection);

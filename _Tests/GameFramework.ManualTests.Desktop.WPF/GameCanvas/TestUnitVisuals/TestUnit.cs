@@ -1,12 +1,9 @@
 using System;
-using GameFramework.Core;
 using GameFramework.Core.Motion;
 using GameFramework.Core.Position;
 using GameFramework.Entities;
-using GameFramework.GameFeedback;
 using GameFramework.Impl.Core.Position;
 using GameFramework.Manager;
-using GameFramework.Map;
 using GameFramework.Map.MapObject;
 using GameFramework.UI.WPF.Core;
 using GameFramework.Visuals;

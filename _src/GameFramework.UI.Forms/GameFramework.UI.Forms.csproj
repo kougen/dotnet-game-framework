@@ -5,6 +5,20 @@
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
+        <AssemblyName>joshika39.GameFramework.UI.Forms</AssemblyName>
     </PropertyGroup>
+
+    <ItemGroup><!--      <PackageReference Include="joshika39.GameFramework.Core" Version="1.6.0" />-->
+    
+      <ProjectReference Include="..\GameFramework.Impl\GameFramework.Impl.csproj" />
+    
+      <ProjectReference Include="..\GameFramework\GameFramework.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Map\FormsMapPanel.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
+    </ItemGroup>
 
 </Project>

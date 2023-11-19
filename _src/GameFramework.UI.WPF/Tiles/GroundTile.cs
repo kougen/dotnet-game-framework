@@ -4,9 +4,7 @@ using GameFramework.Configuration;
 using GameFramework.Core;
 using GameFramework.Core.Position;
 using GameFramework.Entities;
-using GameFramework.GameFeedback;
 using GameFramework.Manager;
-using GameFramework.Visuals;
 
 namespace GameFramework.UI.WPF.Tiles
 {
