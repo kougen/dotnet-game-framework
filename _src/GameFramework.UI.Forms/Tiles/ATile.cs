@@ -24,15 +24,14 @@ namespace GameFramework.UI.Forms.Tiles
             Height = configurationService.Dimension;
             Top = configurationService.Dimension * position.Y;
             Left = configurationService.Dimension * position.X;
-            ScreenSpacePosition = new ScreenSpacePosition(Left, Top);
+            var location = PointToScreen(Point.Empty);
+            var titleHeight = RectangleToScreen(ClientRectangle).Top - Top;
+            ScreenSpacePosition = new ScreenSpacePosition(location.X - 8, location.Y - titleHeight);
             HasBorder = hasBorder;
             InitializeColor(fillColor);
         }
-        
-        public void SteppedOn(IUnit2D unit2D)
-        {
-            throw new NotImplementedException();
-        }
+
+        public abstract void SteppedOn(IUnit2D unit2D);
         
         private void InitializeColor(Color fillColor)
         {

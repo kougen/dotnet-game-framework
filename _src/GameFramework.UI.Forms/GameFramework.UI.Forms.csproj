@@ -8,11 +8,13 @@
         <AssemblyName>joshika39.GameFramework.UI.Forms</AssemblyName>
     </PropertyGroup>
 
-    <ItemGroup><!--      <PackageReference Include="joshika39.GameFramework.Core" Version="1.6.0" />-->
-    
-      <ProjectReference Include="..\GameFramework.Impl\GameFramework.Impl.csproj" />
-    
-      <ProjectReference Include="..\GameFramework\GameFramework.csproj" />
+    <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
+        <PackageReference Include="joshika39.GameFramework.Core" Version="1.6.0"/>
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <ProjectReference Include="..\GameFramework\GameFramework.csproj" />
+        <ProjectReference Include="..\GameFramework.Impl\GameFramework.Impl.csproj" />
     </ItemGroup>
 
     <ItemGroup>

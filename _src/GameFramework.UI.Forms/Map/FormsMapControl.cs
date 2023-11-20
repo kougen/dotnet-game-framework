@@ -34,7 +34,10 @@ namespace GameFramework.UI.Forms.Map
         
         protected FormsMapControl()
         {
-            MouseMove += (_, _) => OnMouseMove();
+            var gmh = new GlobalMouseEventHandler.GlobalMouseHandler();
+            gmh.TheMouseMoved += OnMouseMove;
+            gmh.TheLeftButtonDown += OnMouseDown;
+            System.Windows.Forms.Application.AddMessageFilter(gmh);
             
             EntityViews = _entityViews = new ObservableCollection<IDynamicMapObjectView>();
             MapObjects = _mapObjects = new ObservableCollection<IMapObject2D>();
@@ -42,7 +45,7 @@ namespace GameFramework.UI.Forms.Map
             MapObjects.CollectionChanged += (_, _) => UpdateMapObjects();
             AutoSize = true;
         }
-        
+
         public virtual void Attach(IMouseHandler mouseHandler)
         {
             _mouseHandlers.Add(mouseHandler);
@@ -58,22 +61,18 @@ namespace GameFramework.UI.Forms.Map
 
         protected virtual void OnMouseMove()
         {
-            var position = MousePosition;
+            var position = PointToClient(Cursor.Position);
+            
             foreach (var mouseHandler in _mouseHandlers)
             {
                 mouseHandler.OnMouseMove(new ScreenSpacePosition(position.X, position.Y));
             }
         }
 
-        protected override void OnMouseDown(MouseEventArgs e)
+        private void OnMouseDown()
         {
-            base.OnMouseDown(e);
-            if (e.Button != MouseButtons.Left)
-            {
-                return;
-            }
+            var position = PointToClient(Cursor.Position);
             
-            var position = e.Location;
             foreach (var mouseHandler in _mouseHandlers)
             {
                 mouseHandler.OnMouseLeftClick(new ScreenSpacePosition(position.X, position.Y));

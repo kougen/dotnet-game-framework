@@ -15,7 +15,6 @@ namespace GameFramework.UI.WPF.Tiles
         private bool _disposed;
 
         public override bool IsObstacle => false;
-        
 
         public virtual void UpdatePosition(IPosition2D position)
         {

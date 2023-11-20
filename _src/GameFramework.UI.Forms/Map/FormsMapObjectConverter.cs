@@ -1,5 +1,4 @@
 ﻿using GameFramework.Configuration;
-using GameFramework.Core;
 using GameFramework.Core.Position;
 using GameFramework.Map.MapObject;
 using GameFramework.UI.Forms.Tiles;
@@ -9,12 +8,10 @@ namespace GameFramework.UI.Forms.Map
     public class FormsMapObjectConverter : IMapObject2DConverter
     {
         private readonly IConfigurationService2D _configurationService2D;
-        private readonly IGameManager _gameManager;
 
-        public FormsMapObjectConverter(IConfigurationService2D configurationService2D, IGameManager gameManager)
+        public FormsMapObjectConverter(IConfigurationService2D configurationService2D)
         {
             _configurationService2D = configurationService2D ?? throw new ArgumentNullException(nameof(configurationService2D));
-            _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
         }
 
         public IMapObject2D FromEnum<T>(T tileType, IPosition2D position) where T : Enum
