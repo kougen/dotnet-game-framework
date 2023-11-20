@@ -10,20 +10,25 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <OutputPath>..\..\Binaries\Debug\</OutputPath>
+        <OutputPath>..\..\Binaries\Debug\</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <OutputPath>..\..\Binaries\Release\</OutputPath>
+        <OutputPath>..\..\Binaries\Release\</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\GameFramework.Impl\GameFramework.Impl.csproj" />
-      <ProjectReference Include="..\GameFramework\GameFramework.csproj" />
+        <InternalsVisibleTo Include="GameFramework.ManualTests.Desktop.WPF"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <InternalsVisibleTo Include="GameFramework.ManualTests.Desktop.WPF" />
+
+    <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
+        <PackageReference Include="joshika39.GameFramework.Core" Version="1.6.0"/>
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <ProjectReference Include="..\GameFramework\GameFramework.csproj" />
+        <ProjectReference Include="..\GameFramework.Impl\GameFramework.Impl.csproj" />
     </ItemGroup>
 
 </Project>

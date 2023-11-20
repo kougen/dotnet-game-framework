@@ -36,7 +36,7 @@ namespace GameFramework.ManualTests.Desktop.WPF
             TestMove(_map);
         }
 
-        private async static Task TestMove(IHasUnits2D map)
+        private static async Task TestMove(IHasUnits2D map)
         {
             var unitView = new TestUnitView(new Position2D(0,0), GameApp2D.Current.ConfigurationService);
             var unit = new TestUnit(unitView, new Position2D(0,0));

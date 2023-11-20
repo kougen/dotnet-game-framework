@@ -5,6 +5,30 @@
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
+        <AssemblyName>joshika39.GameFramework.UI.Forms</AssemblyName>
     </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <OutputPath>..\..\Binaries\Debug\</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <OutputPath>..\..\Binaries\Release\</OutputPath>
+    </PropertyGroup>
+
+    <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
+        <PackageReference Include="joshika39.GameFramework.Core" Version="1.6.0"/>
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <ProjectReference Include="..\GameFramework\GameFramework.csproj" />
+        <ProjectReference Include="..\GameFramework.Impl\GameFramework.Impl.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Map\FormsMapPanel.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
+    </ItemGroup>
 
 </Project>

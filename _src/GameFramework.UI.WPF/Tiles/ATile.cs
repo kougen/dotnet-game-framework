@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using GameFramework.Configuration;
-using GameFramework.Core;
 using GameFramework.Core.Position;
 using GameFramework.Entities;
 using GameFramework.Impl.Core.Position;
 using GameFramework.Map.MapObject;
 
-namespace GameFramework.UI.WPF
+namespace GameFramework.UI.WPF.Tiles
 {
     public abstract class ATile : ACustomShape, IMapObject2D
     {

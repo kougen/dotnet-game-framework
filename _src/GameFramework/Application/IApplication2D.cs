@@ -2,7 +2,7 @@ using GameFramework.Board;
 using GameFramework.Configuration;
 using GameFramework.Core;
 
-namespace GameFramework.UI.WPF.Core
+namespace GameFramework.Application
 {
     public interface IApplication2D : IHasProvider
     {
