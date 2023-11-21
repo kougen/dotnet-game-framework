@@ -17,11 +17,11 @@
     </ItemGroup>
     
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <OutputPath>Binaries\Debug\</OutputPath>
+      <OutputPath>..\Binaries\Debug\</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <OutputPath>Binaries\Release\</OutputPath>
+      <OutputPath>..\Binaries\Release\</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>
