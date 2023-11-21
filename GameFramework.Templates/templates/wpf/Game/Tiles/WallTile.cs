@@ -15,9 +15,10 @@ namespace GameFramework.WPF.Game.Tiles
         }
 
         public override bool IsObstacle => true;
+        
         public override void SteppedOn(IUnit2D unit2D)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 }

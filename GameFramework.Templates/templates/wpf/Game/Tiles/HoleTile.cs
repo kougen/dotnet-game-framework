@@ -8,14 +8,15 @@ using GameFramework.GameFeedback;
 using GameFramework.Impl.GameFeedback;
 using GameFramework.Manager;
 using GameFramework.Tiles;
+using GameFramework.UI.WPF.Tiles;
 
-namespace GameFramework.UI.WPF.Tiles
+namespace GameFramework.WPF.Game.Tiles
 {
     internal class HoleTile : ATile, IDeadlyTile
     {
         private readonly IGameManager _gameManager;
         public override bool IsObstacle => false;
-
+        
         public HoleTile(IPosition2D position, IConfigurationService2D configurationService, IGameManager gameManager) : base(position, configurationService, Colors.Black, false)
         {
             _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
