@@ -4,10 +4,13 @@ using GameFramework.Configuration;
 using GameFramework.Core.Factories;
 using GameFramework.Core.Motion;
 using GameFramework.Core.Position;
-using GameFramework.Entities;
 using GameFramework.Map;
-using GameFramework.Map.MapObject;
+using GameFramework.Map.Source;
+using GameFramework.Objects;
+using GameFramework.Tiles;
 using GameFramework.Visuals;
+using GameFramework.Visuals.Handlers;
+using GameFramework.Visuals.Views;
 
 namespace GameFramework.Impl.Map
 {
@@ -17,17 +20,17 @@ namespace GameFramework.Impl.Map
     {
         protected readonly IPositionFactory PositionFactory;
         protected readonly IConfigurationService2D ConfigurationService2D;
-        private readonly ObservableCollection<IUnit2D> _units;
-        private readonly ObservableCollection<IMapObject2D> _mapObjects;
+        private readonly ObservableCollection<IInteractableObject2D> _units;
+        private readonly ObservableCollection<IStaticObject2D> _mapObjects;
 
         public TView View { get; }
         public TSource MapSource { get; }
         public int SizeX { get; }
         public int SizeY { get; }
-        public ICollection<IUnit2D> Units => _units;
-        public virtual IEnumerable<IUnit2D> SelectedUnits { get; }
-        public ICollection<IMapObject2D> MapObjects => _mapObjects;
-        public IMapObject2D? SelectedObject { get; set; }
+        public ICollection<IInteractableObject2D> Interactables => _units;
+        public virtual IEnumerable<IInteractableObject2D> SelectedInteractables { get; }
+        public ICollection<IStaticObject2D> MapObjects => _mapObjects;
+        public IObject2D? SelectedObject { get; set; }
 
         protected AMap2D(TSource mapSource, TView view, IPositionFactory positionFactory, IConfigurationService2D configurationService2D)
         {
@@ -37,19 +40,19 @@ namespace GameFramework.Impl.Map
             View = view ?? throw new ArgumentNullException(nameof(view));
             SizeX = MapSource.ColumnCount;
             SizeY = MapSource.RowCount;
-            _units = new ObservableCollection<IUnit2D>(MapSource.Units);
-            View.EntityViews = new ObservableCollection<IDynamicMapObjectView>(Units.Select(u => u.View));
-            _mapObjects = new ObservableCollection<IMapObject2D>(MapSource.MapObjects);
-            View.MapObjects = new ObservableCollection<IMapObject2D>(MapObjects);
-            SelectedUnits = new List<IUnit2D>();
+            _units = new ObservableCollection<IInteractableObject2D>(MapSource.Units);
+            View.DisposableObjectViews = new ObservableCollection<IDisposableStaticObjectView>(Interactables.Select(u => u.View));
+            _mapObjects = new ObservableCollection<IStaticObject2D>(MapSource.MapObjects);
+            View.MapObjects = new ObservableCollection<IStaticObject2D>(MapObjects);
+            SelectedInteractables = new List<IInteractableObject2D>();
 
-            _units.CollectionChanged += (_, _) => View.EntityViews = new ObservableCollection<IDynamicMapObjectView>(Units.Select(u => u.View));
-            _mapObjects.CollectionChanged += (_, _) => View.MapObjects = new ObservableCollection<IMapObject2D>(MapObjects);
+            _units.CollectionChanged += (_, _) => View.DisposableObjectViews = new ObservableCollection<IDisposableStaticObjectView>(Interactables.Select(u => u.View));
+            _mapObjects.CollectionChanged += (_, _) => View.MapObjects = new ObservableCollection<IStaticObject2D>(MapObjects);
             View.Attach(this);
         }
 
         #region MapObjects
-        public virtual IEnumerable<IMapObject2D> MapPortion(IPosition2D topLeft, IPosition2D bottomRight)
+        public virtual IEnumerable<IStaticObject2D> MapPortion(IPosition2D topLeft, IPosition2D bottomRight)
         {
             var objects = MapObjects.ToArray();
             for (var y = topLeft.Y; y <= bottomRight.Y; y++)
@@ -61,7 +64,7 @@ namespace GameFramework.Impl.Map
             }
         }
 
-        public virtual IEnumerable<IMapObject2D> MapPortion(IPosition2D center, int radius)
+        public virtual IEnumerable<IStaticObject2D> MapPortion(IPosition2D center, int radius)
         {
             var top = center.Y - radius < 0 ? 0 : center.Y - radius;
             var bottom = center.Y + radius >= SizeY ? SizeY - 1 : center.Y + radius;
@@ -74,44 +77,44 @@ namespace GameFramework.Impl.Map
         #endregion
         
         #region Units
-        public IEnumerable<IUnit2D> GetUnitsAtPortion(IMapObject2D mapObject)
+        public IEnumerable<IInteractableObject2D> GetInteractablesAtPortion(IStaticObject2D staticObject)
         {
-            return GetUnitsAtPortion(new[]
+            return GetInteractablesAtPortion(new[]
             {
-                mapObject
+                staticObject
             });
         }
         
-        public virtual IEnumerable<IUnit2D> GetUnitsAtPortion(IEnumerable<IMapObject2D> mapObjects)
+        public virtual IEnumerable<IInteractableObject2D> GetInteractablesAtPortion(IEnumerable<IStaticObject2D> mapObjects)
         {
-            var units = new List<IUnit2D>();
+            var units = new List<IInteractableObject2D>();
             foreach (var mapObject in mapObjects)
             {
-                units.AddRange(Units.Where(unit => unit.Position == mapObject.Position));
+                units.AddRange(Interactables.Where(unit => unit.Position == mapObject.Position));
             }
 
             return units;
         }
 
-        public virtual IEnumerable<IUnit2D> GetUnitsAtPortion(IPosition2D topLeft, IPosition2D bottomRight)
+        public virtual IEnumerable<IInteractableObject2D> GetInteractablesAtPortion(IPosition2D topLeft, IPosition2D bottomRight)
         {
             var portion = MapPortion(topLeft, bottomRight);
-            return GetUnitsAtPortion(portion);
+            return GetInteractablesAtPortion(portion);
         }
 
-        public virtual IEnumerable<TUnit> GetUnitsOfTypeAtPortion<TUnit>(IEnumerable<IMapObject2D> mapObjects) where TUnit : IUnit2D
+        public virtual IEnumerable<TUnit> GetInteractablesOfTypeAtPortion<TUnit>(IEnumerable<IStaticObject2D> mapObjects) where TUnit : IInteractableObject2D
         {
             throw new NotImplementedException();
         }
 
-        public virtual IEnumerable<TUnit> GetAllUnitsOfType<TUnit>() where TUnit : IUnit2D
+        public virtual IEnumerable<TUnit> GetAllInteractablesOfType<TUnit>() where TUnit : IInteractableObject2D
         {
             throw new NotImplementedException();
         }
 
-        public virtual TUnit? GetUnit<TUnit>(Guid id) where TUnit : IUnit2D
+        public virtual TUnit? GetInteractable<TUnit>(Guid id) where TUnit : IInteractableObject2D
         {
-            foreach (var unit in Units)
+            foreach (var unit in Interactables)
             {
                 if (unit.Id.Equals(id) && unit is TUnit unit2D)
                 {
@@ -122,28 +125,28 @@ namespace GameFramework.Impl.Map
             return default;
         }
 
-        public virtual IUnit2D? GetUnit(Guid id)
+        public virtual IInteractableObject2D? GetInteractable(Guid id)
         {
-            return GetUnit<IUnit2D>(id);
+            return GetInteractable<IInteractableObject2D>(id);
         }
 
-        public virtual void MoveUnit(IUnit2D unit2D, Move2D move)
+        public virtual void MoveInteractable(IInteractableObject2D interactableObject2D, Move2D move)
         {
-            var mapObject = SimulateMove(unit2D.Position, move);
+            var mapObject = SimulateMove(interactableObject2D.Position, move);
             if (mapObject is null || mapObject.IsObstacle)
             {
                 return;
             }
 
-            foreach (var unit in GetUnitsAtPortion(mapObject))
+            foreach (var unit in GetInteractablesAtPortion(mapObject))
             {
-                unit2D.SteppedOn(unit);
+                interactableObject2D.SteppedOn(unit);
             }
             
-            unit2D.Step(mapObject);
+            interactableObject2D.Step(mapObject);
         }
 
-        public virtual IMapObject2D? SimulateMove(IPosition2D position, Move2D move)
+        public virtual IStaticObject2D? SimulateMove(IPosition2D position, Move2D move)
         {
             var objects = MapObjects.ToArray();
             switch (move)
@@ -176,17 +179,12 @@ namespace GameFramework.Impl.Map
             }
             return default;
         }
-
-        public virtual void RegisterUnit(IUnit2D unit2D)
-        {
-            Units.Add(unit2D);
-            View.EntityViews = new ObservableCollection<IDynamicMapObjectView>(Units.Select(u => u.View));
-        }
+        
         #endregion
 
         public virtual void SaveProgress()
         {
-            MapSource.SaveLayout(MapObjects, Units);
+            MapSource.SaveLayout(MapObjects, Interactables);
         }
 
         #region MouseMove
@@ -198,14 +196,14 @@ namespace GameFramework.Impl.Map
 
         private void MouseMoveOnUnit(IScreenSpacePosition screenSpacePosition)
         {
-            foreach (var unit in Units)
+            foreach (var unit in Interactables)
             {
                 if(unit is not IHoverable hoverableUnit)
                 {
                     continue;
                 }
                 
-                var pos = unit.ScreenSpacePosition;
+                var pos = unit.View.ScreenSpacePosition;
                 if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + ConfigurationService2D.Dimension &&
                     screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + ConfigurationService2D.Dimension)
                 {
@@ -228,7 +226,7 @@ namespace GameFramework.Impl.Map
                 {
                     continue;
                 }
-                var pos = mapObject.ScreenSpacePosition;
+                var pos = mapObject.View.ScreenSpacePosition;
                 if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + ConfigurationService2D.Dimension &&
                     screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + ConfigurationService2D.Dimension)
                 {
@@ -258,14 +256,14 @@ namespace GameFramework.Impl.Map
 
         private bool ClickUnit(IScreenSpacePosition screenSpacePosition)
         {
-            foreach (var unit in Units)
+            foreach (var unit in Interactables)
             {
                 if(unit is not IClickable clickableUnit)
                 {
                     continue;
                 }
                 
-                var pos = unit.ScreenSpacePosition;
+                var pos = unit.View.ScreenSpacePosition;
                 if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + ConfigurationService2D.Dimension &&
                     screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + ConfigurationService2D.Dimension)
                 {
@@ -274,7 +272,7 @@ namespace GameFramework.Impl.Map
                         continue;
                     }
                     
-                    if (unit.View is IFocusable { IsTileFocused: true } focusableUnitView)
+                    if (unit is IFocusable { IsTileFocused: true } focusableUnitView)
                     {
                         focusableUnitView.OnFocusLost();
                     }
@@ -282,7 +280,7 @@ namespace GameFramework.Impl.Map
                     clickableUnit.OnClicked();
                     SelectedObject = unit;
                     
-                    if (unit.View is IFocusable focusable)
+                    if (unit is IFocusable focusable)
                     {
                         focusable.OnFocused();
                         return true;
@@ -302,7 +300,7 @@ namespace GameFramework.Impl.Map
                     continue;
                 }
                 
-                var pos = mapObject.ScreenSpacePosition;
+                var pos = mapObject.View.ScreenSpacePosition;
                 if (screenSpacePosition.X >= pos.X && screenSpacePosition.X <= pos.X + ConfigurationService2D.Dimension &&
                     screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + ConfigurationService2D.Dimension)
                 {

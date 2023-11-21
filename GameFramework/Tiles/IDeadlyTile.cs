@@ -1,8 +1,8 @@
-using GameFramework.Map.MapObject;
+using GameFramework.Objects;
 
 namespace GameFramework.Tiles
 {
-    public interface IDeadlyTile : IMapObject2D
+    public interface IDeadlyTile : IStaticObject2D
     {
         
     }

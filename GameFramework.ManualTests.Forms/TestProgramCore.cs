@@ -1,5 +1,5 @@
 ﻿using GameFramework.Impl.Core;
-using GameFramework.Map.MapObject;
+using GameFramework.Objects;
 using GameFramework.UI.Forms.Core;
 using GameFramework.UI.Forms.Map;
 using Implementation.Module;

@@ -4,28 +4,30 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using GameFramework.Impl.Core.Position;
-using GameFramework.Map.MapObject;
-using GameFramework.Visuals;
+using GameFramework.Objects;
+using GameFramework.Visuals.Handlers;
+using GameFramework.Visuals.Tiles;
+using GameFramework.Visuals.Views;
 
 namespace GameFramework.UI.WPF.Map
 {
     public class WpfMapControl : Canvas, IMapView2D, IViewDisposedSubscriber
     {
-        private ObservableCollection<IDynamicMapObjectView> _entityViews;
-        private ObservableCollection<IMapObject2D> _mapObjects;
+        private ObservableCollection<IDisposableStaticObjectView> _disposableObjectViews;
+        private ObservableCollection<IStaticObject2D> _mapObjects;
         private readonly ICollection<IMouseHandler> _mouseHandlers = new List<IMouseHandler>();
         
-        public ObservableCollection<IDynamicMapObjectView> EntityViews
+        public ObservableCollection<IDisposableStaticObjectView> DisposableObjectViews
         {
-            get => _entityViews;
+            get => _disposableObjectViews;
             set
             {
-                _entityViews = value;
+                _disposableObjectViews = value;
                 UpdateEntities();
             }
         }
 
-        public ObservableCollection<IMapObject2D> MapObjects
+        public ObservableCollection<IStaticObject2D> MapObjects
         {
             get => _mapObjects;
             set
@@ -37,10 +39,10 @@ namespace GameFramework.UI.WPF.Map
         
         protected WpfMapControl()
         {
-            EntityViews = _entityViews = new ObservableCollection<IDynamicMapObjectView>();
-            MapObjects = _mapObjects = new ObservableCollection<IMapObject2D>();
-            EntityViews.CollectionChanged += (sender, args) => UpdateEntities();
-            MapObjects.CollectionChanged += (sender, args) => UpdateMapObjects();
+            DisposableObjectViews = _disposableObjectViews = new ObservableCollection<IDisposableStaticObjectView>();
+            MapObjects = _mapObjects = new ObservableCollection<IStaticObject2D>();
+            DisposableObjectViews.CollectionChanged += (_, _) => UpdateEntities();
+            MapObjects.CollectionChanged += (_, _) => UpdateMapObjects();
         }
         
         public void Attach(IMouseHandler mouseHandler)
@@ -48,7 +50,7 @@ namespace GameFramework.UI.WPF.Map
             _mouseHandlers.Add(mouseHandler);
         }
 
-        public void OnViewDisposed(IDynamicMapObjectView view)
+        public void OnViewDisposed(IDisposableStaticObjectView view)
         {
             if (view is Shape shape)
             {
@@ -78,7 +80,7 @@ namespace GameFramework.UI.WPF.Map
         
         private void UpdateEntities()
         {
-            foreach (var entityView in EntityViews)
+            foreach (var entityView in DisposableObjectViews)
             {
                 if (entityView is Shape shape && !Children.Contains(shape))
                 {
@@ -92,7 +94,7 @@ namespace GameFramework.UI.WPF.Map
         {
             foreach (var mapObject in MapObjects)
             {
-                if (mapObject is Shape shape && !Children.Contains(shape))
+                if (mapObject.View is Shape shape && !Children.Contains(shape))
                 {
                     Children.Add(shape);
                 } 

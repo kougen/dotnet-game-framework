@@ -2,7 +2,7 @@
 using System.Threading;
 using GameFramework.Impl.Core;
 using GameFramework.ManualTests.Desktop.WPF.GameCanvas;
-using GameFramework.Map.MapObject;
+using GameFramework.Objects;
 using GameFramework.UI.WPF.Map;
 using Implementation.Module;
 using Microsoft.Extensions.DependencyInjection;

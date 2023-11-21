@@ -1,6 +1,6 @@
-using GameFramework.Entities;
 using GameFramework.Map;
-using GameFramework.Map.MapObject;
+using GameFramework.Map.Source;
+using GameFramework.Objects;
 
 namespace GameFramework.Impl.Map.Source
 {
@@ -9,9 +9,9 @@ namespace GameFramework.Impl.Map.Source
         public Guid Id { get; } = Guid.NewGuid();
         public int ColumnCount { get; set; }
         public int RowCount { get; set; }
-        public abstract IEnumerable<IMapObject2D> MapObjects { get; protected set; }
-        public abstract ICollection<IUnit2D> Units { get; protected set;}
+        public abstract IEnumerable<IStaticObject2D> MapObjects { get; protected set; }
+        public abstract ICollection<IInteractableObject2D> Units { get; protected set;}
         
-        public abstract void SaveLayout(IEnumerable<IMapObject2D> updatedMapObjects, IEnumerable<IUnit2D> updatedUnits);
+        public abstract void SaveLayout(IEnumerable<IStaticObject2D> updatedMapObjects, IEnumerable<IInteractableObject2D> updatedUnits);
     }
 }

@@ -1,5 +1,6 @@
 using GameFramework.Map;
-using GameFramework.Visuals;
+using GameFramework.Map.Source;
+using GameFramework.Visuals.Views;
 
 namespace GameFramework.Board
 {
