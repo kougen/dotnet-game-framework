@@ -1,21 +1,17 @@
 using System;
 using GameFramework.Configuration;
-using GameFramework.Core;
 using GameFramework.Core.Position;
 using GameFramework.Map.MapObject;
-using GameFramework.UI.WPF.Tiles;
 
-namespace GameFramework.UI.WPF.Map
+namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas
 {
     internal class DefaultMapObjectConverter : IMapObject2DConverter
     {
         private readonly IConfigurationService2D _configurationService2D;
-        private readonly IGameManager _gameManager;
 
-        public DefaultMapObjectConverter(IConfigurationService2D configurationService2D, IGameManager gameManager)
+        public DefaultMapObjectConverter(IConfigurationService2D configurationService2D)
         {
             _configurationService2D = configurationService2D ?? throw new ArgumentNullException(nameof(configurationService2D));
-            _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
         }
 
         public IMapObject2D FromEnum<T>(T tileType, IPosition2D position) where T : Enum
@@ -27,9 +23,7 @@ namespace GameFramework.UI.WPF.Map
             
             return tileType switch
             {
-                TileType.Ground => new GroundTile(position, _configurationService2D, _gameManager),
-                TileType.Wall => new WallTile(position, _configurationService2D),
-                TileType.Hole => new HoleTile(position, _configurationService2D, _gameManager),
+                TileType.Ground => new TestTile(position, _configurationService2D),
                 _ => throw new ArgumentException($"Unknown tile type: {tileType}")
             };
         }
