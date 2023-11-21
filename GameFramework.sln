@@ -1,36 +1,30 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework", "_src\GameFramework\GameFramework.csproj", "{9F4391F4-089B-4406-9A2F-073DFA2337B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework", "GameFramework\GameFramework.csproj", "{9F4391F4-089B-4406-9A2F-073DFA2337B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.Impl", "_src\GameFramework.Impl\GameFramework.Impl.csproj", "{DCE17AA8-B8AD-4E51-A5EA-7C2FCA917A20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.Impl", "GameFramework.Impl\GameFramework.Impl.csproj", "{DCE17AA8-B8AD-4E51-A5EA-7C2FCA917A20}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{454632A5-7829-4D0C-AE6C-04F0E41CA915}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.Unit.Tests", "_Tests\GameFramework.Unit.Tests\GameFramework.Unit.Tests.csproj", "{89D67EFE-F754-47BE-9139-DEF2693CAD4E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.Unit.Tests", "GameFramework.Unit.Tests\GameFramework.Unit.Tests.csproj", "{89D67EFE-F754-47BE-9139-DEF2693CAD4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.UI.WPF", "_src\GameFramework.UI.WPF\GameFramework.UI.WPF.csproj", "{542363E5-80EF-4B90-9BDF-AE2A495F9C5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.UI.WPF", "GameFramework.UI.WPF\GameFramework.UI.WPF.csproj", "{542363E5-80EF-4B90-9BDF-AE2A495F9C5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.ManualTests.Desktop.WPF", "_Tests\GameFramework.ManualTests.Desktop.WPF\GameFramework.ManualTests.Desktop.WPF.csproj", "{826EA653-FD6E-4C99-BEE5-AB28F33AB5A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.ManualTests.Desktop.WPF", "GameFramework.ManualTests.Desktop.WPF\GameFramework.ManualTests.Desktop.WPF.csproj", "{826EA653-FD6E-4C99-BEE5-AB28F33AB5A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.UI.Avalonia", "_src\GameFramework.UI.Avalonia\GameFramework.UI.Avalonia\GameFramework.UI.Avalonia.csproj", "{F0C01294-BBF2-4C6A-986C-5651F41F5CE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.UI.Avalonia", "GameFramework.UI.Avalonia\GameFramework.UI.Avalonia\GameFramework.UI.Avalonia.csproj", "{F0C01294-BBF2-4C6A-986C-5651F41F5CE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.UI.Avalonia.Android", "_src\GameFramework.UI.Avalonia\GameFramework.UI.Avalonia.Android\GameFramework.UI.Avalonia.Android.csproj", "{616A314E-681C-4B13-A362-38B9AB9390D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.UI.Forms", "GameFramework.UI.Forms\GameFramework.UI.Forms.csproj", "{8E7C4880-3A04-4DC3-A52D-2D6B7CAE1248}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.UI.Avalonia.Desktop", "_src\GameFramework.UI.Avalonia\GameFramework.UI.Avalonia.Desktop\GameFramework.UI.Avalonia.Desktop.csproj", "{87B678A2-919A-41C6-922E-3202BEE2347F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.UI.Avalonia.iOS", "_src\GameFramework.UI.Avalonia\GameFramework.UI.Avalonia.iOS\GameFramework.UI.Avalonia.iOS.csproj", "{56FE1F8F-E323-41F9-901F-1AC31ED9061A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.UI.Avalonia.Browser", "_src\GameFramework.UI.Avalonia\GameFramework.UI.Avalonia.Browser\GameFramework.UI.Avalonia.Browser.csproj", "{FCA2B91F-3EC0-49AA-B6CF-FBB022290AB0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.UI.Forms", "_src\GameFramework.UI.Forms\GameFramework.UI.Forms.csproj", "{8E7C4880-3A04-4DC3-A52D-2D6B7CAE1248}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.ManualTests.Forms", "_Tests\GameFramework.ManualTests.Forms\GameFramework.ManualTests.Forms.csproj", "{1A4266F6-D4C3-4073-BFC5-9E37C31BA4AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.ManualTests.Forms", "GameFramework.ManualTests.Forms\GameFramework.ManualTests.Forms.csproj", "{1A4266F6-D4C3-4073-BFC5-9E37C31BA4AD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{B01BA7E6-3FA9-456C-9F78-A55C337905D4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{2BA75142-5B9F-46B7-9315-59CDDAED3B94}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wpf", "wpf", "{2BA75142-5B9F-46B7-9315-59CDDAED3B94}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.WPF", "Templates\Desktop\wpf\GameFramework.WPF\GameFramework.WPF.csproj", "{19B85BB1-A7AF-41C5-BA88-3E36CF4C8D8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework.WPF", "GameFramework.Templates\templates\wpf\GameFramework.WPF.csproj", "{1612F422-10C0-4E05-AAA6-EB741C6ABDD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,22 +56,6 @@ Global
 		{F0C01294-BBF2-4C6A-986C-5651F41F5CE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0C01294-BBF2-4C6A-986C-5651F41F5CE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0C01294-BBF2-4C6A-986C-5651F41F5CE5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{616A314E-681C-4B13-A362-38B9AB9390D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{616A314E-681C-4B13-A362-38B9AB9390D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{616A314E-681C-4B13-A362-38B9AB9390D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{616A314E-681C-4B13-A362-38B9AB9390D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{87B678A2-919A-41C6-922E-3202BEE2347F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87B678A2-919A-41C6-922E-3202BEE2347F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87B678A2-919A-41C6-922E-3202BEE2347F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87B678A2-919A-41C6-922E-3202BEE2347F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56FE1F8F-E323-41F9-901F-1AC31ED9061A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56FE1F8F-E323-41F9-901F-1AC31ED9061A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56FE1F8F-E323-41F9-901F-1AC31ED9061A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56FE1F8F-E323-41F9-901F-1AC31ED9061A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCA2B91F-3EC0-49AA-B6CF-FBB022290AB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCA2B91F-3EC0-49AA-B6CF-FBB022290AB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCA2B91F-3EC0-49AA-B6CF-FBB022290AB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCA2B91F-3EC0-49AA-B6CF-FBB022290AB0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8E7C4880-3A04-4DC3-A52D-2D6B7CAE1248}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E7C4880-3A04-4DC3-A52D-2D6B7CAE1248}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E7C4880-3A04-4DC3-A52D-2D6B7CAE1248}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -90,6 +68,10 @@ Global
 		{19B85BB1-A7AF-41C5-BA88-3E36CF4C8D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19B85BB1-A7AF-41C5-BA88-3E36CF4C8D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19B85BB1-A7AF-41C5-BA88-3E36CF4C8D8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1612F422-10C0-4E05-AAA6-EB741C6ABDD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1612F422-10C0-4E05-AAA6-EB741C6ABDD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1612F422-10C0-4E05-AAA6-EB741C6ABDD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1612F422-10C0-4E05-AAA6-EB741C6ABDD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{89D67EFE-F754-47BE-9139-DEF2693CAD4E} = {454632A5-7829-4D0C-AE6C-04F0E41CA915}
@@ -97,5 +79,6 @@ Global
 		{1A4266F6-D4C3-4073-BFC5-9E37C31BA4AD} = {454632A5-7829-4D0C-AE6C-04F0E41CA915}
 		{2BA75142-5B9F-46B7-9315-59CDDAED3B94} = {B01BA7E6-3FA9-456C-9F78-A55C337905D4}
 		{19B85BB1-A7AF-41C5-BA88-3E36CF4C8D8A} = {2BA75142-5B9F-46B7-9315-59CDDAED3B94}
+		{1612F422-10C0-4E05-AAA6-EB741C6ABDD5} = {2BA75142-5B9F-46B7-9315-59CDDAED3B94}
 	EndGlobalSection
 EndGlobal
