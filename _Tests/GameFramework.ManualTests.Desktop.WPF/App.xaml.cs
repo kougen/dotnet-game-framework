@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using GameFramework.Impl.Core;
+using GameFramework.ManualTests.Desktop.WPF.GameCanvas;
 using GameFramework.Map.MapObject;
 using GameFramework.UI.WPF.Map;
 using Implementation.Module;

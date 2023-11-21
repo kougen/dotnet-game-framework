@@ -1,9 +1,11 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
 using GameFramework.Configuration;
 using GameFramework.Core.Position;
 using GameFramework.Entities;
+using GameFramework.UI.WPF.Tiles;
 
-namespace GameFramework.UI.WPF.Tiles
+namespace GameFramework.WPF.Game.Tiles
 {
     internal class WallTile : ATile
     {
@@ -15,7 +17,7 @@ namespace GameFramework.UI.WPF.Tiles
         public override bool IsObstacle => true;
         public override void SteppedOn(IUnit2D unit2D)
         {
-            // do nothing
+            throw new NotImplementedException();
         }
     }
 }

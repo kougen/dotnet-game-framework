@@ -1,7 +1,5 @@
 using System.Threading;
 using GameFramework.Impl.Core;
-using GameFramework.Map.MapObject;
-using GameFramework.UI.WPF.Map;
 using Implementation.Module;
 using Infrastructure.Module;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,8 +18,6 @@ namespace GameFramework.UI.WPF
         public override IModule RegisterServices(IServiceCollection collection)
         {
             RegisterOtherServices(new GameFrameworkCore(collection, Source));
-            collection.AddSingleton<IMapObject2DConverter, DefaultMapObjectConverter>();
-            
             return this;
         }
     }

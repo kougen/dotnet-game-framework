@@ -10,7 +10,7 @@ jobs:
     name: Build
     env:
       BUILD_CONFIG: 'Debug'
-      SOLUTION: '_Solutions/GameFramework.Windows.slnf'
+      SOLUTION: 'GameFramework.Windows.slnf'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
@@ -62,7 +62,7 @@ jobs:
     name: 'Build, Test & Deploy'
     env:
       BUILD_CONFIG: 'Release'
-      SOLUTION: '_Solutions/GameFramework.Windows.slnf'
+      SOLUTION: 'GameFramework.Windows.slnf'
     runs-on: windows-latest
     steps:
     - name: Checkout
