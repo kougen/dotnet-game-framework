@@ -1,7 +1,6 @@
 using GameFramework.Core.Factories;
 using GameFramework.Entities;
 using GameFramework.GameFeedback;
-using GameFramework.Impl.Core.Position.Factories;
 using GameFramework.Impl.GameFeedback;
 using GameFramework.Impl.Map.Source;
 using GameFramework.ManualTests.Forms.Map;
@@ -18,7 +17,7 @@ namespace GameFramework.ManualTests.Forms
             InitializeComponent();
             var data = new int[5, 7];
             var mapView = new TestMapView();
-            var mapSource = new JsonMapSource2D(Program.Application.Services, @"C:\Users\JoshH\OneDrive\File\Documents\test.json", data, new List<IUnit2D>(), 7, 5);
+            var mapSource = new JsonMapSource2D(Program.Application.Services, @".\test.json", data, new List<IUnit2D>(), 7, 5);
         
             _map = new TestMap(mapSource, mapView, Program.Application.Services.GetRequiredService<IPositionFactory>(), Program.Application.ConfigurationService);
             if (_map.View is Control control)

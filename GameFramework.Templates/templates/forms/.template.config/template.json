@@ -5,13 +5,13 @@
         "Windows",
         "Desktop"
     ],
-    "name": "GameFramework WPF Templates",
-    "identity": "joshika39.GameFramework.Templates.WPF",
-    "shortName": "game-framework-wpf",
+    "name": "GameFramework Forms Templates",
+    "identity": "joshika39.GameFramework.Templates.Forms",
+    "shortName": "game-framework-forms",
     "tags": {
         "language": "C#",
         "type": "project"
     },
-    "sourceName": "GameFramework.WPF",
+    "sourceName": "GameFramework.Forms",
     "preferNameDirectory": true
 }

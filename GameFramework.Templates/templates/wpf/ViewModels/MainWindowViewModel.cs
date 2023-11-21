@@ -15,13 +15,13 @@ namespace GameFramework.WPF.ViewModels
 
         public MainWindowViewModel()
         {
-            var width = 5;
-            var height = 5;
-            var mapSize = new int[height, width];
+            const int WIDTH = 5;
+            const int HEIGHT = 5;
+            var mapSize = new int[HEIGHT, WIDTH];
             
             // NOTE: This is a test map, not the actual map, it has only ground types.
             MapView = new GameMapView();
-            var mapSource = new GameMapSource(GameApp2D.Current.Services, @".\test.json", mapSize, new List<IUnit2D>(), width, height);
+            var mapSource = new GameMapSource(GameApp2D.Current.Services, @".\test.json", mapSize, new List<IUnit2D>(), WIDTH, HEIGHT);
             var map = new GameMap(mapSource, MapView, GameApp2D.Current.Services.GetRequiredService<IPositionFactory>(), GameApp2D.Current.ConfigurationService);
 
             // NOTE: This is how you start the game.
