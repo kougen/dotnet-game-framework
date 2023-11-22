@@ -1,15 +1,12 @@
-using System;
-using System.Windows.Media;
+using BoardTemplate.Forms.Tiles;
 using BoardTemplate.Game.Game.Tiles;
 using BoardTemplate.Game.Tiles;
-using BoardTemplate.WPF.Tiles;
 using GameFramework.Configuration;
 using GameFramework.Core.Position;
 using GameFramework.Impl.Tiles.Static;
 using GameFramework.Objects.Static;
-using GameFramework.UI.WPF.Tiles.Static;
 
-namespace BoardTemplate.WPF.Map
+namespace BoardTemplate.Forms.Map
 {
     internal class StaticObjectConverter : IStaticObject2DConverter
     {
@@ -29,9 +26,9 @@ namespace BoardTemplate.WPF.Map
             
             return tileType switch
             {
-                TileTypes.GroundTile => new HoverableTile(position, _configurationService2D, new HoverableTileView(position, _configurationService2D, Colors.Green)),
-                TileTypes.WallTile => new GeneralStaticTile(position, _configurationService2D, new GeneralStaticTileView(position, _configurationService2D, Colors.Gray), true),
-                TileTypes.HoleTile => new GeneralStaticTile(position, _configurationService2D, new GeneralStaticTileView(position, _configurationService2D, Colors.Black)),
+                TileTypes.GroundTile => new HoverableTile(position, _configurationService2D, new HoverableTileView(position, _configurationService2D, Color.Green)),
+                TileTypes.WallTile => new GeneralStaticTile(position, _configurationService2D, new GeneralStaticTileView(position, _configurationService2D.Dimension, Color.Gray), true),
+                TileTypes.HoleTile => new GeneralStaticTile(position, _configurationService2D, new GeneralStaticTileView(position, _configurationService2D.Dimension, Color.Black)),
                 _ => throw new ArgumentException($"Unknown tile type: {tileType}")
             };
         }

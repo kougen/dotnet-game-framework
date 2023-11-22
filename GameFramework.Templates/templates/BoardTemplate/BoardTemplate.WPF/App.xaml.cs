@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows;
+using BoardTemplate.WPF.Map;
 using BoardTemplate.WPF.ViewModels;
 using BoardTemplate.WPF.Views;
 using GameFramework.Impl.Core;
@@ -29,7 +30,7 @@ namespace BoardTemplate.WPF
 
             // NOTE: Add your own services here
             return collection
-                .AddSingleton<IStaticObject2DConverter, DefaultMapObjectConverter>()
+                .AddSingleton<IStaticObject2DConverter, StaticObjectConverter>()
                 .AddScoped<IMainWindow, MainWindow>()
                 .AddScoped<IMainWindowViewModel, MainWindowViewModel>()
                 .BuildServiceProvider();

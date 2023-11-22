@@ -8,8 +8,20 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <OutputPath>..\Binaries\Debug\</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <OutputPath>..\Binaries\Release\</OutputPath>
+    </PropertyGroup>
+
     <ItemGroup>
-      <Folder Include="Map\" />
+      <PackageReference Include="joshika39.GameFramework.UI.Forms" Version="2.1.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BoardTemplate.Game\BoardTemplate.Game.csproj" />
     </ItemGroup>
 
 </Project>

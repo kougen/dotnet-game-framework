@@ -7,10 +7,18 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <OutputPath>..\Binaries\Debug\</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <OutputPath>..\Binaries\Release\</OutputPath>
+    </PropertyGroup>
+    
     <ItemGroup>
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
       <PackageReference Include="joshika39.GameFramework.Core" Version="2.1.1" />
-      <PackageReference Include="joshika39.GameFramework.UI.WPF" Version="2.0.0" />
+      <PackageReference Include="joshika39.GameFramework.UI.WPF" Version="2.1.1" />
     </ItemGroup>
 
     <ItemGroup>
