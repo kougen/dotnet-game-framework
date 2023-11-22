@@ -2,9 +2,6 @@
 using System.Threading;
 using GameFramework.Impl.Core;
 using GameFramework.ManualTests.Desktop.WPF.GameCanvas;
-using GameFramework.Objects;
-using GameFramework.Objects.Static;
-using GameFramework.UI.WPF.Map;
 using Implementation.Module;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,7 +20,7 @@ namespace GameFramework.ManualTests.Desktop.WPF
             core.RegisterOtherServices(new GameFrameworkCore(collection, source));
 
             return collection
-                .AddSingleton<IStaticObject2DConverter, DefaultStaticObjectConverter>()
+                // .AddSingleton<IStaticObject2DConverter, DefaultStaticObjectConverter>()
                 .BuildServiceProvider();
         }
     }

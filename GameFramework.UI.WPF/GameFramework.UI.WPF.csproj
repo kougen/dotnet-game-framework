@@ -21,14 +21,13 @@
         <InternalsVisibleTo Include="GameFramework.ManualTests.Desktop.WPF"/>
     </ItemGroup>
 
-
-    <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
-        <PackageReference Include="joshika39.GameFramework.Core" Version="2.0.0" />
-    </ItemGroup>
-
     <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
         <ProjectReference Include="..\GameFramework\GameFramework.csproj" />
         <ProjectReference Include="..\GameFramework.Impl\GameFramework.Impl.csproj" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
+      <PackageReference Include="joshika39.GameFramework.Core" Version="2.1.1" />
     </ItemGroup>
 
 </Project>

@@ -29,10 +29,5 @@ namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas
                 _ => throw new ArgumentException($"Unknown tile type: {tileType}")
             };
         }
-
-        public IStaticObject2D FromInt(int type, IPosition2D position)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

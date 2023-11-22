@@ -1,4 +1,3 @@
-using System;
 using GameFramework.Configuration;
 using GameFramework.Core;
 using GameFramework.Core.Position;
@@ -21,18 +20,20 @@ namespace GameFramework.WPF.Game.Map
 
         public IMapObject2D FromEnum<T>(T tileType, IPosition2D position) where T : Enum
         {
-            if (tileType is not TileTypes)
-            {
-                throw new ArgumentException($"tileType must be of type {nameof(TileTypes)}");
-            }
-            
-            return tileType switch
-            {
-                TileTypes.GroundTile => new GroundTile(position, _configurationService2D, _gameManager),
-                TileTypes.WallTile => new WallTile(position, _configurationService2D),
-                TileTypes.HoleTile => new HoleTile(position, _configurationService2D, _gameManager),
-                _ => throw new ArgumentException($"Unknown tile type: {tileType}")
-            };
+            throw new NotImplementedException();
+
+            // if (tileType is not TileTypes)
+            // {
+            //     throw new ArgumentException($"tileType must be of type {nameof(TileTypes)}");
+            // }
+            //
+            // return tileType switch
+            // {
+            //     TileTypes.GroundTile => new GroundTile(position, _configurationService2D, _gameManager),
+            //     TileTypes.WallTile => new WallTile(position, _configurationService2D),
+            //     TileTypes.HoleTile => new HoleTile(position, _configurationService2D, _gameManager),
+            //     _ => throw new ArgumentException($"Unknown tile type: {tileType}")
+            // };
         }
 
         public IMapObject2D FromInt(int type, IPosition2D position)

@@ -31,10 +31,5 @@ namespace GameFramework.UI.Forms.Map
                     throw new ArgumentException($"Unknown tile type: {tileType}");
             }
         }
-
-        public IStaticObject2D FromInt(int type, IPosition2D position)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
