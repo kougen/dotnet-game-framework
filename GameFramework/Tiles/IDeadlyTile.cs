@@ -1,4 +1,5 @@
 using GameFramework.Objects;
+using GameFramework.Objects.Static;
 
 namespace GameFramework.Tiles
 {

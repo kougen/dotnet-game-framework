@@ -3,6 +3,7 @@ using GameFramework.Configuration;
 using GameFramework.Core.Position;
 using GameFramework.Objects;
 using GameFramework.UI.WPF.Tiles;
+using GameFramework.UI.WPF.Tiles.Interactable;
 
 namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas.TestUnitVisuals
 {

@@ -1,17 +1,17 @@
 ﻿using GameFramework.Configuration;
 using GameFramework.Core.Position;
-using GameFramework.Impl.Tiles;
 using GameFramework.Impl.Tiles.Static;
 using GameFramework.Objects;
-using GameFramework.UI.Forms.Tiles;
+using GameFramework.Objects.Static;
+using GameFramework.UI.Forms.Tiles.Static;
 
 namespace GameFramework.UI.Forms.Map
 {
-    public class FormsMapObjectConverter : IMapObject2DConverter
+    public class FormsStaticObjectConverter : IStaticObject2DConverter
     {
         private readonly IConfigurationService2D _configurationService2D;
 
-        public FormsMapObjectConverter(IConfigurationService2D configurationService2D)
+        public FormsStaticObjectConverter(IConfigurationService2D configurationService2D)
         {
             _configurationService2D = configurationService2D ?? throw new ArgumentNullException(nameof(configurationService2D));
         }
@@ -26,7 +26,7 @@ namespace GameFramework.UI.Forms.Map
             switch (tileType)
             {
                 case TileType.Ground:
-                    return new GeneralStaticTile(position, _configurationService2D, new GroundTileView(position, _configurationService2D)) ;
+                    return new GeneralStaticTile(position, _configurationService2D, new GeneralStaticTileView(position, _configurationService2D)) ;
                 default:
                     throw new ArgumentException($"Unknown tile type: {tileType}");
             }

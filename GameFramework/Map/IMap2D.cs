@@ -1,6 +1,7 @@
 ﻿using GameFramework.Core.Position;
 using GameFramework.Map.Source;
 using GameFramework.Objects;
+using GameFramework.Objects.Static;
 using GameFramework.Visuals.Views;
 
 namespace GameFramework.Map

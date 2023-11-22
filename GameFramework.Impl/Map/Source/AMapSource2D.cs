@@ -1,6 +1,8 @@
 using GameFramework.Map;
 using GameFramework.Map.Source;
 using GameFramework.Objects;
+using GameFramework.Objects.Interactable;
+using GameFramework.Objects.Static;
 
 namespace GameFramework.Impl.Map.Source
 {

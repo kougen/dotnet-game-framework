@@ -3,7 +3,7 @@ using GameFramework.Configuration;
 using GameFramework.Core.Position;
 using GameFramework.Visuals;
 
-namespace GameFramework.UI.WPF.Tiles
+namespace GameFramework.UI.WPF.Tiles.Static
 {
     public abstract class AClickableTileView : AHoverableTileView, IClickable
     {

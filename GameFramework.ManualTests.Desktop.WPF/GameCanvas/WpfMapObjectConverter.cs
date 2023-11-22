@@ -3,14 +3,15 @@ using GameFramework.Configuration;
 using GameFramework.Core.Position;
 using GameFramework.Impl.Tiles.Static;
 using GameFramework.Objects;
+using GameFramework.Objects.Static;
 
 namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas
 {
-    internal class DefaultMapObjectConverter : IMapObject2DConverter
+    internal class DefaultStaticObjectConverter : IStaticObject2DConverter
     {
         private readonly IConfigurationService2D _configurationService2D;
 
-        public DefaultMapObjectConverter(IConfigurationService2D configurationService2D)
+        public DefaultStaticObjectConverter(IConfigurationService2D configurationService2D)
         {
             _configurationService2D = configurationService2D ?? throw new ArgumentNullException(nameof(configurationService2D));
         }

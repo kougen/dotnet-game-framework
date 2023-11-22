@@ -1,6 +1,6 @@
 ﻿using GameFramework.Visuals.Views;
 
-namespace GameFramework.Objects
+namespace GameFramework.Objects.Static
 {
     public interface IStaticObject2D : IObject2D
     {

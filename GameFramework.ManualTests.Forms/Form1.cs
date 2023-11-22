@@ -4,6 +4,7 @@ using GameFramework.Impl.GameFeedback;
 using GameFramework.Impl.Map.Source;
 using GameFramework.ManualTests.Forms.Map;
 using GameFramework.Objects;
+using GameFramework.Objects.Interactable;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GameFramework.ManualTests.Forms

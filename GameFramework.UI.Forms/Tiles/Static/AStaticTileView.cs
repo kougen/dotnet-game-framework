@@ -1,18 +1,17 @@
-﻿using GameFramework.Configuration;
-using GameFramework.Core.Position;
+﻿using GameFramework.Core.Position;
 using GameFramework.Impl.Core.Position;
 using GameFramework.Visuals.Views;
 
-namespace GameFramework.UI.Forms.Tiles
+namespace GameFramework.UI.Forms.Tiles.Static
 {
-    public abstract class ATileView : UserControl, IStaticObjectView2D
+    public abstract class AStaticTileView : UserControl, IStaticObjectView2D
     {
         public IScreenSpacePosition ScreenSpacePosition { get; }
         protected virtual bool HasBorder { get; }
         protected virtual Color BorderColor { get; set; } = Color.Black;
         protected double Size;
         
-        protected ATileView(IPosition2D position2D, double size, Color fillColor, bool hasBorder = false)
+        protected AStaticTileView(IPosition2D position2D, double size, Color fillColor, bool hasBorder = false)
         {
             Size = size;
             Width = (int)size;

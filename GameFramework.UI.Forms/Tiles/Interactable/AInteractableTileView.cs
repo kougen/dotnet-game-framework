@@ -1,16 +1,16 @@
 ﻿using GameFramework.Core.Position;
-using GameFramework.Visuals;
+using GameFramework.UI.Forms.Tiles.Static;
 using GameFramework.Visuals.Tiles;
 using GameFramework.Visuals.Views;
 
-namespace GameFramework.UI.Forms.Tiles
+namespace GameFramework.UI.Forms.Tiles.Interactable
 {
-    public abstract class AUnitTileView : AFocusableTileView, IMovingObjectView
+    public abstract class AInteractableTileView : AStaticTileView, IMovingObjectView
     {
         private readonly ICollection<IViewLoadedSubscriber> _onLoadedSubscribers = new List<IViewLoadedSubscriber>();
         private readonly ICollection<IViewDisposedSubscriber> _onDisposedSubscribers = new List<IViewDisposedSubscriber>();
         
-        protected AUnitTileView(IPosition2D position, double size, Color fillColor, bool hasBorder) : base(position, size, fillColor, hasBorder)
+        protected AInteractableTileView(IPosition2D position, double size, Color fillColor, bool hasBorder) : base(position, size, fillColor, hasBorder)
         { }
         
         public void UpdatePosition(IPosition2D position)

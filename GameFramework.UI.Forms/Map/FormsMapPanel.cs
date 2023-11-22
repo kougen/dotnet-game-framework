@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using GameFramework.Impl.Core.Position;
 using GameFramework.Objects;
+using GameFramework.Objects.Static;
 using GameFramework.Visuals;
 using GameFramework.Visuals.Handlers;
 using GameFramework.Visuals.Tiles;

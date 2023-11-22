@@ -7,6 +7,8 @@ using GameFramework.Core.Position;
 using GameFramework.Map;
 using GameFramework.Map.Source;
 using GameFramework.Objects;
+using GameFramework.Objects.Interactable;
+using GameFramework.Objects.Static;
 using GameFramework.Tiles;
 using GameFramework.Visuals;
 using GameFramework.Visuals.Handlers;

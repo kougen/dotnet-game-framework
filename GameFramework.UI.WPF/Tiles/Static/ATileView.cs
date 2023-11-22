@@ -5,7 +5,7 @@ using GameFramework.Core.Position;
 using GameFramework.Impl.Core.Position;
 using GameFramework.Visuals.Views;
 
-namespace GameFramework.UI.WPF.Tiles
+namespace GameFramework.UI.WPF.Tiles.Static
 {
     public abstract class ATileView : ACustomShape, IStaticObjectView2D
     {

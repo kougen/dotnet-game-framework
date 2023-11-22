@@ -4,10 +4,11 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using GameFramework.Configuration;
 using GameFramework.Core.Position;
+using GameFramework.UI.WPF.Tiles.Static;
 using GameFramework.Visuals.Tiles;
 using GameFramework.Visuals.Views;
 
-namespace GameFramework.UI.WPF.Tiles
+namespace GameFramework.UI.WPF.Tiles.Interactable
 {
     public abstract class AInteractableTileView : ATileView, IMovingObjectView
     {

@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using GameFramework.Impl.Core.Position;
-using GameFramework.Objects;
+using GameFramework.Objects.Static;
 using GameFramework.Visuals.Handlers;
 using GameFramework.Visuals.Tiles;
 using GameFramework.Visuals.Views;

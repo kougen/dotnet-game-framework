@@ -1,11 +1,11 @@
 ﻿using GameFramework.Configuration;
 using GameFramework.Core.Position;
 
-namespace GameFramework.UI.Forms.Tiles
+namespace GameFramework.UI.Forms.Tiles.Static
 {
-    public class GroundTileView : AFocusableTileView
+    public class GeneralStaticTileView : AStaticFocusableTileView
     {
-        public GroundTileView(IPosition2D position, IConfigurationService2D configurationService) : base(position, configurationService.Dimension, Color.Green)
+        public GeneralStaticTileView(IPosition2D position, IConfigurationService2D configurationService) : base(position, configurationService.Dimension, Color.Green)
         { }
         
         public override void OnHovered()

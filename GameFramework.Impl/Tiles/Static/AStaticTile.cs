@@ -1,6 +1,8 @@
 using GameFramework.Configuration;
 using GameFramework.Core.Position;
 using GameFramework.Objects;
+using GameFramework.Objects.Interactable;
+using GameFramework.Objects.Static;
 using GameFramework.Visuals.Views;
 
 namespace GameFramework.Impl.Tiles.Static

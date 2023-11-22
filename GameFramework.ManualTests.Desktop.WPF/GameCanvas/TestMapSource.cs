@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using GameFramework.Impl.Map.Source;
 using GameFramework.Objects;
+using GameFramework.Objects.Interactable;
 
 namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas
 {

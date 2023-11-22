@@ -1,4 +1,5 @@
 using GameFramework.Core.Position;
+using GameFramework.Objects.Interactable;
 
 namespace GameFramework.Objects
 {

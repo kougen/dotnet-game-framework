@@ -1,10 +1,13 @@
 using System.Text;
 using GameFramework.Core.Factories;
 using GameFramework.Objects;
+using GameFramework.Objects.Interactable;
+using GameFramework.Objects.Static;
 using Infrastructure.Configuration;
 using Infrastructure.Configuration.Factories;
 using Infrastructure.IO;
 using Microsoft.Extensions.DependencyInjection;
+using IStaticObject2DConverter = GameFramework.Objects.Static.IStaticObject2DConverter;
 
 namespace GameFramework.Impl.Map.Source
 {
@@ -13,7 +16,7 @@ namespace GameFramework.Impl.Map.Source
         private readonly IReader _reader;
         private readonly IPositionFactory _positionFactory;
         private readonly string _mapDataBase64;
-        private readonly IMapObject2DConverter _tileConverter;
+        private readonly IStaticObject2DConverter _tileConverter;
 
         public sealed override IEnumerable<IStaticObject2D> MapObjects { get; protected set; }
         public sealed override ICollection<IInteractableObject2D> Units { get; protected set; }
@@ -29,7 +32,7 @@ namespace GameFramework.Impl.Map.Source
             Query = provider.GetRequiredService<IConfigurationQueryFactory>().CreateConfigurationQuery(filePath);
             _positionFactory = provider.GetRequiredService<IPositionFactory>();
             _reader = provider.GetRequiredService<IReader>();
-            _tileConverter = provider.GetRequiredService<IMapObject2DConverter>();
+            _tileConverter = provider.GetRequiredService<IStaticObject2DConverter>();
             ColumnCount = col;
             RowCount = row;
             _mapDataBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(GetRawData(data)));
@@ -43,7 +46,7 @@ namespace GameFramework.Impl.Map.Source
             Query = queryFactory.CreateConfigurationQuery(filePath);
             _positionFactory = provider.GetRequiredService<IPositionFactory>();
             _reader = provider.GetRequiredService<IReader>();
-            _tileConverter = provider.GetRequiredService<IMapObject2DConverter>();
+            _tileConverter = provider.GetRequiredService<IStaticObject2DConverter>();
             ColumnCount = Query.GetIntAttribute("row") ??  throw new InvalidOperationException("Draft config is missing a 'row;");
             RowCount = Query.GetIntAttribute("col") ??  throw new InvalidOperationException("Draft config is missing a 'col'");
             _mapDataBase64 = Query.GetStringAttribute("data") ??  throw new InvalidOperationException("Draft config is missing the 'data'");

@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using GameFramework.Objects;
+using GameFramework.Objects.Static;
 using GameFramework.Visuals.Handlers;
 
 namespace GameFramework.Visuals.Views

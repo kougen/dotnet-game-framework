@@ -1,6 +1,8 @@
 using GameFramework.Core.Motion;
 using GameFramework.Core.Position;
 using GameFramework.Objects;
+using GameFramework.Objects.Interactable;
+using GameFramework.Objects.Static;
 
 namespace GameFramework.Map
 {

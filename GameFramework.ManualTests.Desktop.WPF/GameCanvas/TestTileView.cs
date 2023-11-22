@@ -2,6 +2,7 @@ using System.Windows.Media;
 using GameFramework.Configuration;
 using GameFramework.Core.Position;
 using GameFramework.UI.WPF.Tiles;
+using GameFramework.UI.WPF.Tiles.Static;
 
 namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas
 {

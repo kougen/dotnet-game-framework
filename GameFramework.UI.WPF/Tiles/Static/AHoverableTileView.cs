@@ -2,9 +2,8 @@ using System.Windows.Media;
 using GameFramework.Configuration;
 using GameFramework.Core.Position;
 using GameFramework.Tiles;
-using GameFramework.Visuals;
 
-namespace GameFramework.UI.WPF.Tiles
+namespace GameFramework.UI.WPF.Tiles.Static
 {
     public abstract class AHoverableTileView : ATileView, IHoverable
     {

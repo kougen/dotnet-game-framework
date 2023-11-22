@@ -1,6 +1,6 @@
 using GameFramework.Visuals.Views;
 
-namespace GameFramework.Objects
+namespace GameFramework.Objects.Interactable
 {
     public interface IInteractableObject2D : IObject2D, IDisposable
     {

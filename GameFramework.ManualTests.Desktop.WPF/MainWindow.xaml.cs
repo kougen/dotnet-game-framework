@@ -10,6 +10,7 @@ using GameFramework.ManualTests.Desktop.WPF.GameCanvas;
 using GameFramework.ManualTests.Desktop.WPF.GameCanvas.TestUnitVisuals;
 using GameFramework.Map;
 using GameFramework.Objects;
+using GameFramework.Objects.Interactable;
 using GameFramework.UI.WPF.Core;
 using Infrastructure.Time;
 using Microsoft.Extensions.DependencyInjection;

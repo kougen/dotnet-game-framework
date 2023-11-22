@@ -1,8 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using GameFramework.Impl.Core.Position;
-using GameFramework.Objects;
+using GameFramework.Objects.Static;
 using GameFramework.UI.Forms.MouseEvents;
-using GameFramework.Visuals;
 using GameFramework.Visuals.Handlers;
 using GameFramework.Visuals.Tiles;
 using GameFramework.Visuals.Views;
@@ -11,16 +10,16 @@ namespace GameFramework.UI.Forms.Map
 {
     public class FormsMapControl : Panel, IMapView2D, IViewDisposedSubscriber
     {
-        private ObservableCollection<IDisposableStaticObjectView> _entityViews;
+        private ObservableCollection<IDisposableStaticObjectView> _disposableViews;
         private ObservableCollection<IStaticObject2D> _mapObjects;
         private readonly ICollection<IMouseHandler> _mouseHandlers = new List<IMouseHandler>();
         
         public ObservableCollection<IDisposableStaticObjectView> DisposableObjectViews
         {
-            get => _entityViews;
+            get => _disposableViews;
             set
             {
-                _entityViews = value;
+                _disposableViews = value;
                 UpdateEntities();
             }
         }
@@ -42,7 +41,7 @@ namespace GameFramework.UI.Forms.Map
             gmh.TheLeftButtonDown += OnMouseDown;
             System.Windows.Forms.Application.AddMessageFilter(gmh);
             
-            DisposableObjectViews = _entityViews = new ObservableCollection<IDisposableStaticObjectView>();
+            DisposableObjectViews = _disposableViews = new ObservableCollection<IDisposableStaticObjectView>();
             MapObjects = _mapObjects = new ObservableCollection<IStaticObject2D>();
             DisposableObjectViews.CollectionChanged += (_, _) => UpdateEntities();
             MapObjects.CollectionChanged += (_, _) => UpdateMapObjects();
@@ -98,7 +97,7 @@ namespace GameFramework.UI.Forms.Map
         {
             foreach (var mapObject in MapObjects)
             {
-                if (mapObject is Control shape && !Controls.Contains(shape))
+                if (mapObject.View is Control shape && !Controls.Contains(shape))
                 {
                     Controls.Add(shape);
                 } 
