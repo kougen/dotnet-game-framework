@@ -16,8 +16,6 @@ namespace GameFramework.Impl.Tiles.Static
         }
         
         public override void SteppedOn(IInteractableObject2D interactableObject2D)
-        {
-            
-        }
+        { }
     }
 }

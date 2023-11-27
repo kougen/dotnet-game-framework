@@ -1,0 +1,12 @@
+{
+  "solution": {
+    "path": "GameFramework.sln",
+    "projects": [
+      "GameFramework.Impl\\GameFramework.Impl.csproj",
+      "GameFramework.UI.Forms\\GameFramework.UI.Forms.csproj",
+      "GameFramework.UI.Maui\\GameFramework.UI.Maui.csproj",
+      "GameFramework.UI.WPF\\GameFramework.UI.WPF.csproj",
+      "GameFramework\\GameFramework.csproj"
+    ]
+  }
+}

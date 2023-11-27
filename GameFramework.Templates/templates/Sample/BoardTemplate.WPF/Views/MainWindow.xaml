@@ -4,9 +4,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:interfaces="clr-namespace:BoardTemplate.WPF.ViewModels"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        d:DataContext="{d:DesignInstance {x:Type interfaces:IMainWindowViewModel}}">
+        d:DataContext="{d:DesignInstance {x:Type interfaces:MainWindowViewModel}}">
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="PreviewKeyDown">
+            <b:InvokeCommandAction Command="{Binding KeyDownCommand}" PassEventArgsToCommand="True" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
     <Grid>
         <UserControl Content="{Binding MapView}" />
     </Grid>

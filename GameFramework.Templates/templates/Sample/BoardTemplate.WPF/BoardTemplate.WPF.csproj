@@ -19,6 +19,7 @@
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
       <PackageReference Include="joshika39.GameFramework.Core" Version="2.1.1" />
       <PackageReference Include="joshika39.GameFramework.UI.WPF" Version="2.1.1" />
+      <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
     </ItemGroup>
 
     <ItemGroup>

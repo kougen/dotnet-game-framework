@@ -34,7 +34,7 @@ namespace GameFramework.UI.Forms.Map
             }
         }
         
-        protected FormsMapControl()
+        public FormsMapControl()
         {
             var gmh = new GlobalMouseEventHandler.GlobalMouseHandler();
             gmh.TheMouseMoved += OnMouseMove;
