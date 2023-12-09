@@ -27,6 +27,12 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
 
+    - name: Install java
+      uses: JavaToolInstaller@0
+      with: 
+        versionSpec: "11"
+        jdkArchitectureOption: x64
+
     - name: Restore dependencies
       run: nuget restore $env:SOLUTION
 
