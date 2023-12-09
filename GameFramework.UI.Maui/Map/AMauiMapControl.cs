@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using GameFramework.Objects.Static;
 using GameFramework.Visuals.Handlers;
 using GameFramework.Visuals.Tiles;
 using GameFramework.Visuals.Views;
-using Microsoft.Maui.Controls;
 
 namespace GameFramework.UI.Maui.Map
 {
@@ -12,7 +10,7 @@ namespace GameFramework.UI.Maui.Map
     {
         private ObservableCollection<IDisposableStaticObjectView> _disposableObjectViews;
         private ObservableCollection<IStaticObject2D> _mapObjects;
-        protected ICollection<IMouseHandler> MouseHandlers = new List<IMouseHandler>();
+        protected readonly ICollection<IMouseHandler> MouseHandlers = new List<IMouseHandler>();
         
         public ObservableCollection<IDisposableStaticObjectView> DisposableObjectViews
         {
@@ -49,7 +47,7 @@ namespace GameFramework.UI.Maui.Map
 
         public virtual void OnViewDisposed(IDisposableStaticObjectView view)
         {
-            if (view is ContentView shape)
+            if (view is BoxView shape)
             {
                 Children.Remove(shape);
             }
@@ -59,11 +57,15 @@ namespace GameFramework.UI.Maui.Map
         {
             foreach (var entityView in DisposableObjectViews)
             {
-                if (entityView is ContentView shape && !Children.Contains(shape))
+                if (entityView is BoxView shape && !Children.Contains(shape))
                 {
                     Children.Add(shape);
                 }
                 entityView.Attach(this);
+                // if (entityView is IMovingObjectView movingObjectView)
+                // {
+                //     movingObjectView.ViewLoaded();                    
+                // }
             }
         }
         
@@ -71,7 +73,7 @@ namespace GameFramework.UI.Maui.Map
         {
             foreach (var mapObject in MapObjects)
             {
-                if (mapObject.View is ContentView shape && !Children.Contains(shape))
+                if (mapObject.View is BoxView shape && !Children.Contains(shape))
                 {
                     Children.Add(shape);
                 } 

@@ -13,6 +13,7 @@
         <InternalsVisibleTo Include="GameFramework.Unit.Tests" />
         <InternalsVisibleTo Include="GameFramework.ManualTests.Desktop.WPF" />
         <InternalsVisibleTo Include="GameFramework.ManualTests.Forms" />
+        <InternalsVisibleTo Include="GameFramework.Maui.Tests" />
         <InternalsVisibleTo Include="joshika39.GameFramework.UI.WPF" />
     </ItemGroup>
     

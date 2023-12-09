@@ -2,11 +2,12 @@ using GameFramework.Configuration;
 using GameFramework.Core.Position;
 using GameFramework.Objects;
 using GameFramework.Objects.Interactable;
+using GameFramework.Visuals.Tiles;
 using GameFramework.Visuals.Views;
 
 namespace GameFramework.Impl.Tiles.Interactable
 {
-    public abstract class AInteractableTile : IInteractableObject2D
+    public abstract class AInteractableTile : IInteractableObject2D, IViewLoadedSubscriber
     {
         public Guid Id { get; }
         public IMovingObjectView View { get; }
@@ -23,10 +24,20 @@ namespace GameFramework.Impl.Tiles.Interactable
             View = view ?? throw new ArgumentNullException(nameof(view));
             ConfigurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             IsObstacle = isObstacle;
+            View.Attach(this);
         }
         
         public abstract void Step(IObject2D staticObject);
         public abstract void Delete();
-        public abstract void Dispose();
+
+        public virtual void Dispose()
+        {
+            View.Dispose();
+        }
+
+        public virtual void OnLoaded()
+        {
+            View.UpdatePosition(Position);
+        }
     }
 }

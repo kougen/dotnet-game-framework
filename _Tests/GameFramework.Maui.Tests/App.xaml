@@ -2,7 +2,7 @@
 <core:GameApp2D xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:GameFramework.Maui.Tests"
-             xmlns:core="clr-namespace:GameFramework.UI.Maui.Core;assembly=GameFramework.UI.Maui"
+             xmlns:core="clr-namespace:GameFramework.UI.Maui.Core;assembly=joshika39.GameFramework.UI.Maui"
              x:Class="GameFramework.Maui.Tests.App">
     <core:GameApp2D.Resources>
         <ResourceDictionary>

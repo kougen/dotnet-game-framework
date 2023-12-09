@@ -37,7 +37,7 @@ namespace GameFramework.ManualTests.Desktop.WPF
             TestMove(_map);
         }
 
-        private async static Task TestMove(IHasIntractable2D map)
+        private static async Task TestMove(IHasIntractable2D map)
         {
             var unitView = new TestInteractableView(new Position2D(0,0), GameApp2D.Current.ConfigurationService);
             var unit = new TestInteractableObject(unitView, new Position2D(0,0));
