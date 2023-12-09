@@ -6,13 +6,13 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <OutputPath>..\Binaries\Debug\</OutputPath>
-    </PropertyGroup>
+<!--    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">-->
+<!--      <OutputPath>..\Binaries\Debug\</OutputPath>-->
+<!--    </PropertyGroup>-->
 
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <OutputPath>..\Binaries\Release\</OutputPath>
-    </PropertyGroup>
+<!--    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">-->
+<!--      <OutputPath>..\Binaries\Release\</OutputPath>-->
+<!--    </PropertyGroup>-->
 
     <ItemGroup>
       <PackageReference Include="joshika39.GameFramework.Core" Version="3.0.0" />

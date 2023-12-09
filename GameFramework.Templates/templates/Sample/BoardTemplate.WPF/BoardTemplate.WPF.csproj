@@ -7,13 +7,13 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <OutputPath>..\Binaries\Debug\</OutputPath>
-    </PropertyGroup>
+<!--    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">-->
+<!--        <OutputPath>..\Binaries\Debug\</OutputPath>-->
+<!--    </PropertyGroup>-->
 
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-        <OutputPath>..\Binaries\Release\</OutputPath>
-    </PropertyGroup>
+<!--    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">-->
+<!--        <OutputPath>..\Binaries\Release\</OutputPath>-->
+<!--    </PropertyGroup>-->
     
     <ItemGroup>
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
