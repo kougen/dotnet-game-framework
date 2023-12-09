@@ -27,11 +27,16 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Install java
-      uses: JavaToolInstaller@0
-      with: 
-        versionSpec: "11"
-        jdkArchitectureOption: x64
+    - name: Install .NET MAUI
+      shell: pwsh
+      run: |
+        dotnet workload install maui --source https://aka.ms/dotnet6/nuget/index.json --source https://api.nuget.org/v3/index.json
+        dotnet workload install android maui wasm-tools --source https://aka.ms/dotnet6/nuget/index.json --source https://api.nuget.org/v3/index.json
+        
+    - uses: actions/setup-java@v2
+      with:
+        distribution: 'microsoft'
+        java-version: '11'
 
     - name: Restore dependencies
       run: nuget restore $env:SOLUTION
