@@ -19,8 +19,8 @@ namespace GameFramework.UI.Forms.Tiles.Interactable
             BeginInvoke(() =>
             {
                 BringToFront();
-                Left = (int)Math.Round(position.X * Size);
-                Top = (int)Math.Round(position.Y * Size);
+                Left = (int)Math.Round(position.X * TileSize);
+                Top = (int)Math.Round(position.Y * TileSize);
             });
         }
 

@@ -12,15 +12,15 @@
 		<dependencies>
 			<group targetFramework="net6.0-windows10">
 				<dependency id="Microsoft.Extensions.DependencyInjection" version="7.0.0" />
-				<dependency id="joshika39.GameFramework.Core" version="2.1.1" />
+				<dependency id="joshika39.GameFramework.Core" version="3.0.0" />
 			</group>
 			<group targetFramework="net6.0-windows6">
 				<dependency id="Microsoft.Extensions.DependencyInjection" version="7.0.0" />
-				<dependency id="joshika39.GameFramework.Core" version="2.1.1" />
+				<dependency id="joshika39.GameFramework.Core" version="3.0.0" />
 			</group>
 			<group targetFramework="net6.0-windows7">
 				<dependency id="Microsoft.Extensions.DependencyInjection" version="7.0.0" />
-				<dependency id="joshika39.GameFramework.Core" version="2.1.1" />
+				<dependency id="joshika39.GameFramework.Core" version="3.0.0" />
 			</group>
 		</dependencies>
 		

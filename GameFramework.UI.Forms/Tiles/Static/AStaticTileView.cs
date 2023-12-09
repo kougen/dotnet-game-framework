@@ -9,11 +9,11 @@ namespace GameFramework.UI.Forms.Tiles.Static
         public IScreenSpacePosition ScreenSpacePosition { get; }
         protected virtual bool HasBorder { get; }
         protected virtual Color BorderColor { get; set; } = Color.Black;
-        protected double Size;
+        protected double TileSize;
         
         protected AStaticTileView(IPosition2D position2D, double size, Color fillColor, bool hasBorder = false)
         {
-            Size = size;
+            TileSize = size;
             Width = (int)size;
             Height = (int)size;
             Top = (int)size * position2D.Y;

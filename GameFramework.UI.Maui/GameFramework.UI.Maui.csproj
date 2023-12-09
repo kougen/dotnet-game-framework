@@ -27,7 +27,7 @@
     </PropertyGroup>
 
     <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
-        <PackageReference Include="joshika39.GameFramework.Core" Version="2.1.1" />
+        <PackageReference Include="joshika39.GameFramework.Core" Version="3.0.0" />
     </ItemGroup>
 
     <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">

@@ -57,7 +57,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="joshika39.GameFramework.Core" Version="2.1.2" />
+        <PackageReference Include="joshika39.GameFramework.Core" Version="3.0.0" />
         <PackageReference Include="joshika39.GameFramework.UI.Maui" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0"/>
     </ItemGroup>
