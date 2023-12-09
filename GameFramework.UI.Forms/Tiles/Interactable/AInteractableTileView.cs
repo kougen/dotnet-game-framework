@@ -9,24 +9,32 @@ namespace GameFramework.UI.Forms.Tiles.Interactable
     {
         private readonly ICollection<IViewLoadedSubscriber> _onLoadedSubscribers = new List<IViewLoadedSubscriber>();
         private readonly ICollection<IViewDisposedSubscriber> _onDisposedSubscribers = new List<IViewDisposedSubscriber>();
-        
-        protected AInteractableTileView(IPosition2D position, double size, Color fillColor, bool hasBorder) : base(position, size, fillColor, hasBorder)
+
+        protected AInteractableTileView(IPosition2D position, double size, Color fillColor, bool hasBorder) : base(
+            position, size, fillColor, hasBorder)
         { }
         
         public void UpdatePosition(IPosition2D position)
         {
             BeginInvoke(() =>
             {
+                BringToFront();
                 Left = (int)Math.Round(position.X * Size);
                 Top = (int)Math.Round(position.Y * Size);
             });
         }
-        
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            ViewLoaded();
+        }
+
         public void ViewLoaded()
         {
             foreach (var subscriber in _onLoadedSubscribers)
             {
-                subscriber.OnLoaded();
+                subscriber.OnLoaded(this);
             }
         }
         

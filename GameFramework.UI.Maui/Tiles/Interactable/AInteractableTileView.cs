@@ -44,7 +44,7 @@ public abstract class AInteractableTileView : AStaticTileView, IMovingObjectView
     {
         foreach (var subscriber in OnLoadedSubscribers)
         {
-            subscriber.OnLoaded();
+            subscriber.OnLoaded(this);
         }
     }
     

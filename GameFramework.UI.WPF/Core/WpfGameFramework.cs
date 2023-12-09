@@ -1,6 +1,5 @@
 using System.Threading;
 using GameFramework.Impl.Core;
-using GameFramework.Tiles.Factories;
 using GameFramework.UI.WPF.Factories;
 using GameFramework.Visuals.Factories;
 using Implementation.Module;
@@ -22,7 +21,7 @@ namespace GameFramework.UI.WPF.Core
         {
             collection.AddSingleton<ITileViewFactory2D, WpfTileViewFactory>();
             collection.AddSingleton<IMapViewFactory2D, WpfGameMapViewFactory2D>();
-            RegisterOtherServices(new GameFrameworkCore(collection, Source));
+            
             return this;
         }
     }

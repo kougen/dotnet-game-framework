@@ -32,7 +32,7 @@ namespace GameFramework.UI.WPF.Tiles.Interactable
         {
             foreach (var subscriber in _onLoadedSubscribers)
             {
-                subscriber.OnLoaded();
+                subscriber.OnLoaded(this);
             }
         }
         

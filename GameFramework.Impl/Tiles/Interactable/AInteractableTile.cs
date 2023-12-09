@@ -25,6 +25,7 @@ namespace GameFramework.Impl.Tiles.Interactable
             ConfigurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             IsObstacle = isObstacle;
             View.Attach(this);
+            View.UpdatePosition(Position);
         }
         
         public abstract void Step(IObject2D staticObject);
@@ -35,7 +36,7 @@ namespace GameFramework.Impl.Tiles.Interactable
             View.Dispose();
         }
 
-        public virtual void OnLoaded()
+        public virtual void OnLoaded(IMovingObjectView _)
         {
             View.UpdatePosition(Position);
         }

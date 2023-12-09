@@ -13,6 +13,7 @@ namespace GameFramework.ManualTests.Forms
             var core = new CoreModule(collection, source);
             core.RegisterServices("gf-manual-tests");
             core.RegisterOtherServices(new GameFrameworkCore(collection, source));
+            core.RegisterOtherServices(new FormsGameFramework(collection, source));
             
             return collection.BuildServiceProvider();
         }

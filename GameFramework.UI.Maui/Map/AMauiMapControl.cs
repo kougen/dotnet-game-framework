@@ -62,10 +62,6 @@ namespace GameFramework.UI.Maui.Map
                     Children.Add(shape);
                 }
                 entityView.Attach(this);
-                // if (entityView is IMovingObjectView movingObjectView)
-                // {
-                //     movingObjectView.ViewLoaded();                    
-                // }
             }
         }
         

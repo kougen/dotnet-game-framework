@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows;
 using GameFramework.GameFeedback;
@@ -39,7 +40,9 @@ namespace GameFramework.ManualTests.Desktop.WPF
 
         private static async Task TestMove(IHasIntractable2D map)
         {
-            var unitView = new TestInteractableView(new Position2D(0,0), GameApp2D.Current.ConfigurationService);
+            var unitView =
+                GameApp2D.Current.BoardService.TileViewFactory2D.CreateInteractableTileView2D(new Position2D(0, 0),
+                    Color.Blue);
             var unit = new TestInteractableObject(unitView, new Position2D(0,0));
             map.Interactables.Add(unit);
             
