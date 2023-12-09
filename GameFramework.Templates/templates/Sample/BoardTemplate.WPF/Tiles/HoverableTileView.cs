@@ -2,6 +2,7 @@ using System.Windows.Media;
 using GameFramework.Configuration;
 using GameFramework.Core.Position;
 using GameFramework.UI.WPF.Tiles.Static;
+using Color = System.Drawing.Color;
 
 namespace BoardTemplate.WPF.Tiles
 {

@@ -1,6 +1,8 @@
-﻿namespace BoardTemplate.Maui;
+﻿using Microsoft.Maui.Controls;
 
-public partial class AppShell : Shell
+namespace BoardTemplate.Maui;
+
+public partial class AppShell
 {
     public AppShell()
     {
