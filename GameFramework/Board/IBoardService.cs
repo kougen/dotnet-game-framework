@@ -1,11 +1,15 @@
 using GameFramework.Map;
 using GameFramework.Map.Source;
+using GameFramework.Visuals.Factories;
 using GameFramework.Visuals.Views;
 
 namespace GameFramework.Board
 {
     public interface IBoardService
     {
+        ITileViewFactory2D TileViewFactory2D { get; }
+        IMapViewFactory2D MapViewFactory2D { get; }
+        
         IMap2D? GetActiveMap();
         T? GetActiveMap<T>() where T : IMap2D<IMapSource2D, IMapView2D>;
         T? GetActiveMap<T, TSource, TView>() where T : IMap2D<TSource, TView>

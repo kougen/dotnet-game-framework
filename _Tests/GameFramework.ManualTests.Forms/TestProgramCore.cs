@@ -1,8 +1,5 @@
 ﻿using GameFramework.Impl.Core;
-using GameFramework.Objects;
-using GameFramework.Objects.Static;
 using GameFramework.UI.Forms.Core;
-using GameFramework.UI.Forms.Map;
 using Implementation.Module;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,7 +14,7 @@ namespace GameFramework.ManualTests.Forms
             core.RegisterServices("gf-manual-tests");
             core.RegisterOtherServices(new GameFrameworkCore(collection, source));
             
-            return collection.AddSingleton<IStaticObject2DConverter, FormsStaticObjectConverter>().BuildServiceProvider();
+            return collection.BuildServiceProvider();
         }
     }
 }

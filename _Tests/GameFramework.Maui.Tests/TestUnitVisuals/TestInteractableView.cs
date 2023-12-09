@@ -6,7 +6,8 @@ namespace GameFramework.Maui.Tests.TestUnitVisuals
 {
     public class TestInteractableView : AInteractableTileView
     {
-        public TestInteractableView(IPosition2D position, IConfigurationService2D configurationService) : base(position, configurationService, Colors.Blue, true)
+        public TestInteractableView(IPosition2D position, IConfigurationService2D configurationService) : base(position, configurationService, 
+            System.Drawing.Color.Blue, true)
         { }
     }
 }

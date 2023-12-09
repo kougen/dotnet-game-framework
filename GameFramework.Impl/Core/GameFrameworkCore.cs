@@ -4,6 +4,11 @@ using GameFramework.Core;
 using GameFramework.Core.Factories;
 using GameFramework.Impl.Configuration;
 using GameFramework.Impl.Core.Position.Factories;
+using GameFramework.Impl.Tiles;
+using GameFramework.Impl.Tiles.Factories;
+using GameFramework.Manager;
+using GameFramework.Objects.Static;
+using GameFramework.Tiles.Factories;
 using Implementation.Module;
 using Infrastructure.Application;
 using Infrastructure.Configuration.Factories;
@@ -33,7 +38,9 @@ namespace GameFramework.Impl.Core
             collection.AddSingleton<IPositionFactory, PositionFactory>();
             collection.AddSingleton<IGameManager, GameManager>();
             collection.AddSingleton<IBoardService, BoardService>();
-
+            collection.AddSingleton<IStaticObject2DConverter, DefaultStaticTileConverter>();
+            collection.AddSingleton<ITileFactory2D, DefaultTileFactory>();
+            
             return this;
         }
     }

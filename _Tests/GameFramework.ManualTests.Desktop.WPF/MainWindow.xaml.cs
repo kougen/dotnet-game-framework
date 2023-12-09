@@ -27,7 +27,7 @@ namespace GameFramework.ManualTests.Desktop.WPF
             InitializeComponent();
             var data = new int[5, 7];
             var mapView = new TestMapView();
-            var mapSource = new TestMapSource(GameApp2D.Current.Services, @"C:\Users\JoshH\OneDrive\File\Documents\test.json", data, new List<IInteractableObject2D>(), 7, 5);
+            var mapSource = new TestMapSource(GameApp2D.Current.Services, @"C:\Users\Dev\Documents\test\test.json", data, new List<IInteractableObject2D>(), 7, 5);
             _map = new TestMap(mapSource, mapView, new PositionFactory(), GameApp2D.Current.ConfigurationService);
             Map.Content = _map.View;
             

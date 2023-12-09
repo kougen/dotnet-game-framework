@@ -3,33 +3,10 @@ using GameFramework.Core.Position;
 
 namespace GameFramework.UI.Forms.Tiles.Static
 {
-    public class GeneralStaticTileView : AStaticFocusableTileView
+    public class GeneralStaticTileView : AStaticTileView
     {
-        public GeneralStaticTileView(IPosition2D position, IConfigurationService2D configurationService) : base(position, configurationService.Dimension, Color.Green)
+        public GeneralStaticTileView(IPosition2D position, IConfigurationService2D configurationService, Color color, bool hasBorder = false)
+            : base(position, configurationService.Dimension, color, hasBorder)
         { }
-        
-        public override void OnHovered()
-        {
-            base.OnHovered();
-            BackColor = Color.LightGreen;
-        }
-        
-        public override void OnHoverLost()
-        {
-            base.OnHoverLost();
-            BackColor = Color.Green;
-        }
-
-        public override void OnFocused()
-        {
-            base.OnFocused();
-            BorderStyle = IsTileFocused ? BorderStyle.FixedSingle : BorderStyle.None;
-        }
-
-        public override void OnFocusLost()
-        {
-            base.OnFocusLost();
-            BorderStyle = IsTileFocused ? BorderStyle.FixedSingle : BorderStyle.None;
-        }
     }
 }

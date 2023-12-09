@@ -1,4 +1,4 @@
-﻿namespace GameFramework.Maui.Tests.Views;
+﻿namespace BoardTemplate.Maui.Views;
 
 public partial class MainPage : ContentPage
 {

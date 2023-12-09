@@ -28,9 +28,7 @@ namespace GameFramework.Maui.Tests
             core.RegisterServices("gf-manual-tests");
             core.RegisterOtherServices(new GameFrameworkCore(collection, source));
 
-            return collection
-                .AddSingleton<IStaticObject2DConverter, StaticObjectConverter>()
-                .BuildServiceProvider();
+            return collection.BuildServiceProvider();
         }
     }
 }

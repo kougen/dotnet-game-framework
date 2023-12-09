@@ -1,7 +1,7 @@
 ﻿using GameFramework.Core.Position;
 using GameFramework.Visuals;
 
-namespace GameFramework.UI.Forms.Tiles
+namespace GameFramework.UI.Forms.Tiles.Static
 {
     public abstract class AStaticFocusableTileView : AStaticClickableTileView, IFocusable
     {
