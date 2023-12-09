@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardTemplate.Game", "BoardTemplate.Game\BoardTemplate.Game.csproj", "{037CF734-22A5-4F93-A57F-68156FED99B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoardTemplate.Game", "BoardTemplate.Game\BoardTemplate.Game.csproj", "{037CF734-22A5-4F93-A57F-68156FED99B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardTemplate.WPF", "BoardTemplate.WPF\BoardTemplate.WPF.csproj", "{2A28B971-86AF-4623-9D55-F33EFA964BF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoardTemplate.WPF", "BoardTemplate.WPF\BoardTemplate.WPF.csproj", "{2A28B971-86AF-4623-9D55-F33EFA964BF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardTemplate.Forms", "BoardTemplate.Forms\BoardTemplate.Forms.csproj", "{F670763F-4B6D-48D5-BBAA-4D9C321DDAA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoardTemplate.Forms", "BoardTemplate.Forms\BoardTemplate.Forms.csproj", "{F670763F-4B6D-48D5-BBAA-4D9C321DDAA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardTemplate.Game.Tests", "BoardTemplate.Game.Tests\BoardTemplate.Game.Tests.csproj", "{E522BE97-303A-4DC5-9BAE-407DB8D2CE5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoardTemplate.Game.Tests", "BoardTemplate.Game.Tests\BoardTemplate.Game.Tests.csproj", "{E522BE97-303A-4DC5-9BAE-407DB8D2CE5B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoardTemplate.Maui", "BoardTemplate.Maui\BoardTemplate.Maui.csproj", "{A2B51551-D740-4923-9BEB-C6F95A01FBC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,11 @@ Global
 		{E522BE97-303A-4DC5-9BAE-407DB8D2CE5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E522BE97-303A-4DC5-9BAE-407DB8D2CE5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E522BE97-303A-4DC5-9BAE-407DB8D2CE5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2B51551-D740-4923-9BEB-C6F95A01FBC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2B51551-D740-4923-9BEB-C6F95A01FBC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2B51551-D740-4923-9BEB-C6F95A01FBC5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A2B51551-D740-4923-9BEB-C6F95A01FBC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2B51551-D740-4923-9BEB-C6F95A01FBC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

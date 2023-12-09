@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using BoardTemplate.Game.Game.Map;
 using BoardTemplate.WPF.Map;
+using CommunityToolkit.Mvvm.Input;
 using GameFramework.Core.Factories;
 using GameFramework.GameFeedback;
 using GameFramework.Impl.GameFeedback;
@@ -10,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BoardTemplate.WPF.ViewModels
 {
-    public class MainWindowViewModel : IMainWindowViewModel
+    public partial class MainWindowViewModel : IMainWindowViewModel
     {
         public IGameMapView MapView { get; }
 
@@ -31,6 +34,12 @@ namespace BoardTemplate.WPF.ViewModels
             
             // NOTE: This is how you save the map.
             map.SaveProgress();
+        }
+
+        [RelayCommand]
+        private void OnKeyDown(KeyEventArgs e)
+        {
+            
         }
     }
 }

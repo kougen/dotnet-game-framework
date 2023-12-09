@@ -37,7 +37,7 @@ namespace GameFramework.UI.WPF.Map
             }
         }
         
-        protected WpfMapControl()
+        public WpfMapControl()
         {
             DisposableObjectViews = _disposableObjectViews = new ObservableCollection<IDisposableStaticObjectView>();
             MapObjects = _mapObjects = new ObservableCollection<IStaticObject2D>();

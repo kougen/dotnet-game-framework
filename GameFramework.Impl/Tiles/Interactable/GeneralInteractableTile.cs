@@ -18,7 +18,7 @@ namespace GameFramework.Impl.Tiles.Interactable
         
         public override void Step(IObject2D staticObject)
         {
-            
+            View.UpdatePosition(Position);
         }
         
         public override void Delete()
