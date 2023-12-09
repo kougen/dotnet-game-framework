@@ -8,7 +8,7 @@ namespace GameFramework.Impl.Tiles.Interactable
 {
     public class GeneralInteractableTile : AInteractableTile
     {
-        public GeneralInteractableTile(IPosition2D position, IConfigurationService2D configurationService, IMovingObjectView view, bool isObstacle = false) : base(position, configurationService, view)
+        public GeneralInteractableTile(IPosition2D position, IConfigurationService2D configurationService, IMovingObjectView view, bool isObstacle = false) : base(position, configurationService, view, isObstacle)
         { }
         
         public override void SteppedOn(IInteractableObject2D interactableObject2D)

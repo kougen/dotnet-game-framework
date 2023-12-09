@@ -3,6 +3,7 @@ using System.Windows.Media;
 using GameFramework.Configuration;
 using GameFramework.Core.Position;
 using GameFramework.Visuals;
+using Color = System.Drawing.Color;
 
 namespace GameFramework.UI.WPF.Tiles.Static
 {
@@ -16,7 +17,7 @@ namespace GameFramework.UI.WPF.Tiles.Static
         public virtual void OnFocused()
         {
             IsTileFocused = true;
-            Stroke = new SolidColorBrush(Colors.Brown);
+            Stroke = new SolidColorBrush(ConvertColor(Color.Brown));
             Panel.SetZIndex(this, 1);
             StrokeThickness = 1.5;
         }
@@ -24,7 +25,7 @@ namespace GameFramework.UI.WPF.Tiles.Static
         public virtual void OnFocusLost()
         {
             IsTileFocused = false;
-            Stroke = new SolidColorBrush(BorderColor);
+            Stroke = new SolidColorBrush(ConvertColor(BorderColor));
             Panel.SetZIndex(this, -1);
             StrokeThickness = 1;
         }

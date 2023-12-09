@@ -8,7 +8,7 @@ using GameFramework.Visuals.Views;
 
 namespace GameFramework.UI.Forms.Map
 {
-    public class FormsMapControl : Panel, IMapView2D, IViewDisposedSubscriber
+    public class FormsMapControl : Panel, IMapView2D, IViewDisposedSubscriber, IViewLoadedSubscriber
     {
         private ObservableCollection<IDisposableStaticObjectView> _disposableViews;
         private ObservableCollection<IStaticObject2D> _mapObjects;
@@ -87,9 +87,11 @@ namespace GameFramework.UI.Forms.Map
             {
                 if (entityView is Control shape && !Controls.Contains(shape))
                 {
+                    entityView.Attach(this as IViewLoadedSubscriber);
+                    entityView.Attach(this as IViewDisposedSubscriber);
+                    
                     Controls.Add(shape);
                 }
-                entityView.Attach(this);
             }
         }
         
@@ -101,6 +103,14 @@ namespace GameFramework.UI.Forms.Map
                 {
                     Controls.Add(shape);
                 } 
+            }
+        }
+
+        public void OnLoaded(IMovingObjectView view)
+        {
+            if (view is Control shape && !Controls.Contains(shape))
+            {
+                Controls.Add(shape);
             }
         }
     }

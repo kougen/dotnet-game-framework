@@ -1,9 +1,8 @@
 using GameFramework.GameFeedback;
-using GameFramework.Manager;
 using GameFramework.Manager.State;
 using Infrastructure.Time;
 
-namespace GameFramework.Core
+namespace GameFramework.Manager
 {
     public interface IGameManager
     {

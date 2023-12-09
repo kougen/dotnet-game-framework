@@ -12,7 +12,7 @@ public abstract class AInteractableTileView : AStaticTileView, IMovingObjectView
     protected ICollection<IViewDisposedSubscriber> OnDisposedSubscribers = new List<IViewDisposedSubscriber>();
     private bool _isDisposed;
 
-    protected AInteractableTileView(IPosition2D position, IConfigurationService2D configurationService, Color fillColor, bool hasBorder) 
+    protected AInteractableTileView(IPosition2D position, IConfigurationService2D configurationService, System.Drawing.Color fillColor, bool hasBorder) 
         : base(position, configurationService, fillColor, hasBorder)
     { }
     
@@ -44,7 +44,7 @@ public abstract class AInteractableTileView : AStaticTileView, IMovingObjectView
     {
         foreach (var subscriber in OnLoadedSubscribers)
         {
-            subscriber.OnLoaded();
+            subscriber.OnLoaded(this);
         }
     }
     

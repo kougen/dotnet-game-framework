@@ -1,6 +1,7 @@
 using GameFramework.Board;
 using GameFramework.Map;
 using GameFramework.Map.Source;
+using GameFramework.Visuals.Factories;
 using GameFramework.Visuals.Views;
 
 namespace GameFramework.Impl
@@ -8,6 +9,15 @@ namespace GameFramework.Impl
     internal class BoardService : IBoardService
     {
         private object? _activeMap;
+
+        public ITileViewFactory2D TileViewFactory2D { get; }
+        public IMapViewFactory2D MapViewFactory2D { get; }
+        
+        public BoardService(ITileViewFactory2D tileViewFactory2D, IMapViewFactory2D mapViewFactory2D)
+        {
+            TileViewFactory2D = tileViewFactory2D ?? throw new ArgumentNullException(nameof(tileViewFactory2D));
+            MapViewFactory2D = mapViewFactory2D ?? throw new ArgumentNullException(nameof(mapViewFactory2D));
+        }
 
         public IMap2D? GetActiveMap()
         {

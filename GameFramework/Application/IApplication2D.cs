@@ -1,6 +1,7 @@
 using GameFramework.Board;
 using GameFramework.Configuration;
 using GameFramework.Core;
+using GameFramework.Manager;
 
 namespace GameFramework.Application
 {

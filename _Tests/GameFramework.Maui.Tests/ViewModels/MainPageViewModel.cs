@@ -3,12 +3,11 @@ using GameFramework.GameFeedback;
 using GameFramework.Impl.Core.Position;
 using GameFramework.Impl.GameFeedback;
 using GameFramework.Impl.Map.Source;
-using GameFramework.Map;
 using GameFramework.Maui.Tests.TestUnitVisuals;
 using GameFramework.Objects.Interactable;
 using GameFramework.UI.Maui.Core;
 using GameFramework.UI.Maui.Map;
-using Infrastructure.Time;
+using Color = System.Drawing.Color;
 
 namespace GameFramework.Maui.Tests.ViewModels
 {
@@ -22,7 +21,8 @@ namespace GameFramework.Maui.Tests.ViewModels
             const int HEIGHT = 5;
             var mapSize = new int[HEIGHT, WIDTH];
 
-            var unitView = new TestInteractableView(new Position2D(1, 1), GameApp2D.Current.ConfigurationService);
+            var unitView = GameApp2D.Current.BoardService.TileViewFactory2D
+                .CreateInteractableTileView2D(new Position2D(1, 1), Color.Blue);
             var unit = new TestInteractableObject(unitView, new Position2D(1, 1));
 
             // NOTE: This is a test map, not the actual map, it has only ground types.

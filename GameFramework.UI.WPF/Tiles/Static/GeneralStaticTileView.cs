@@ -1,4 +1,4 @@
-using System.Windows.Media;
+using System.Drawing;
 using GameFramework.Configuration;
 using GameFramework.Core.Position;
 

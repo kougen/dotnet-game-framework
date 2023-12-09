@@ -1,11 +1,7 @@
 using System.Diagnostics;
-using GameFramework.Configuration;
-using GameFramework.Core;
 using GameFramework.GameFeedback;
 using GameFramework.Manager;
 using GameFramework.Manager.State;
-using GameFramework.Map;
-using GameFramework.Visuals;
 using Infrastructure.Time;
 
 namespace GameFramework.Impl.Core
@@ -16,7 +12,7 @@ namespace GameFramework.Impl.Core
 
         public GameState State { get; private set; }
         public IStopwatch Timer { get; }
-        
+
         public GameManager(IStopwatch stopwatch)
         {
             Timer = stopwatch ?? throw new ArgumentNullException(nameof(stopwatch));

@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using GameFramework.Impl.Core;
 using GameFramework.Objects.Static;
+using GameFramework.UI.Maui.Core;
 using Implementation.Module;
 
 namespace GameFramework.Maui.Tests
@@ -27,10 +28,9 @@ namespace GameFramework.Maui.Tests
             var core = new CoreModule(collection, source);
             core.RegisterServices("gf-manual-tests");
             core.RegisterOtherServices(new GameFrameworkCore(collection, source));
+            core.RegisterOtherServices(new MauiGameFramework(collection, source));
 
-            return collection
-                .AddSingleton<IStaticObject2DConverter, StaticObjectConverter>()
-                .BuildServiceProvider();
+            return collection.BuildServiceProvider();
         }
     }
 }
