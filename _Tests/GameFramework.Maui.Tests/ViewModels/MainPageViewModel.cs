@@ -3,12 +3,10 @@ using GameFramework.GameFeedback;
 using GameFramework.Impl.Core.Position;
 using GameFramework.Impl.GameFeedback;
 using GameFramework.Impl.Map.Source;
-using GameFramework.Map;
 using GameFramework.Maui.Tests.TestUnitVisuals;
 using GameFramework.Objects.Interactable;
 using GameFramework.UI.Maui.Core;
 using GameFramework.UI.Maui.Map;
-using Infrastructure.Time;
 using Color = System.Drawing.Color;
 
 namespace GameFramework.Maui.Tests.ViewModels
