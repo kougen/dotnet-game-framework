@@ -53,11 +53,16 @@ namespace GameFramework.UI.Forms.Map
             _mouseHandlers.Add(mouseHandler);
         }
 
+        public virtual void Clear()
+        {
+            Invoke(() => Controls.Clear());
+        }
+
         public virtual void OnViewDisposed(IDisposableStaticObjectView view)
         {
             if (view is Control control)
             {
-                Controls.Remove(control);
+                Invoke(() => Controls.Remove(control));
             }
         }
 
@@ -89,8 +94,8 @@ namespace GameFramework.UI.Forms.Map
                 {
                     entityView.Attach(this as IViewLoadedSubscriber);
                     entityView.Attach(this as IViewDisposedSubscriber);
-                    
-                    Controls.Add(shape);
+
+                    Invoke(() => Controls.Add(shape));
                 }
             }
         }
@@ -101,16 +106,16 @@ namespace GameFramework.UI.Forms.Map
             {
                 if (mapObject.View is Control shape && !Controls.Contains(shape))
                 {
-                    Controls.Add(shape);
+                    Invoke(() => Controls.Add(shape));
                 } 
             }
         }
 
-        public void OnLoaded(IMovingObjectView view)
+        public virtual void OnLoaded(IMovingObjectView view)
         {
             if (view is Control shape && !Controls.Contains(shape))
             {
-                Controls.Add(shape);
+                Invoke(() => Controls.Add(shape));
             }
         }
     }

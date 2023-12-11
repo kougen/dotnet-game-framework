@@ -11,7 +11,7 @@ namespace GameFramework.UI.Maui.Map
         private ObservableCollection<IDisposableStaticObjectView> _disposableObjectViews;
         private ObservableCollection<IStaticObject2D> _mapObjects;
         protected readonly ICollection<IMouseHandler> MouseHandlers = new List<IMouseHandler>();
-        
+
         public ObservableCollection<IDisposableStaticObjectView> DisposableObjectViews
         {
             get => _disposableObjectViews;
@@ -39,7 +39,7 @@ namespace GameFramework.UI.Maui.Map
             DisposableObjectViews.CollectionChanged += (_, _) => UpdateEntities();
             MapObjects.CollectionChanged += (_, _) => UpdateMapObjects();
         }
-        
+
         public void Attach(IMouseHandler mouseHandler)
         {
             MouseHandlers.Add(mouseHandler);
@@ -49,31 +49,37 @@ namespace GameFramework.UI.Maui.Map
         {
             if (view is BoxView shape)
             {
-                Children.Remove(shape);
+                Dispatcher.Dispatch(() => Children.Remove(shape));
             }
         }
-        
-        private void UpdateEntities()
+
+        protected virtual void UpdateEntities()
         {
             foreach (var entityView in DisposableObjectViews)
             {
                 if (entityView is BoxView shape && !Children.Contains(shape))
                 {
-                    Children.Add(shape);
+                    Dispatcher.Dispatch(() => Children.Add(shape));
                 }
+
                 entityView.Attach(this);
             }
         }
-        
-        private void UpdateMapObjects()
+
+        protected virtual void UpdateMapObjects()
         {
             foreach (var mapObject in MapObjects)
             {
                 if (mapObject.View is BoxView shape && !Children.Contains(shape))
                 {
-                    Children.Add(shape);
-                } 
+                    Dispatcher.Dispatch(() => Children.Add(shape));
+                }
             }
+        }
+
+        public new virtual void Clear()
+        {
+            Dispatcher.Dispatch(() => Children.Clear());
         }
     }
 }
