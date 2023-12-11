@@ -10,5 +10,6 @@ namespace GameFramework.Visuals.Views
         public ObservableCollection<IStaticObject2D> MapObjects { get; set; }
         public ObservableCollection<IDisposableStaticObjectView> DisposableObjectViews { get; set; }
         void Attach(IMouseHandler mouseHandler);
+        void Clear();
     }
 }

@@ -16,7 +16,7 @@ namespace GameFramework.UI.WPF.Map
         private ObservableCollection<IDisposableStaticObjectView> _disposableObjectViews;
         private ObservableCollection<IStaticObject2D> _mapObjects;
         private readonly ICollection<IMouseHandler> _mouseHandlers = new List<IMouseHandler>();
-        
+
         public ObservableCollection<IDisposableStaticObjectView> DisposableObjectViews
         {
             get => _disposableObjectViews;
@@ -36,7 +36,7 @@ namespace GameFramework.UI.WPF.Map
                 UpdateMapObjects();
             }
         }
-        
+
         public WpfMapControl()
         {
             DisposableObjectViews = _disposableObjectViews = new ObservableCollection<IDisposableStaticObjectView>();
@@ -44,20 +44,25 @@ namespace GameFramework.UI.WPF.Map
             DisposableObjectViews.CollectionChanged += (_, _) => UpdateEntities();
             MapObjects.CollectionChanged += (_, _) => UpdateMapObjects();
         }
-        
+
         public void Attach(IMouseHandler mouseHandler)
         {
             _mouseHandlers.Add(mouseHandler);
+        }
+
+        public virtual void Clear()
+        {
+            Dispatcher.BeginInvoke(() => Children.Clear());
         }
 
         public void OnViewDisposed(IDisposableStaticObjectView view)
         {
             if (view is Shape shape)
             {
-                Children.Remove(shape);
+                Dispatcher.BeginInvoke(() => Children.Remove(shape));
             }
         }
-        
+
         protected override void OnPreviewMouseMove(MouseEventArgs e)
         {
             base.OnPreviewMouseMove(e);
@@ -67,7 +72,7 @@ namespace GameFramework.UI.WPF.Map
                 mouseHandler.OnMouseMove(new ScreenSpacePosition(position.X, position.Y));
             }
         }
-        
+
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
@@ -77,27 +82,28 @@ namespace GameFramework.UI.WPF.Map
                 mouseHandler.OnMouseLeftClick(new ScreenSpacePosition(position.X, position.Y));
             }
         }
-        
+
         private void UpdateEntities()
         {
             foreach (var entityView in DisposableObjectViews)
             {
                 if (entityView is Shape shape && !Children.Contains(shape))
                 {
-                    Children.Add(shape);
+                    Dispatcher.BeginInvoke(() => Children.Add(shape));
                 }
+
                 entityView.Attach(this);
             }
         }
-        
+
         private void UpdateMapObjects()
         {
             foreach (var mapObject in MapObjects)
             {
                 if (mapObject.View is Shape shape && !Children.Contains(shape))
                 {
-                    Children.Add(shape);
-                } 
+                    Dispatcher.BeginInvoke(() => Children.Add(shape));
+                }
             }
         }
     }
