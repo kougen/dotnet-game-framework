@@ -14,10 +14,12 @@ namespace GameFramework.Impl.Configuration
             get => GetDimension();
             set => _configurationQuery.SetAttribute("config.dimension", value);
         }
+      
 
         public ConfigurationService2D(IApplicationSettings applicationSettings, IConfigurationQueryFactory configurationQueryFactory)
         {
             _configurationQuery = configurationQueryFactory.CreateConfigurationQuery(Path.Join(applicationSettings.ConfigurationFolder, "game-settings.json"));
+
         }
 
         private int GetDimension()

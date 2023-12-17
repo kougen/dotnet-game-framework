@@ -24,9 +24,9 @@ internal class DefaultStaticTileConverter : IStaticObject2DConverter
             
         return tileType switch
         {
-            TileType.Ground => _tileFactory2D.CreateStaticTile2D(position, Color.Green),
-            TileType.Hole => _tileFactory2D.CreateStaticTile2D(position, Color.Black),
-            TileType.Wall => _tileFactory2D.CreateStaticTile2D(position, Color.Gray),
+            TileType.Ground => _tileFactory2D.CreateClickableStaticObject2D(position, Color.Green),
+            TileType.Hole => _tileFactory2D.CreateStaticObject2D(position, Color.Black),
+            TileType.Wall => _tileFactory2D.CreateStaticObject2D(position, Color.Gray),
             _ => throw new ArgumentException($"Unknown tile type: {tileType}")
         };
     }

@@ -1,5 +1,5 @@
 using System.Text;
-using GameFramework.Core.Factories;
+using GameFramework.Core.Position.Factories;
 using GameFramework.Objects;
 using GameFramework.Objects.Interactable;
 using GameFramework.Objects.Static;
@@ -14,7 +14,7 @@ namespace GameFramework.Impl.Map.Source
     public class JsonMapSource2D<T> : AMapSource2D where T : struct, Enum
     {
         public sealed override IEnumerable<IStaticObject2D> MapObjects { get; protected set; }
-        public sealed override ICollection<IInteractableObject2D> Units { get; protected set; }
+        public sealed override ICollection<IInteractableObject2D> Interactables { get; protected set; }
         
         protected readonly IReader Reader;
         protected readonly IConfigurationQuery Query;
@@ -22,9 +22,9 @@ namespace GameFramework.Impl.Map.Source
         protected readonly IStaticObject2DConverter TileConverter;
         protected readonly string MapDataBase64;
 
-        protected JsonMapSource2D(IServiceProvider provider, string filePath, int[,] data, ICollection<IInteractableObject2D> units, int col, int row)
+        protected JsonMapSource2D(IServiceProvider provider, string filePath, int[,] data, ICollection<IInteractableObject2D> interactables, int col, int row)
         {
-            Units = units ?? throw new ArgumentNullException(nameof(units));
+            Interactables = interactables ?? throw new ArgumentNullException(nameof(interactables));
             filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
             Query = provider.GetRequiredService<IConfigurationQueryFactory>().CreateConfigurationQuery(filePath);
             PositionFactory = provider.GetRequiredService<IPositionFactory>();
@@ -48,15 +48,15 @@ namespace GameFramework.Impl.Map.Source
             RowCount = Query.GetIntAttribute("row") ??  throw new InvalidOperationException("Draft config is missing a 'col'");
             MapDataBase64 = Query.GetStringAttribute("data") ??  throw new InvalidOperationException("Draft config is missing the 'data'");
             
-            Units = Query.GetObject<List<IInteractableObject2D>>("units") ?? new List<IInteractableObject2D>();
+            Interactables = Query.GetObject<List<IInteractableObject2D>>("units") ?? new List<IInteractableObject2D>();
             MapObjects = ConvertDataToObjects();
         }
         
         public override void SaveLayout(IEnumerable<IStaticObject2D> updatedMapObjects, IEnumerable<IInteractableObject2D> updatedUnits)
         {
-            Units = updatedUnits.ToList();
+            Interactables = updatedUnits.ToList();
             MapObjects = updatedMapObjects;
-            Query.SetObject("units", Units);
+            Query.SetObject("units", Interactables);
         }
         
         protected IEnumerable<IStaticObject2D> ConvertDataToObjects()
@@ -107,7 +107,13 @@ namespace GameFramework.Impl.Map.Source
         public JsonMapSource2D(IServiceProvider provider, string filePath, int[,] data, ICollection<IInteractableObject2D> units, int col, int row) : base(provider, filePath, data, units, col, row)
         { }
         
+        public JsonMapSource2D(IServiceProvider provider, int[,] data, ICollection<IInteractableObject2D> units, int col, int row) : base(provider, @".\temp.json", data, units, col, row)
+        { }
+        
         public JsonMapSource2D(IServiceProvider provider, string filePath) : base(provider, filePath)
+        { }
+        
+        public JsonMapSource2D(IServiceProvider provider) : base(provider, @".\temp.json")
         { }
     }
 }

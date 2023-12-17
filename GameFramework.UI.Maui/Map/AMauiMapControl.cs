@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using GameFramework.Objects.Interactable;
 using GameFramework.Objects.Static;
 using GameFramework.Visuals.Handlers;
 using GameFramework.Visuals.Tiles;
@@ -8,16 +9,16 @@ namespace GameFramework.UI.Maui.Map
 {
     public abstract class AMauiMapControl : AbsoluteLayout, IMapView2D, IViewDisposedSubscriber
     {
-        private ObservableCollection<IDisposableStaticObjectView> _disposableObjectViews;
+        private ObservableCollection<IInteractableObject2D> _interactableObjects;
         private ObservableCollection<IStaticObject2D> _mapObjects;
         protected readonly ICollection<IMouseHandler> MouseHandlers = new List<IMouseHandler>();
 
-        public ObservableCollection<IDisposableStaticObjectView> DisposableObjectViews
+        public ObservableCollection<IInteractableObject2D> InteractableObjects
         {
-            get => _disposableObjectViews;
+            get => _interactableObjects;
             set
             {
-                _disposableObjectViews = value;
+                _interactableObjects = value;
                 UpdateEntities();
             }
         }
@@ -34,9 +35,9 @@ namespace GameFramework.UI.Maui.Map
 
         protected AMauiMapControl()
         {
-            DisposableObjectViews = _disposableObjectViews = new ObservableCollection<IDisposableStaticObjectView>();
+            InteractableObjects = _interactableObjects = new ObservableCollection<IInteractableObject2D>();
             MapObjects = _mapObjects = new ObservableCollection<IStaticObject2D>();
-            DisposableObjectViews.CollectionChanged += (_, _) => UpdateEntities();
+            InteractableObjects.CollectionChanged += (_, _) => UpdateEntities();
             MapObjects.CollectionChanged += (_, _) => UpdateMapObjects();
         }
 
@@ -45,24 +46,24 @@ namespace GameFramework.UI.Maui.Map
             MouseHandlers.Add(mouseHandler);
         }
 
-        public virtual void OnViewDisposed(IDisposableStaticObjectView view)
+        public virtual void OnViewDisposed(IObjectView2D view)
         {
             if (view is BoxView shape)
             {
-                Dispatcher.Dispatch(() => Children.Remove(shape));
+                MainThread.BeginInvokeOnMainThread(() => Children.Remove(shape));
             }
         }
 
         protected virtual void UpdateEntities()
         {
-            foreach (var entityView in DisposableObjectViews)
+            foreach (var interactableObject in InteractableObjects)
             {
-                if (entityView is BoxView shape && !Children.Contains(shape))
+                if (interactableObject.View is BoxView shape && !Children.Contains(shape))
                 {
-                    Dispatcher.Dispatch(() => Children.Add(shape));
+                    MainThread.BeginInvokeOnMainThread(() => Children.Add(shape));
                 }
 
-                entityView.Attach(this);
+                interactableObject.View.Attach(this);
             }
         }
 
@@ -72,14 +73,14 @@ namespace GameFramework.UI.Maui.Map
             {
                 if (mapObject.View is BoxView shape && !Children.Contains(shape))
                 {
-                    Dispatcher.Dispatch(() => Children.Add(shape));
+                    MainThread.BeginInvokeOnMainThread(() => Children.Add(shape));
                 }
             }
         }
 
         public new virtual void Clear()
         {
-            Dispatcher.Dispatch(() => Children.Clear());
+            MainThread.BeginInvokeOnMainThread(() => Children.Clear());
         }
     }
 }

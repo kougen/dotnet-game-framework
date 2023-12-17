@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using GameFramework.Impl.Core.Position;
+using GameFramework.Objects.Interactable;
 using GameFramework.Objects.Static;
 using GameFramework.UI.Forms.MouseEvents;
 using GameFramework.Visuals.Handlers;
@@ -10,16 +11,16 @@ namespace GameFramework.UI.Forms.Map
 {
     public class FormsMapControl : Panel, IMapView2D, IViewDisposedSubscriber, IViewLoadedSubscriber
     {
-        private ObservableCollection<IDisposableStaticObjectView> _disposableViews;
+        private ObservableCollection<IInteractableObject2D> _interactableObjects;
         private ObservableCollection<IStaticObject2D> _mapObjects;
         private readonly ICollection<IMouseHandler> _mouseHandlers = new List<IMouseHandler>();
         
-        public ObservableCollection<IDisposableStaticObjectView> DisposableObjectViews
+        public ObservableCollection<IInteractableObject2D> InteractableObjects
         {
-            get => _disposableViews;
+            get => _interactableObjects;
             set
             {
-                _disposableViews = value;
+                _interactableObjects = value;
                 UpdateEntities();
             }
         }
@@ -41,9 +42,9 @@ namespace GameFramework.UI.Forms.Map
             gmh.TheLeftButtonDown += OnMouseDown;
             System.Windows.Forms.Application.AddMessageFilter(gmh);
             
-            DisposableObjectViews = _disposableViews = new ObservableCollection<IDisposableStaticObjectView>();
+            InteractableObjects = _interactableObjects = new ObservableCollection<IInteractableObject2D>();
             MapObjects = _mapObjects = new ObservableCollection<IStaticObject2D>();
-            DisposableObjectViews.CollectionChanged += (_, _) => UpdateEntities();
+            InteractableObjects.CollectionChanged += (_, _) => UpdateEntities();
             MapObjects.CollectionChanged += (_, _) => UpdateMapObjects();
             AutoSize = true;
         }
@@ -58,7 +59,7 @@ namespace GameFramework.UI.Forms.Map
             Invoke(() => Controls.Clear());
         }
 
-        public virtual void OnViewDisposed(IDisposableStaticObjectView view)
+        public virtual void OnViewDisposed(IObjectView2D view)
         {
             if (view is Control control)
             {
@@ -88,12 +89,12 @@ namespace GameFramework.UI.Forms.Map
 
         private void UpdateEntities()
         {
-            foreach (var entityView in DisposableObjectViews)
+            foreach (var interactableObject in InteractableObjects)
             {
-                if (entityView is Control shape && !Controls.Contains(shape))
+                if (interactableObject.View is Control shape && !Controls.Contains(shape))
                 {
-                    entityView.Attach(this as IViewLoadedSubscriber);
-                    entityView.Attach(this as IViewDisposedSubscriber);
+                    interactableObject.View.Attach(this as IViewLoadedSubscriber);
+                    interactableObject.View.Attach(this as IViewDisposedSubscriber);
 
                     Invoke(() => Controls.Add(shape));
                 }
@@ -111,7 +112,7 @@ namespace GameFramework.UI.Forms.Map
             }
         }
 
-        public virtual void OnLoaded(IMovingObjectView view)
+        public virtual void OnLoaded(IObjectView2D view)
         {
             if (view is Control shape && !Controls.Contains(shape))
             {

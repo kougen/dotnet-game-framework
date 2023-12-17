@@ -1,5 +1,5 @@
 ﻿using GameFramework.Configuration;
-using GameFramework.Core.Factories;
+using GameFramework.Core.Position.Factories;
 using GameFramework.Impl.Map;
 using GameFramework.Map;
 using GameFramework.Map.Source;

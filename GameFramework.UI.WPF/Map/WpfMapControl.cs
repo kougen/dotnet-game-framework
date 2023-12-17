@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using GameFramework.Impl.Core.Position;
+using GameFramework.Objects.Interactable;
 using GameFramework.Objects.Static;
 using GameFramework.Visuals.Handlers;
 using GameFramework.Visuals.Tiles;
@@ -13,16 +14,16 @@ namespace GameFramework.UI.WPF.Map
 {
     public class WpfMapControl : Canvas, IMapView2D, IViewDisposedSubscriber
     {
-        private ObservableCollection<IDisposableStaticObjectView> _disposableObjectViews;
+        private ObservableCollection<IInteractableObject2D> _interactableObjects;
         private ObservableCollection<IStaticObject2D> _mapObjects;
         private readonly ICollection<IMouseHandler> _mouseHandlers = new List<IMouseHandler>();
 
-        public ObservableCollection<IDisposableStaticObjectView> DisposableObjectViews
+        public ObservableCollection<IInteractableObject2D> InteractableObjects
         {
-            get => _disposableObjectViews;
+            get => _interactableObjects;
             set
             {
-                _disposableObjectViews = value;
+                _interactableObjects = value;
                 UpdateEntities();
             }
         }
@@ -39,9 +40,9 @@ namespace GameFramework.UI.WPF.Map
 
         public WpfMapControl()
         {
-            DisposableObjectViews = _disposableObjectViews = new ObservableCollection<IDisposableStaticObjectView>();
+            InteractableObjects = _interactableObjects = new ObservableCollection<IInteractableObject2D>();
             MapObjects = _mapObjects = new ObservableCollection<IStaticObject2D>();
-            DisposableObjectViews.CollectionChanged += (_, _) => UpdateEntities();
+            InteractableObjects.CollectionChanged += (_, _) => UpdateEntities();
             MapObjects.CollectionChanged += (_, _) => UpdateMapObjects();
         }
 
@@ -55,7 +56,7 @@ namespace GameFramework.UI.WPF.Map
             Dispatcher.BeginInvoke(() => Children.Clear());
         }
 
-        public void OnViewDisposed(IDisposableStaticObjectView view)
+        public void OnViewDisposed(IObjectView2D view)
         {
             if (view is Shape shape)
             {
@@ -85,14 +86,14 @@ namespace GameFramework.UI.WPF.Map
 
         private void UpdateEntities()
         {
-            foreach (var entityView in DisposableObjectViews)
+            foreach (var interactableObject in InteractableObjects)
             {
-                if (entityView is Shape shape && !Children.Contains(shape))
+                if (interactableObject.View is Shape shape && !Children.Contains(shape))
                 {
                     Dispatcher.BeginInvoke(() => Children.Add(shape));
                 }
 
-                entityView.Attach(this);
+                interactableObject.View.Attach(this);
             }
         }
 

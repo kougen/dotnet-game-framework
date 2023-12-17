@@ -5,22 +5,23 @@ using GameFramework.Impl.Tiles.Interactable;
 using GameFramework.Manager;
 using GameFramework.ManualTests.Forms.Map;
 using GameFramework.Objects;
+using GameFramework.Visuals.Tiles;
 using GameFramework.Visuals.Views;
 using Infrastructure.Time.Listeners;
 
 namespace GameFramework.ManualTests.Forms.TestUnitVisuals
 {
-    public class TestInteractableObject : GeneralInteractableTile, ITickListener
+    public class TestInteractableObject : InteractableTile, ITickListener
     {
         public TimeSpan ElapsedTime { get; set; }
         
-        public TestInteractableObject(IPosition2D position, IMovingObjectView view) : base(position, Program.Application.ConfigurationService, view, false)
+        public TestInteractableObject(IPosition2D position) : base(position, Program.Application.BoardService, Color.Blue)
         { }
         
         public override void Step(IObject2D staticObject)
         {
             Position = staticObject.Position;
-            View.UpdatePosition(Position);
+            View.Position2D = Position;
         }
 
         public void RaiseTick(int round)

@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+enum TileType {
+    Ground,
+    Wall,
+    Hole
+}
+
+interface IClickable {
+}
+
+interface IHoverable {
+}
+
+interface IFocusable {
+}
+
+interface IStaticObjectView2D {
+}
+
+interface IMovingObjectView {
+}
+
+interface IObject2D {
+}
+
+interface IInteractableObject2D extends IObject2D {
+}
+
+interface IStaticObject2D extends IObject2D {
+}
+
+class GeneralClickableInteractableObject2D implements IInteractableObject2D, IClickable {
+}
+
+class GeneralHoverableInteractableObject2D implements IInteractableObject2D, IHoverable {
+}
+
+class GeneralFocusableInteractableObject2D implements IInteractableObject2D, IFocusable {
+}
+
+@enduml

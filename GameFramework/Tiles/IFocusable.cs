@@ -1,3 +1,5 @@
+using GameFramework.Tiles;
+
 namespace GameFramework.Visuals
 {
     public interface IFocusable : IClickable

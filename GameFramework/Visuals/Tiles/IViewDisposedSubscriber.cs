@@ -4,6 +4,6 @@ namespace GameFramework.Visuals.Tiles
 {
     public interface IViewDisposedSubscriber
     {
-        void OnViewDisposed(IDisposableStaticObjectView view);
+        void OnViewDisposed(IObjectView2D view);
     }
 }

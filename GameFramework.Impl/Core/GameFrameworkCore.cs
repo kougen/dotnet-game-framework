@@ -1,7 +1,7 @@
 ﻿using GameFramework.Board;
 using GameFramework.Configuration;
 using GameFramework.Core;
-using GameFramework.Core.Factories;
+using GameFramework.Core.Position.Factories;
 using GameFramework.Impl.Configuration;
 using GameFramework.Impl.Core.Position.Factories;
 using GameFramework.Impl.Tiles;
@@ -28,13 +28,14 @@ namespace GameFramework.Impl.Core
 
         public override IModule RegisterServices(IServiceCollection collection)
         {
-            collection.AddSingleton<IConfigurationService2D, ConfigurationService2D>(p =>
-            {
-                var appSettings = p.GetRequiredService<IApplicationSettings>();
-                var confQueryFactory = p.GetRequiredService<IConfigurationQueryFactory>();
-                return new ConfigurationService2D(appSettings, confQueryFactory);
-            });
+            // collection.AddSingleton<IConfigurationService2D, ConfigurationService2D>(p =>
+            // {
+            //     var appSettings = p.GetRequiredService<IApplicationSettings>();
+            //     var confQueryFactory = p.GetRequiredService<IConfigurationQueryFactory>();
+            //     return new ConfigurationService2D(appSettings, confQueryFactory);
+            // });
 
+            collection.AddSingleton<IConfigurationService2D, ConfigurationService2D>();
             collection.AddSingleton<IPositionFactory, PositionFactory>();
             collection.AddSingleton<IGameManager, GameManager>();
             collection.AddSingleton<IBoardService, BoardService>();

@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 using GameFramework.Configuration;
-using GameFramework.Core.Factories;
+using GameFramework.Core.Position.Factories;
 using GameFramework.Impl.Map;
 
 namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas

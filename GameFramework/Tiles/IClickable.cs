@@ -1,4 +1,4 @@
-namespace GameFramework.Visuals
+namespace GameFramework.Tiles
 {
     public interface IClickable
     {

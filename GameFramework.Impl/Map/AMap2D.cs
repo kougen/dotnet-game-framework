@@ -1,9 +1,9 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using GameFramework.Configuration;
-using GameFramework.Core.Factories;
 using GameFramework.Core.Motion;
 using GameFramework.Core.Position;
+using GameFramework.Core.Position.Factories;
 using GameFramework.Map;
 using GameFramework.Map.Source;
 using GameFramework.Objects;
@@ -12,6 +12,7 @@ using GameFramework.Objects.Static;
 using GameFramework.Tiles;
 using GameFramework.Visuals;
 using GameFramework.Visuals.Handlers;
+using GameFramework.Visuals.Tiles;
 using GameFramework.Visuals.Views;
 
 namespace GameFramework.Impl.Map
@@ -42,13 +43,13 @@ namespace GameFramework.Impl.Map
             View = view ?? throw new ArgumentNullException(nameof(view));
             SizeX = MapSource.ColumnCount;
             SizeY = MapSource.RowCount;
-            _units = new ObservableCollection<IInteractableObject2D>(MapSource.Units);
-            View.DisposableObjectViews = new ObservableCollection<IDisposableStaticObjectView>(Interactables.Select(u => u.View));
+            _units = new ObservableCollection<IInteractableObject2D>(MapSource.Interactables);
+            View.InteractableObjects = new ObservableCollection<IInteractableObject2D>(Interactables);
             _mapObjects = new ObservableCollection<IStaticObject2D>(MapSource.MapObjects);
             View.MapObjects = new ObservableCollection<IStaticObject2D>(MapObjects);
             SelectedInteractables = new List<IInteractableObject2D>();
 
-            _units.CollectionChanged += (_, _) => View.DisposableObjectViews = new ObservableCollection<IDisposableStaticObjectView>(Interactables.Select(u => u.View));
+            _units.CollectionChanged += (_, _) => View.InteractableObjects = new ObservableCollection<IInteractableObject2D>(Interactables);
             _mapObjects.CollectionChanged += (_, _) => View.MapObjects = new ObservableCollection<IStaticObject2D>(MapObjects);
             View.Attach(this);
         }

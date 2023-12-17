@@ -1,4 +1,4 @@
-using GameFramework.Core.Factories;
+using GameFramework.Core.Position.Factories;
 using GameFramework.GameFeedback;
 using GameFramework.Impl.Core.Position;
 using GameFramework.Impl.GameFeedback;
@@ -7,7 +7,6 @@ using GameFramework.Maui.Tests.TestUnitVisuals;
 using GameFramework.Objects.Interactable;
 using GameFramework.UI.Maui.Core;
 using GameFramework.UI.Maui.Map;
-using Color = System.Drawing.Color;
 
 namespace GameFramework.Maui.Tests.ViewModels
 {
@@ -20,15 +19,11 @@ namespace GameFramework.Maui.Tests.ViewModels
             const int WIDTH = 5;
             const int HEIGHT = 5;
             var mapSize = new int[HEIGHT, WIDTH];
-
-            var unitView = GameApp2D.Current.BoardService.TileViewFactory2D
-                .CreateInteractableTileView2D(new Position2D(1, 1), Color.Blue);
-            var unit = new TestInteractableObject(unitView, new Position2D(1, 1));
+            var unit = new TestInteractableObject(new Position2D(1, 1));
 
             // NOTE: This is a test map, not the actual map, it has only ground types.
             MapControl = new MauiMapControl();
-            var mapSource = new JsonMapSource2D(GameApp2D.Current.Services, @".\test.json", mapSize,
-                new List<IInteractableObject2D>(), WIDTH, HEIGHT);
+            var mapSource = new JsonMapSource2D(GameApp2D.Current.Services, mapSize, new List<IInteractableObject2D>(), WIDTH, HEIGHT);
             var map = new GameMap(mapSource, MapControl,
                 GameApp2D.Current.Services.GetRequiredService<IPositionFactory>(),
                 GameApp2D.Current.ConfigurationService);

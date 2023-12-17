@@ -1,4 +1,5 @@
 using System.Drawing;
+using GameFramework.Board;
 using GameFramework.Configuration;
 using GameFramework.Core.Position;
 using GameFramework.Impl.Tiles.Interactable;
@@ -12,31 +13,53 @@ namespace GameFramework.Impl.Tiles.Factories;
 
 internal class DefaultTileFactory : ITileFactory2D
 {
-    private readonly ITileViewFactory2D _tileViewFactory2D;
-    private readonly IConfigurationService2D _configurationService2D;
+    private readonly IBoardService _boardService;
 
-    public DefaultTileFactory(ITileViewFactory2D tileViewFactory2D, IConfigurationService2D configurationService2D)
+    public DefaultTileFactory(IBoardService boardService)
     {
-        _tileViewFactory2D = tileViewFactory2D ?? throw new ArgumentNullException(nameof(tileViewFactory2D));
-        _configurationService2D =
-            configurationService2D ?? throw new ArgumentNullException(nameof(configurationService2D));
+        _boardService = boardService ?? throw new ArgumentNullException(nameof(boardService));
     }
 
-    public IInteractableObject2D CreateInteractableTile2D(IPosition2D position, Color fillColor, bool hasBorder = false)
+    public IInteractableObject2D CreateInteractableTile2D(IPosition2D position, Color fillColor, bool isObstacle = false, bool hasBorder = false)
     {
-        return new GeneralInteractableTile(
-            position,
-            _configurationService2D,
-            _tileViewFactory2D.CreateInteractableTileView2D(position, fillColor, hasBorder)
-        );
+        return new InteractableTile(position, _boardService, fillColor, isObstacle, hasBorder);
     }
 
-    public IStaticObject2D CreateStaticTile2D(IPosition2D position, Color fillColor, bool hasBorder = false)
+    public IInteractableObject2D CreateHoverableInteractiveObject2D(IPosition2D position, Color fillColor,
+        bool isObstacle = false,bool hasBorder = false)
     {
-        return new GeneralStaticTile(
-            position,
-            _configurationService2D,
-            _tileViewFactory2D.CreateTileView2D(position, fillColor, hasBorder)
-        );
+        return new HoverableInteractableTile(position, _boardService, fillColor, isObstacle, hasBorder);
+    }
+
+    public IInteractableObject2D CreateClickableInteractiveObject2D(IPosition2D position, Color fillColor,
+        bool isObstacle = false,bool hasBorder = false)
+    {
+        return new ClickableInteractableTile(position, _boardService, fillColor, isObstacle);
+    }
+
+    public IInteractableObject2D CreateFocusableInteractiveObject2D(IPosition2D position, Color fillColor,
+        bool isObstacle = false,bool hasBorder = false)
+    {
+        return new FocusableInteractableTile(position, _boardService, fillColor, isObstacle, hasBorder);
+    }
+
+    public IStaticObject2D CreateStaticObject2D(IPosition2D position, Color fillColor, bool isObstacle = false, bool hasBorder = false)
+    {
+        return new StaticTile(position, _boardService, fillColor, isObstacle, hasBorder);
+    }
+
+    public IStaticObject2D CreateHoverableStaticObject2D(IPosition2D position, Color fillColor, bool isObstacle = false, bool hasBorder = false)
+    {
+        return new HoverableStaticTile(position, _boardService, fillColor, isObstacle, hasBorder);
+    }
+
+    public IStaticObject2D CreateClickableStaticObject2D(IPosition2D position, Color fillColor, bool isObstacle = false, bool hasBorder = false)
+    {
+        return new ClickableStaticTile(position, _boardService, fillColor, isObstacle, hasBorder);
+    }
+
+    public IStaticObject2D CreateFocusableStaticObject2D(IPosition2D position, Color fillColor, bool isObstacle = false, bool hasBorder = false)
+    {
+        return new FocusableStaticTile(position, _boardService, fillColor, isObstacle, hasBorder);
     }
 }

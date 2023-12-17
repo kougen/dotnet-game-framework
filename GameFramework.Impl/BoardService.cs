@@ -1,4 +1,5 @@
 using GameFramework.Board;
+using GameFramework.Configuration;
 using GameFramework.Map;
 using GameFramework.Map.Source;
 using GameFramework.Visuals.Factories;
@@ -12,11 +13,13 @@ namespace GameFramework.Impl
 
         public ITileViewFactory2D TileViewFactory2D { get; }
         public IMapViewFactory2D MapViewFactory2D { get; }
+        public IConfigurationService2D ConfigurationService2D { get; }
         
-        public BoardService(ITileViewFactory2D tileViewFactory2D, IMapViewFactory2D mapViewFactory2D)
+        public BoardService(ITileViewFactory2D tileViewFactory2D, IMapViewFactory2D mapViewFactory2D, IConfigurationService2D configurationService2D)
         {
             TileViewFactory2D = tileViewFactory2D ?? throw new ArgumentNullException(nameof(tileViewFactory2D));
             MapViewFactory2D = mapViewFactory2D ?? throw new ArgumentNullException(nameof(mapViewFactory2D));
+            ConfigurationService2D = configurationService2D ?? throw new ArgumentNullException(nameof(configurationService2D));
         }
 
         public IMap2D? GetActiveMap()

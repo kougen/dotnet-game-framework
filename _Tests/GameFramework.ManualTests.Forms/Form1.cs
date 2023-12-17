@@ -1,4 +1,3 @@
-using GameFramework.Core.Factories;
 using GameFramework.GameFeedback;
 using GameFramework.Impl.Core.Position;
 using GameFramework.Impl.Core.Position.Factories;
@@ -20,10 +19,8 @@ namespace GameFramework.ManualTests.Forms
      
         private static async Task TestMove(IHasIntractable2D map)
         {
-            var unitView =
-                Program.Application.BoardService.TileViewFactory2D.CreateInteractableTileView2D(new Position2D(0, 0),
-                    Color.Blue);
-            var unit = new TestInteractableObject(new Position2D(0,0), unitView);
+
+            var unit = new TestInteractableObject(new Position2D(0,0));
             map.Interactables.Add(unit);
             
             var stopwatch = Program.Application.Services.GetRequiredService<IStopwatch>();

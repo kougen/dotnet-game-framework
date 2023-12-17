@@ -40,10 +40,7 @@ namespace GameFramework.ManualTests.Desktop.WPF
 
         private static async Task TestMove(IHasIntractable2D map)
         {
-            var unitView =
-                GameApp2D.Current.BoardService.TileViewFactory2D.CreateInteractableTileView2D(new Position2D(0, 0),
-                    Color.Blue);
-            var unit = new TestInteractableObject(unitView, new Position2D(0,0));
+            var unit = new TestInteractableObject(new Position2D(0,0));
             map.Interactables.Add(unit);
             
             var stopwatch = GameApp2D.Current.Services.GetRequiredService<IStopwatch>();

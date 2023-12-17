@@ -10,7 +10,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\GameFramework.Impl\GameFramework.Impl.csproj" />
       <ProjectReference Include="..\..\GameFramework.UI.WPF\GameFramework.UI.WPF.csproj" />
-      <ProjectReference Include="..\..\GameFramework.UI.WPF\GameFramework.UI.WPF.csproj" />
     </ItemGroup>
 
     <ItemGroup>
