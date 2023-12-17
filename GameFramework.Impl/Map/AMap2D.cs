@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using GameFramework.Configuration;
 using GameFramework.Core.Motion;
@@ -12,7 +11,6 @@ using GameFramework.Objects.Static;
 using GameFramework.Tiles;
 using GameFramework.Visuals;
 using GameFramework.Visuals.Handlers;
-using GameFramework.Visuals.Tiles;
 using GameFramework.Visuals.Views;
 
 namespace GameFramework.Impl.Map
@@ -23,16 +21,14 @@ namespace GameFramework.Impl.Map
     {
         protected readonly IPositionFactory PositionFactory;
         protected readonly IConfigurationService2D ConfigurationService2D;
-        private readonly ObservableCollection<IInteractableObject2D> _units;
-        private readonly ObservableCollection<IStaticObject2D> _mapObjects;
 
         public TView View { get; }
         public TSource MapSource { get; }
         public int SizeX { get; }
         public int SizeY { get; }
-        public ICollection<IInteractableObject2D> Interactables => _units;
+        public ICollection<IInteractableObject2D> Interactables => View.InteractableObjects;
         public virtual IEnumerable<IInteractableObject2D> SelectedInteractables { get; }
-        public ICollection<IStaticObject2D> MapObjects => _mapObjects;
+        public ICollection<IStaticObject2D> MapObjects => View.MapObjects;
         public IObject2D? SelectedObject { get; set; }
 
         protected AMap2D(TSource mapSource, TView view, IPositionFactory positionFactory, IConfigurationService2D configurationService2D)
@@ -43,15 +39,22 @@ namespace GameFramework.Impl.Map
             View = view ?? throw new ArgumentNullException(nameof(view));
             SizeX = MapSource.ColumnCount;
             SizeY = MapSource.RowCount;
-            _units = new ObservableCollection<IInteractableObject2D>(MapSource.Interactables);
-            View.InteractableObjects = new ObservableCollection<IInteractableObject2D>(Interactables);
-            _mapObjects = new ObservableCollection<IStaticObject2D>(MapSource.MapObjects);
-            View.MapObjects = new ObservableCollection<IStaticObject2D>(MapObjects);
             SelectedInteractables = new List<IInteractableObject2D>();
-
-            _units.CollectionChanged += (_, _) => View.InteractableObjects = new ObservableCollection<IInteractableObject2D>(Interactables);
-            _mapObjects.CollectionChanged += (_, _) => View.MapObjects = new ObservableCollection<IStaticObject2D>(MapObjects);
             View.Attach(this);
+            Initialize();
+        }
+        
+        private void Initialize()
+        {
+            foreach (var interactable in MapSource.Interactables)
+            {
+                View.InteractableObjects.Add(interactable);
+            }
+            
+            foreach (var mapObject in MapSource.MapObjects)
+            {
+                View.MapObjects.Add(mapObject);
+            }
         }
 
         #region MapObjects

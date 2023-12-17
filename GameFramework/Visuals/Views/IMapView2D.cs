@@ -7,8 +7,8 @@ namespace GameFramework.Visuals.Views
 {
     public interface IMapView2D
     {
-        public ObservableCollection<IStaticObject2D> MapObjects { get; set; }
-        public ObservableCollection<IInteractableObject2D> InteractableObjects { get; set; }
+        public ObservableCollection<IStaticObject2D> MapObjects { get; }
+        public ObservableCollection<IInteractableObject2D> InteractableObjects { get; }
         void Attach(IMouseHandler mouseHandler);
         void Clear();
     }

@@ -1,8 +1,6 @@
-using GameFramework.Visuals.Tiles;
-
 namespace GameFramework.Objects.Interactable
 {
-    public interface IInteractableObject2D : IObject2D
+    public interface IInteractableObject2D : IObject2D, IDisposable
     {
         Guid Id { get; }
         void Step(IObject2D staticObject);

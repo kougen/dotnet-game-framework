@@ -130,17 +130,5 @@ namespace GameFramework.UI.WPF.Tiles
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        protected void ExecuteOnMainThread(Action action)
-        {
-            if (Dispatcher.CheckAccess())
-            {
-                action.Invoke();
-            }
-            else
-            {
-                Dispatcher.Invoke(action);
-            }
-        }
     }
 }

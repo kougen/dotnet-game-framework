@@ -12,9 +12,9 @@ namespace GameFramework.Impl.Tiles.Interactable
     public class InteractableTile : IInteractableObject2D, IViewLoadedSubscriber
     {
         public Guid Id { get; }
-        public IObjectView2D View { get; protected init; }
+        public IObjectView2D View { get; }
         public IPosition2D Position { get; protected set; }
-        public bool IsObstacle { get; protected set; }
+        public bool IsObstacle { get; }
 
         protected IConfigurationService2D ConfigurationService;
         protected readonly ITileViewFactory2D TileViewFactory2D;
@@ -42,7 +42,7 @@ namespace GameFramework.Impl.Tiles.Interactable
         
         public virtual void Delete()
         {
-            
+            Dispose();
         }
 
         public virtual void Dispose()

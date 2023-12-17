@@ -5,10 +5,7 @@ using GameFramework.Core.Motion;
 using GameFramework.Core.Position;
 using GameFramework.Impl.Tiles.Interactable;
 using GameFramework.Manager;
-using GameFramework.Objects;
 using GameFramework.UI.WPF.Core;
-using GameFramework.Visuals.Tiles;
-using GameFramework.Visuals.Views;
 using Infrastructure.Time.Listeners;
 
 namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas.TestUnitVisuals
@@ -28,21 +25,21 @@ namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas.TestUnitVisuals
             var map = GameApp2D.Current.BoardService.GetActiveMap<TestMap>();
             if (GameApp2D.Current.Manager.State == GameState.InProgress)
             {
-                map?.MoveInteractable(this, Move2D.Right);
-
-                if (_round == 3)
+                if (_round == 2)
                 {
                     var spawnable = new TestSpawnable(Position, GameApp2D.Current.BoardService);
                     _spawnables.Add(spawnable);
                     map?.Interactables.Add(spawnable);
                 }
-                else if (_round == 5)
+                else if (_round == 4)
                 {
                     foreach (var spawnable in _spawnables)
                     {
                         map?.Interactables.Remove(spawnable);
                     }
                 }
+                
+                map?.MoveInteractable(this, Move2D.Right);
             }
 
             _round++;

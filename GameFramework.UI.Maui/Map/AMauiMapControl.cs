@@ -1,44 +1,27 @@
 ﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using GameFramework.Objects.Interactable;
 using GameFramework.Objects.Static;
 using GameFramework.Visuals.Handlers;
 using GameFramework.Visuals.Tiles;
 using GameFramework.Visuals.Views;
+using Microsoft.VisualBasic;
 
 namespace GameFramework.UI.Maui.Map
 {
     public abstract class AMauiMapControl : AbsoluteLayout, IMapView2D, IViewDisposedSubscriber
     {
-        private ObservableCollection<IInteractableObject2D> _interactableObjects;
-        private ObservableCollection<IStaticObject2D> _mapObjects;
         protected readonly ICollection<IMouseHandler> MouseHandlers = new List<IMouseHandler>();
 
-        public ObservableCollection<IInteractableObject2D> InteractableObjects
-        {
-            get => _interactableObjects;
-            set
-            {
-                _interactableObjects = value;
-                UpdateEntities();
-            }
-        }
-
-        public ObservableCollection<IStaticObject2D> MapObjects
-        {
-            get => _mapObjects;
-            set
-            {
-                _mapObjects = value;
-                UpdateMapObjects();
-            }
-        }
+        public ObservableCollection<IInteractableObject2D> InteractableObjects { get; }
+        public ObservableCollection<IStaticObject2D> MapObjects { get; }
 
         protected AMauiMapControl()
         {
-            InteractableObjects = _interactableObjects = new ObservableCollection<IInteractableObject2D>();
-            MapObjects = _mapObjects = new ObservableCollection<IStaticObject2D>();
-            InteractableObjects.CollectionChanged += (_, _) => UpdateEntities();
-            MapObjects.CollectionChanged += (_, _) => UpdateMapObjects();
+            InteractableObjects = InteractableObjects = new ObservableCollection<IInteractableObject2D>();
+            MapObjects = MapObjects = new ObservableCollection<IStaticObject2D>();
+            InteractableObjects.CollectionChanged += (_, args) => ExecuteOnMainThread(() => UpdateEntities(args));
+            MapObjects.CollectionChanged += (_, args) => ExecuteOnMainThread(() => UpdateMapObjects(args));
         }
 
         public void Attach(IMouseHandler mouseHandler)
@@ -50,37 +33,85 @@ namespace GameFramework.UI.Maui.Map
         {
             if (view is BoxView shape)
             {
-                MainThread.BeginInvokeOnMainThread(() => Children.Remove(shape));
+                ExecuteOnMainThread(() => Children.Remove(shape));
             }
         }
 
-        protected virtual void UpdateEntities()
+        private void UpdateEntities(NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
+            foreach (var old in notifyCollectionChangedEventArgs.OldItems ?? new Collection())
+            {
+                if (old is IInteractableObject2D { View: BoxView shape } interactable && Children.Contains(shape))
+                {
+                    Children.Remove(shape);
+                    interactable.Delete();
+                }
+            }
+
+            foreach (var @new in notifyCollectionChangedEventArgs.NewItems ?? new Collection())
+            {
+                if (@new is IInteractableObject2D { View: BoxView shape } interactableObject2D &&
+                    !Children.Contains(shape))
+                {
+                    Children.Add(shape);
+                    interactableObject2D.View.Attach(this);
+                }
+            }
+
             foreach (var interactableObject in InteractableObjects)
             {
                 if (interactableObject.View is BoxView shape && !Children.Contains(shape))
                 {
-                    MainThread.BeginInvokeOnMainThread(() => Children.Add(shape));
+                    Children.Add(shape);
                 }
 
                 interactableObject.View.Attach(this);
             }
         }
 
-        protected virtual void UpdateMapObjects()
+        private void UpdateMapObjects(NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
+            foreach (var old in notifyCollectionChangedEventArgs.OldItems ?? new Collection())
+            {
+                if (old is IStaticObject2D { View: BoxView shape } && Children.Contains(shape))
+                {
+                    Children.Remove(shape);
+                }
+            }
+
+            foreach (var @new in notifyCollectionChangedEventArgs.NewItems ?? new Collection())
+            {
+                if (@new is IStaticObject2D { View: BoxView shape } mapObject && !Children.Contains(shape))
+                {
+                    Children.Add(shape);
+                    mapObject.View.Attach(this);
+                }
+            }
+
             foreach (var mapObject in MapObjects)
             {
                 if (mapObject.View is BoxView shape && !Children.Contains(shape))
                 {
-                    MainThread.BeginInvokeOnMainThread(() => Children.Add(shape));
+                    ExecuteOnMainThread(() => Children.Add(shape));
                 }
             }
         }
 
         public new virtual void Clear()
         {
-            MainThread.BeginInvokeOnMainThread(() => Children.Clear());
+            ExecuteOnMainThread(Children.Clear);
+        }
+
+        protected void ExecuteOnMainThread(Action action)
+        {
+            if (MainThread.IsMainThread)
+            {
+                action();
+            }
+            else
+            {
+                MainThread.BeginInvokeOnMainThread(action);
+            }
         }
     }
 }
