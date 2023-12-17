@@ -1,10 +1,7 @@
-using System;
 using GameFramework.Application;
 using GameFramework.Board;
 using GameFramework.Configuration;
-using GameFramework.Core;
 using GameFramework.Manager;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace GameFramework.UI.Maui.Core
 {

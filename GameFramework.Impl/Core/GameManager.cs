@@ -9,6 +9,9 @@ namespace GameFramework.Impl.Core
     internal class GameManager : IGameManager
     {
         private readonly ICollection<IGameStateChangedListener> _listeners;
+        private readonly ICollection<IGameStartedListener> _startedListeners;
+        private readonly ICollection<IGameResetListener> _resetListeners;
+        private readonly ICollection<IGameFinishedListener> _finishedListeners;
 
         public GameState State { get; private set; }
         public IStopwatch Timer { get; }
@@ -17,6 +20,9 @@ namespace GameFramework.Impl.Core
         {
             Timer = stopwatch ?? throw new ArgumentNullException(nameof(stopwatch));
             _listeners = new List<IGameStateChangedListener>();
+            _startedListeners = new List<IGameStartedListener>();
+            _resetListeners = new List<IGameResetListener>();
+            _finishedListeners = new List<IGameFinishedListener>();
             State = GameState.NotStarted;
         }
         
@@ -35,6 +41,16 @@ namespace GameFramework.Impl.Core
             {
                 gameFeedbackListener.OnGameStarted(feedback);
             }
+
+            foreach (var gameFeedbackListener in _startedListeners)
+            {
+                if(_listeners.Contains(gameFeedbackListener))
+                {
+                    continue;
+                }
+                
+                gameFeedbackListener.OnGameStarted(feedback);
+            }
         }
         
         public void EndGame(IGameplayFeedback feedback, GameResolution resolution)
@@ -50,6 +66,16 @@ namespace GameFramework.Impl.Core
 
             foreach (var gameFeedbackListener in _listeners)
             {
+                gameFeedbackListener.OnGameFinished(feedback, resolution);
+            }
+            
+            foreach (var gameFeedbackListener in _finishedListeners)
+            {
+                if(_listeners.Contains(gameFeedbackListener))
+                {
+                    continue;
+                }
+                
                 gameFeedbackListener.OnGameFinished(feedback, resolution);
             }
         }
@@ -98,11 +124,48 @@ namespace GameFramework.Impl.Core
             {
                 gameFeedbackListener.OnGameReset();
             }
+            
+            foreach (var gameFeedbackListener in _resetListeners)
+            {
+                if (_listeners.Contains(gameFeedbackListener))
+                {
+                    continue;
+                }
+                
+                gameFeedbackListener.OnGameReset();
+            }
         }
 
         public void AttachListener(IGameStateChangedListener changedListener)
         {
-            _listeners.Add(changedListener);
+            if(!_listeners.Contains(changedListener))
+            {
+                _listeners.Add(changedListener);
+            }
+        }
+
+        public void AttachListener(IGameStartedListener changedListener)
+        {
+            if(!_startedListeners.Contains(changedListener))
+            {
+                _startedListeners.Add(changedListener);
+            }
+        }
+
+        public void AttachListener(IGameResetListener changedListener)
+        {
+            if(!_resetListeners.Contains(changedListener))
+            {
+                _resetListeners.Add(changedListener);
+            }
+        }
+
+        public void AttachListener(IGameFinishedListener changedListener)
+        {
+            if(!_finishedListeners.Contains(changedListener))
+            {
+                _finishedListeners.Add(changedListener);
+            }
         }
     }
 }

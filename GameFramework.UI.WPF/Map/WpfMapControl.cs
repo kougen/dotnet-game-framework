@@ -4,11 +4,11 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using GameFramework.Impl.Core.Position;
 using GameFramework.Objects.Interactable;
 using GameFramework.Objects.Static;
+using GameFramework.UI.WPF.Tiles;
 using GameFramework.Visuals.Handlers;
 using GameFramework.Visuals.Tiles;
 using GameFramework.Visuals.Views;
@@ -46,7 +46,7 @@ namespace GameFramework.UI.WPF.Map
 
         public void OnViewDisposed(IObjectView2D view)
         {
-            if (view is Shape shape)
+            if (view is TileView shape)
             {
                 ExecuteOnMainThread(() => Children.Remove(shape));
             }
@@ -76,7 +76,7 @@ namespace GameFramework.UI.WPF.Map
         {
             foreach (var old in notifyCollectionChangedEventArgs.OldItems ?? new Collection())
             {
-                if (old is IInteractableObject2D { View: Shape shape } interactable && Children.Contains(shape))
+                if (old is IInteractableObject2D { View: TileView shape } interactable && Children.Contains(shape))
                 {
                     Children.Remove(shape);
                     interactable.Delete();
@@ -85,7 +85,7 @@ namespace GameFramework.UI.WPF.Map
 
             foreach (var @new in notifyCollectionChangedEventArgs.NewItems ?? new Collection())
             {
-                if (@new is IInteractableObject2D { View: Shape shape } interactableObject2D &&
+                if (@new is IInteractableObject2D { View: TileView shape } interactableObject2D &&
                     !Children.Contains(shape))
                 {
                     Children.Add(shape);
@@ -95,7 +95,7 @@ namespace GameFramework.UI.WPF.Map
 
             foreach (var interactableObject in InteractableObjects)
             {
-                if (interactableObject.View is Shape shape && !Children.Contains(shape))
+                if (interactableObject.View is TileView shape && !Children.Contains(shape))
                 {
                     Children.Add(shape);
                 }
@@ -109,7 +109,7 @@ namespace GameFramework.UI.WPF.Map
         {
             foreach (var old in notifyCollectionChangedEventArgs.OldItems ?? new Collection())
             {
-                if (old is IStaticObject2D { View: Shape shape } && Children.Contains(shape))
+                if (old is IStaticObject2D { View: TileView shape } && Children.Contains(shape))
                 {
                     Children.Remove(shape);
                 }
@@ -117,7 +117,7 @@ namespace GameFramework.UI.WPF.Map
 
             foreach (var @new in notifyCollectionChangedEventArgs.NewItems ?? new Collection())
             {
-                if (@new is IStaticObject2D { View: Shape shape } mapObject && !Children.Contains(shape))
+                if (@new is IStaticObject2D { View: TileView shape } mapObject && !Children.Contains(shape))
                 {
                     Children.Add(shape);
                     mapObject.View.Attach(this);
@@ -126,9 +126,9 @@ namespace GameFramework.UI.WPF.Map
 
             foreach (var mapObject in MapObjects)
             {
-                if (mapObject.View is Shape shape && !Children.Contains(shape))
+                if (mapObject.View is TileView shape && !Children.Contains(shape))
                 {
-                    ExecuteOnMainThread(() => Children.Add(shape));
+                    Children.Add(shape);
                 }
             }
         }

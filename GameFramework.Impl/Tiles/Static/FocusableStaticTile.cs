@@ -6,7 +6,7 @@ using GameFramework.Visuals;
 
 namespace GameFramework.Impl.Tiles.Static
 {
-    public class FocusableStaticTile : StaticTile, IFocusable
+    public class FocusableStaticTile : ClickableStaticTile, IFocusable
     {
         public bool IsTileFocused { get; protected set; }
 
@@ -21,13 +21,6 @@ namespace GameFramework.Impl.Tiles.Static
         public virtual void OnFocusLost()
         {
             IsTileFocused = false;
-        }
-
-        public bool IsClickEnabled { get; set; }
-        
-        public void OnClicked()
-        {
-            
         }
     }
 }

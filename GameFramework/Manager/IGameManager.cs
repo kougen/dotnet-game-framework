@@ -16,5 +16,8 @@ namespace GameFramework.Manager
         void ResetGame();
         
         void AttachListener(IGameStateChangedListener changedListener);
+        void AttachListener(IGameStartedListener changedListener);
+        void AttachListener(IGameResetListener changedListener);
+        void AttachListener(IGameFinishedListener changedListener);
     }
 }

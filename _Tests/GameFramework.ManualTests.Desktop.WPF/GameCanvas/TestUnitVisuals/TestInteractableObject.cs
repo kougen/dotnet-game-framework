@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
 using GameFramework.Core.Motion;
 using GameFramework.Core.Position;
 using GameFramework.Impl.Tiles.Interactable;
@@ -16,9 +18,17 @@ namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas.TestUnitVisuals
         private int _round;
         
         private readonly ICollection<TestSpawnable> _spawnables = new List<TestSpawnable>();
+        private readonly TestMap? _map;
 
         public TestInteractableObject(IPosition2D position) : base(position, GameApp2D.Current.BoardService, Color.Blue)
-        { }
+        {
+            _map = GameApp2D.Current.BoardService.GetActiveMap<TestMap>();
+        }
+
+        public void DoStep()
+        {
+            GameApp2D.Current.Manager.Timer.PeriodicOperation(1000, this, new CancellationToken());
+        }
 
         public void RaiseTick(int round)
         {
@@ -27,9 +37,9 @@ namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas.TestUnitVisuals
             {
                 if (_round == 2)
                 {
-                    var spawnable = new TestSpawnable(Position, GameApp2D.Current.BoardService);
-                    _spawnables.Add(spawnable);
-                    map?.Interactables.Add(spawnable);
+                    // var spawnable = new TestSpawnable(Position, GameApp2D.Current.BoardService);
+                    // _spawnables.Add(spawnable);
+                    // map?.Interactables.Add(spawnable);
                 }
                 else if (_round == 4)
                 {
@@ -43,6 +53,10 @@ namespace GameFramework.ManualTests.Desktop.WPF.GameCanvas.TestUnitVisuals
             }
 
             _round++;
+            if(_round == 6)
+            {
+                _map?.Interactables.Remove(this);
+            }
         }
     }
 }

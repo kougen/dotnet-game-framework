@@ -15,24 +15,38 @@ namespace GameFramework.UI.WPF.Tiles
 {
     public class TileView : ACustomShape, IObjectView2D
     {
-        private bool _initialized;
         public IPosition2D Position2D
         {
             get => _position2D;
             set
             {
-                _position2D = value;
-                if (!_initialized)
-                {
-                    return;
-                }
-                
                 ExecuteOnMainThread(() =>
                 {
-                    Canvas.SetLeft(this, Position2D.X * ConfigurationService.Dimension);
-                    Canvas.SetTop(this, Position2D.Y * ConfigurationService.Dimension);
+                    var previousPosition = _position2D;
 
-                    ScreenSpacePosition = new ScreenSpacePosition(Rect.X, Rect.Y);
+                    var delta = new Point(
+                        value.X * ConfigurationService.Dimension - previousPosition.X * ConfigurationService.Dimension,
+                        value.Y * ConfigurationService.Dimension - previousPosition.Y * ConfigurationService.Dimension);
+                    _position2D = value;
+
+                    if (delta.X != 0)
+                    {
+                        Canvas.SetLeft(this, Position2D.X * ConfigurationService.Dimension);
+                    }
+
+                    if (delta.Y != 0)
+                    {
+                        Canvas.SetTop(this, Position2D.Y * ConfigurationService.Dimension);
+                    }
+
+                    if (delta.X != 0 || delta.Y != 0)
+                    {
+                        Rect = new Rect(
+                            new Point(ConfigurationService.Dimension * Position2D.X,
+                                ConfigurationService.Dimension * Position2D.Y),
+                            new Size(ConfigurationService.Dimension, ConfigurationService.Dimension));
+                        ScreenSpacePosition = new ScreenSpacePosition(Rect.X, Rect.Y);
+                    }
                 });
             }
         }
@@ -67,12 +81,11 @@ namespace GameFramework.UI.WPF.Tiles
             Rect = new Rect(
                 new Point(ConfigurationService.Dimension * position.X, ConfigurationService.Dimension * position.Y),
                 new Size(ConfigurationService.Dimension, ConfigurationService.Dimension));
+            ScreenSpacePosition = new ScreenSpacePosition(Rect.X, Rect.Y);
             Position2D = _position2D = position ?? throw new ArgumentNullException(nameof(position));
             FillColor = fillColor;
             HasBorder = hasBorder;
-            ScreenSpacePosition = new ScreenSpacePosition(Rect.X, Rect.Y);
             ExecuteOnMainThread(InitializeColor);
-            _initialized = true;
         }
 
         private void InitializeColor()

@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using GameFramework.Impl.Core;
-using GameFramework.Objects.Static;
 using GameFramework.UI.Maui.Core;
 using Implementation.Module;
 

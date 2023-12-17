@@ -20,7 +20,7 @@ namespace GameFramework.UI.Maui.Tiles
             set
             {
                 _position2D = value;
-                SetPosition(Position2D);
+                ExecuteOnMainThread(() => SetPosition(_position2D));
             }
         }
 
@@ -43,32 +43,29 @@ namespace GameFramework.UI.Maui.Tiles
         public TileView(IPosition2D position, IConfigurationService2D configurationService,
             System.Drawing.Color fillColor, bool hasBorder)
         {
-            Position2D = position ?? throw new ArgumentNullException(nameof(position));
             _configurationService =
                 configurationService ?? throw new ArgumentNullException(nameof(configurationService));
+            Position2D = position ?? throw new ArgumentNullException(nameof(position));
             FillColor = fillColor;
             WidthRequest = _configurationService.Dimension;
             HeightRequest = _configurationService.Dimension;
             Background = new SolidColorBrush(ConvertColor(FillColor));
-            SetPosition(position);
             HasBorder = hasBorder;
 
-            if (ScreenSpacePosition == null)
-            {
-                throw new ArgumentNullException(nameof(ScreenSpacePosition));
-            }
+            var rect = new Rect(_configurationService.Dimension * position.X,
+                _configurationService.Dimension * position.Y, _configurationService.Dimension,
+                _configurationService.Dimension);
+            AbsoluteLayout.SetLayoutBounds(this, rect);
+            ScreenSpacePosition = new ScreenSpacePosition(rect.Top, rect.Left);
         }
 
         private void SetPosition(IPosition2D position)
         {
-            ExecuteOnMainThread(() =>
-            {
-                var rect = new Rect(_configurationService.Dimension * position.X,
-                    _configurationService.Dimension * position.Y, _configurationService.Dimension,
-                    _configurationService.Dimension);
-                AbsoluteLayout.SetLayoutBounds(this, rect);
-                ScreenSpacePosition = new ScreenSpacePosition(rect.Top, rect.Left);
-            });
+            var rect = new Rect(_configurationService.Dimension * position.X,
+                _configurationService.Dimension * position.Y, _configurationService.Dimension,
+                _configurationService.Dimension);
+            AbsoluteLayout.SetLayoutBounds(this, rect);
+            ScreenSpacePosition = new ScreenSpacePosition(rect.Top, rect.Left);
         }
 
         private static Color ConvertColor(System.Drawing.Color color)

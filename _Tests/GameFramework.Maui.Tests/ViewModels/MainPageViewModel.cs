@@ -16,7 +16,7 @@ namespace GameFramework.Maui.Tests.ViewModels
 
         public MainPageViewModel()
         {
-            const int WIDTH = 5;
+            const int WIDTH = 7;
             const int HEIGHT = 5;
             var mapSize = new int[HEIGHT, WIDTH];
             var unit = new TestInteractableObject(new Position2D(1, 1));

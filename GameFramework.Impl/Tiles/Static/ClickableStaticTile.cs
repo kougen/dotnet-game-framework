@@ -5,7 +5,7 @@ using GameFramework.Tiles;
 
 namespace GameFramework.Impl.Tiles.Static
 {
-    public class ClickableStaticTile : StaticTile, IClickable
+    public class ClickableStaticTile : HoverableStaticTile, IClickable
     {
         public bool IsClickEnabled { get; set; }
 

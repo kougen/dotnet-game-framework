@@ -21,6 +21,7 @@ namespace GameFramework.Impl.Map
     {
         protected readonly IPositionFactory PositionFactory;
         protected readonly IConfigurationService2D ConfigurationService2D;
+        protected IPosition2D? HoveredPosition;
 
         public TView View { get; }
         public TSource MapSource { get; }
@@ -214,12 +215,14 @@ namespace GameFramework.Impl.Map
                     screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + ConfigurationService2D.Dimension)
                 {
                     hoverableUnit.OnHovered();
+                    HoveredPosition = unit.Position;
                     continue;
                 }
 
                 if (hoverableUnit.IsHovered)
                 {
                     hoverableUnit.OnHoverLost();
+                    HoveredPosition = null;
                 }
             }
         }
@@ -237,12 +240,14 @@ namespace GameFramework.Impl.Map
                     screenSpacePosition.Y >= pos.Y && screenSpacePosition.Y <= pos.Y + ConfigurationService2D.Dimension)
                 {
                     hoverableMapObject.OnHovered();
+                    HoveredPosition = mapObject.Position;
                     continue;
                 }
 
                 if (hoverableMapObject.IsHovered)
                 {
                     hoverableMapObject.OnHoverLost();
+                    HoveredPosition = null;
                 }
             }
         }

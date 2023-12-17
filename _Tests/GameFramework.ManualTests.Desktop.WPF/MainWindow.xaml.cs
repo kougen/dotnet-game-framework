@@ -26,35 +26,19 @@ namespace GameFramework.ManualTests.Desktop.WPF
         public MainWindow()
         {
             InitializeComponent();
-            var data = new int[5, 7];
+            var data = new int[7, 7];
             var mapView = new TestMapView();
-            var mapSource = new TestMapSource(GameApp2D.Current.Services, @"C:\Users\Dev\Documents\test\test.json", data, new List<IInteractableObject2D>(), 7, 5);
+            var mapSource = new TestMapSource(GameApp2D.Current.Services, @"C:\Users\Dev\Documents\test\test.json", data, new List<IInteractableObject2D>(), 7, 7);
             _map = new TestMap(mapSource, mapView, new PositionFactory(), GameApp2D.Current.ConfigurationService);
             Map.Content = _map.View;
             
-            GameApp2D.Current.BoardService.SetActiveMap(_map);
+            GameApp2D.Current.Manager.AttachListener(this);
             GameApp2D.Current.Manager.StartGame(new GameplayFeedback(FeedbackLevel.Info, "Game test started"));
-            
-            TestMove(_map);
-        }
-
-        private static async Task TestMove(IHasIntractable2D map)
-        {
-            var unit = new TestInteractableObject(new Position2D(0,0));
-            map.Interactables.Add(unit);
-            
-            var stopwatch = GameApp2D.Current.Services.GetRequiredService<IStopwatch>();
-            stopwatch.Start();
-            
-            for (var i = 0; i < 6; i++)
-            {
-                await stopwatch.WaitAsync(1000, unit);
-            }
         }
         
         public void OnGameStarted(IGameplayFeedback feedback)
         {
-            GameApp2D.Current.BoardService.SetActiveMap<TestMap, TestMapSource, TestMapView>(_map);
+            GameApp2D.Current.BoardService.SetActiveMap(_map);
         }
     }
 }
