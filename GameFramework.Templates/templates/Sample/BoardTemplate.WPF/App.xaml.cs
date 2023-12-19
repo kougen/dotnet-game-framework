@@ -52,6 +52,8 @@ namespace BoardTemplate.WPF
                 var mainWindow = provider.GetRequiredService<IMainWindow>();
                 var mainWindowViewModel = provider.GetRequiredService<IMainWindowViewModel>();
 
+                Gameplay.Application2D = Current;
+                
                 if (mainWindow is MainWindow window)
                 {
                     window.DataContext = mainWindowViewModel;

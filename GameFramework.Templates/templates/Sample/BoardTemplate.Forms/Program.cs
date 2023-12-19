@@ -1,4 +1,5 @@
 using BoardTemplate.Forms.Views.Main;
+using BoardTemplate.Game;
 using GameFramework.Application;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,6 +20,7 @@ static class Program
         {
             var provider = scope.ServiceProvider;
             var mainWindow = provider.GetRequiredService<IMainWindow>();
+            Gameplay.Application2D = Application;
             if (mainWindow is MainWindow window)
             {
                 System.Windows.Forms.Application.Run(window);
