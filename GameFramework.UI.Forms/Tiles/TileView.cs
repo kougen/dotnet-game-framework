@@ -11,12 +11,23 @@ namespace GameFramework.UI.Forms.Tiles
         
         public IPosition2D Position2D { get; set; }
         public IScreenSpacePosition ScreenSpacePosition { get; }
-        public Color FillColor { get; set; }
+
+        public Color FillColor
+        {
+            get => _fillColor;
+            set
+            {
+                _fillColor = value;
+                ExecuteOnMainThread(() => BackColor = FillColor);
+            }
+        }
+
         public virtual bool HasBorder { get; set; }
 
         protected virtual Color BorderColor { get; set; } = Color.Black;
         protected double TileSize;
-        
+        private Color _fillColor;
+
         public TileView(IPosition2D position2D, double size, Color fillColor, bool hasBorder = false)
         {
             Position2D = position2D ?? throw new ArgumentNullException(nameof(position2D));
@@ -75,6 +86,18 @@ namespace GameFramework.UI.Forms.Tiles
                 {
                     subscriber.OnViewDisposed(this);
                 }
+            }
+        }
+        
+        protected virtual void ExecuteOnMainThread(Action action)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(action);
+            }
+            else
+            {
+                action();
             }
         }
     }

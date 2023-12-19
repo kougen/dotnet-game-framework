@@ -18,12 +18,11 @@ namespace GameFramework.Maui.Tests.ViewModels
         {
             const int WIDTH = 7;
             const int HEIGHT = 5;
-            var mapSize = new int[HEIGHT, WIDTH];
             var unit = new TestInteractableObject(new Position2D(1, 1));
 
             // NOTE: This is a test map, not the actual map, it has only ground types.
             MapControl = new MauiMapControl();
-            var mapSource = new JsonMapSource2D(GameApp2D.Current.Services, mapSize, new List<IInteractableObject2D>(), WIDTH, HEIGHT);
+            var mapSource = new JsonMapSource2D(GameApp2D.Current.Services, WIDTH, HEIGHT);
             var map = new GameMap(mapSource, MapControl,
                 GameApp2D.Current.Services.GetRequiredService<IPositionFactory>(),
                 GameApp2D.Current.ConfigurationService);

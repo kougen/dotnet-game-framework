@@ -56,14 +56,14 @@ namespace GameFramework.UI.Forms.Map
 
         public virtual void Clear()
         {
-            Invoke(() => Controls.Clear());
+            ExecuteOnMainThread(Controls.Clear);
         }
 
         public virtual void OnViewDisposed(IObjectView2D view)
         {
             if (view is Control control)
             {
-                Invoke(() => Controls.Remove(control));
+                ExecuteOnMainThread(() => Controls.Remove(control));
             }
         }
 
@@ -96,7 +96,7 @@ namespace GameFramework.UI.Forms.Map
                     interactableObject.View.Attach(this as IViewLoadedSubscriber);
                     interactableObject.View.Attach(this as IViewDisposedSubscriber);
 
-                    Invoke(() => Controls.Add(shape));
+                    ExecuteOnMainThread(() => Controls.Add(shape));
                 }
             }
         }
@@ -107,7 +107,7 @@ namespace GameFramework.UI.Forms.Map
             {
                 if (mapObject.View is Control shape && !Controls.Contains(shape))
                 {
-                    Invoke(() => Controls.Add(shape));
+                    ExecuteOnMainThread(() => Controls.Add(shape));
                 } 
             }
         }
@@ -116,7 +116,19 @@ namespace GameFramework.UI.Forms.Map
         {
             if (view is Control shape && !Controls.Contains(shape))
             {
-                Invoke(() => Controls.Add(shape));
+                ExecuteOnMainThread(() => Controls.Add(shape));
+            }
+        }
+        
+        private void ExecuteOnMainThread(Action action)
+        {
+            if (!InvokeRequired)
+            {
+                action();
+            }
+            else
+            {
+                Invoke(action);
             }
         }
     }

@@ -28,23 +28,23 @@ namespace GameFramework.UI.WPF.Tiles
                         value.X * ConfigurationService.Dimension - previousPosition.X * ConfigurationService.Dimension,
                         value.Y * ConfigurationService.Dimension - previousPosition.Y * ConfigurationService.Dimension);
                     _position2D = value;
-
+                    
                     if (delta.X != 0)
                     {
-                        Canvas.SetLeft(this, Position2D.X * ConfigurationService.Dimension);
+                        Canvas.SetLeft(this, Rect.X + ConfigurationService.Dimension);
                     }
 
                     if (delta.Y != 0)
                     {
-                        Canvas.SetTop(this, Position2D.Y * ConfigurationService.Dimension);
+                        Canvas.SetTop(this, Rect.Y + ConfigurationService.Dimension);
                     }
 
                     if (delta.X != 0 || delta.Y != 0)
                     {
                         Rect = new Rect(
-                            new Point(ConfigurationService.Dimension * Position2D.X,
-                                ConfigurationService.Dimension * Position2D.Y),
-                            new Size(ConfigurationService.Dimension, ConfigurationService.Dimension));
+                            new Point(ConfigurationService.Dimension * Position2D.X, ConfigurationService.Dimension * Position2D.Y),
+                            new Size(ConfigurationService.Dimension, ConfigurationService.Dimension)
+                        );
                         ScreenSpacePosition = new ScreenSpacePosition(Rect.X, Rect.Y);
                     }
                 });

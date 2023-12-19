@@ -1,12 +1,10 @@
-﻿using System;
-using System.Threading;
-using BoardTemplate.Game;
+﻿using BoardTemplate.Game;
+using BoardTemplate.Game.Visuals;
 using BoardTemplate.Maui.Factories;
 using GameFramework.Impl.Core;
 using GameFramework.UI.Maui.Core;
 using GameFramework.Visuals.Factories;
 using Implementation.Module;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace BoardTemplate.Maui
 {
@@ -15,7 +13,11 @@ namespace BoardTemplate.Maui
         public App()
         {
             InitializeComponent();
-
+            
+            Gameplay.Application2D = Current;
+            var popupService = Services.GetRequiredService<IFeedbackPopup>();
+            Current.Manager.AttachListener(popupService);
+            
             MainPage = new AppShell();
         }
 

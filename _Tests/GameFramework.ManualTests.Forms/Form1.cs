@@ -34,9 +34,8 @@ namespace GameFramework.ManualTests.Forms
         public Form1()
         {
             InitializeComponent();
-            var data = new int[5, 7];
             var mapView = new TestMapView();
-            var mapSource = new TestMapSource(Program.Application.Services, @"C:\Users\Dev\Documents\test\test.json", data, new List<IInteractableObject2D>(), 7, 5);
+            var mapSource = new TestMapSource(@"C:\Users\Dev\Documents\test\test.json", Program.Application.Services, 7, 5);
             _map = new TestMap(mapSource, mapView, new PositionFactory(), Program.Application.ConfigurationService);
 
             Controls.Add(_map.View as Control);
@@ -45,11 +44,6 @@ namespace GameFramework.ManualTests.Forms
             Program.Application.Manager.StartGame(new GameplayFeedback(FeedbackLevel.Info, "Game test started"));
             
             TestMove(_map);
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
         }
     }
 }

@@ -14,6 +14,18 @@
         </b:EventTrigger>
     </b:Interaction.Triggers>
     <Grid>
-        <UserControl Content="{Binding MapView}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button Content="Open New Map" Command="{Binding OpenCommand}" />
+            <Button Content="Save state" Command="{Binding SaveCommand}" />
+        </StackPanel>
+        <UserControl  Grid.Row="1" Content="{Binding MapView}" />
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="{Binding CurrentTime}" />
+        </StackPanel>
     </Grid>
 </Window>

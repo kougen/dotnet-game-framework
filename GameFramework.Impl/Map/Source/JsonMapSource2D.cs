@@ -1,65 +1,104 @@
+using System.Drawing;
 using System.Text;
-using GameFramework.Core.Position.Factories;
-using GameFramework.Objects;
+using GameFramework.Core.Position;
+using GameFramework.Impl.Map.Source.Dummies;
 using GameFramework.Objects.Interactable;
 using GameFramework.Objects.Static;
 using Infrastructure.Configuration;
 using Infrastructure.Configuration.Factories;
 using Infrastructure.IO;
 using Microsoft.Extensions.DependencyInjection;
-using IStaticObject2DConverter = GameFramework.Objects.Static.IStaticObject2DConverter;
+using ColorConverter = GameFramework.Tiles.ColorConverter;
 
 namespace GameFramework.Impl.Map.Source
 {
-    public class JsonMapSource2D<T> : AMapSource2D where T : struct, Enum
+    public class JsonMapSource2D : AMapSource2D
     {
+        public override bool Initialized { get; protected set; }
         public sealed override IEnumerable<IStaticObject2D> MapObjects { get; protected set; }
         public sealed override ICollection<IInteractableObject2D> Interactables { get; protected set; }
-        
+
+        protected IList<DummyInteractable> DummyInteractables;
         protected readonly IReader Reader;
         protected readonly IConfigurationQuery Query;
-        protected readonly IPositionFactory PositionFactory;
-        protected readonly IStaticObject2DConverter TileConverter;
-        protected readonly string MapDataBase64;
+        protected string MapDataBase64;
+        protected int[,] Data;
 
-        protected JsonMapSource2D(IServiceProvider provider, string filePath, int[,] data, ICollection<IInteractableObject2D> interactables, int col, int row)
+        public JsonMapSource2D(string filePath, IServiceProvider provider, int col, int row, Color? bgColor = null, ICollection<IInteractableObject2D>? interactables = null, bool bypass = false) : base(provider, bgColor ?? Color.Black)
         {
-            Interactables = interactables ?? throw new ArgumentNullException(nameof(interactables));
-            filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
-            Query = provider.GetRequiredService<IConfigurationQueryFactory>().CreateConfigurationQuery(filePath);
-            PositionFactory = provider.GetRequiredService<IPositionFactory>();
+            var queryFactory = provider.GetRequiredService<IConfigurationQueryFactory>();
+            Query = queryFactory.CreateConfigurationQuery(filePath);
             Reader = provider.GetRequiredService<IReader>();
-            TileConverter = provider.GetRequiredService<IStaticObject2DConverter>();
-            ColumnCount = col;
-            RowCount = row;
-            MapDataBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(GetRawData(data)));
-            MapObjects = ConvertDataToObjects();
+            Initialized = Query.GetBoolAttribute("initialized") ?? false;
+            if (Initialized && !bypass)
+            {
+                ColumnCount = Query.GetIntAttribute("col") ??  throw new InvalidOperationException("Draft config is missing a 'row;");
+                RowCount = Query.GetIntAttribute("row") ??  throw new InvalidOperationException("Draft config is missing a 'col'");
+                MapDataBase64 = Query.GetStringAttribute("data") ??  throw new InvalidOperationException("Draft config is missing the 'data'");
+                DummyInteractables = Query.GetObject<List<DummyInteractable>>("interactables") ?? new List<DummyInteractable>();
+                Interactables = DummyInteractables.Select(i => GetInteractableConverter()(i.ColorId, i.X, i.Y)).ToList();
+                MapObjects = ConvertDataToObjects();
+                Data = Get2DMap();
+            }
+            else
+            {
+                ColumnCount = col;
+                RowCount = row;
+                Data = GetDefaultMap();
+                Interactables = interactables ?? new List<IInteractableObject2D>();
+                DummyInteractables = Interactables.Select(i => new DummyInteractable(i)).ToList();
+                filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
+                Query = provider.GetRequiredService<IConfigurationQueryFactory>().CreateConfigurationQuery(filePath);
+                Reader = provider.GetRequiredService<IReader>();
+                MapDataBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(GetRawData()));
+                MapObjects = ConvertDataToObjects();
+            }
         }
 
-        protected JsonMapSource2D(IServiceProvider provider, string filePath)
+        public JsonMapSource2D(IServiceProvider provider, int col, int row, Color? bgColor = null,
+            ICollection<IInteractableObject2D>? interactables = null, bool bypass = false) : this(
+            Path.Join(".", "temp.json"), provider, col, row, bgColor, interactables, bypass)
+        { }
+
+        public JsonMapSource2D(string filePath, IServiceProvider provider, Color bgColor) : base(provider, bgColor)
         {
             var queryFactory = provider.GetRequiredService<IConfigurationQueryFactory>();
             filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
             Query = queryFactory.CreateConfigurationQuery(filePath);
             Reader = provider.GetRequiredService<IReader>();
-            PositionFactory = provider.GetRequiredService<IPositionFactory>();
-            TileConverter = provider.GetRequiredService<IStaticObject2DConverter>();
             ColumnCount = Query.GetIntAttribute("col") ??  throw new InvalidOperationException("Draft config is missing a 'row;");
             RowCount = Query.GetIntAttribute("row") ??  throw new InvalidOperationException("Draft config is missing a 'col'");
             MapDataBase64 = Query.GetStringAttribute("data") ??  throw new InvalidOperationException("Draft config is missing the 'data'");
-            
-            Interactables = Query.GetObject<List<IInteractableObject2D>>("units") ?? new List<IInteractableObject2D>();
+            DummyInteractables = Query.GetObject<List<DummyInteractable>>("interactables") ?? new List<DummyInteractable>();
+            Interactables = DummyInteractables.Select(i => GetInteractableConverter()(i.ColorId, i.X, i.Y)).ToList();
             MapObjects = ConvertDataToObjects();
+            Data = Get2DMap();
         }
+        
+        public JsonMapSource2D(IServiceProvider provider, Color bgColor) : this(
+            Path.Join(".", "temp.json"), provider, bgColor)
+        { }
         
         public override void SaveLayout(IEnumerable<IStaticObject2D> updatedMapObjects, IEnumerable<IInteractableObject2D> updatedUnits)
         {
             Interactables = updatedUnits.ToList();
             MapObjects = updatedMapObjects;
-            Query.SetObject("units", Interactables);
+            Query.SetAttribute("col", ColumnCount);
+            Query.SetAttribute("row", RowCount);
+            Data = Get2DMap();
+            DummyInteractables = Interactables.Select(i => new DummyInteractable(i)).ToList();
+            MapDataBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(GetRawData()));
+            Query.SetObject("data", MapDataBase64);
+            Query.SetObject("interactables", DummyInteractables);
+            Query.SetAttribute("initialized", true);
+        }
+
+        protected IEnumerable<IStaticObject2D> ConvertDataToObjects()
+        {
+            return ConvertDataToObjects(GetConverter());
         }
         
-        protected IEnumerable<IStaticObject2D> ConvertDataToObjects()
+        protected virtual IEnumerable<IStaticObject2D> ConvertDataToObjects(Func<int, IPosition2D, IStaticObject2D> converter)
         {
             var id = Guid.NewGuid();
             var tempPath = Path.Join(Path.GetTempPath(), $"{id}.txt");
@@ -75,45 +114,62 @@ namespace GameFramework.Impl.Map.Source
                 {
                     var value = row[j];
                     var position = PositionFactory.CreatePosition(j, i);
-                    if (!Enum.TryParse(value.ToString(), out T type))
-                    {
-                        continue;
-                    }
-                    list.Add(TileConverter.FromEnum(type, position));
+                    list.Add(converter(value, position));
                 }
             }
             return list;
         }
         
-        private string GetRawData(int[,] data)
+        protected string GetRawData()
         {
             var stringBuilder = new StringBuilder();
             for (var i = 0; i < RowCount; i++)
             {
                 for (var j = 0; j < ColumnCount; j++)
                 {
-                    var tile = data[i,j];
+                    var tile = Data[i,j];
                     stringBuilder.Append($"{tile} ");
                 }
                 stringBuilder.Remove(stringBuilder.Length - 1, 1);
-                stringBuilder.Append("\r\n");
+                stringBuilder.Append(Environment.NewLine);
             }
             return stringBuilder.ToString();
         }
-    }
 
-    public class JsonMapSource2D : JsonMapSource2D<TileType>
-    {
-        public JsonMapSource2D(IServiceProvider provider, string filePath, int[,] data, ICollection<IInteractableObject2D> units, int col, int row) : base(provider, filePath, data, units, col, row)
-        { }
-        
-        public JsonMapSource2D(IServiceProvider provider, int[,] data, ICollection<IInteractableObject2D> units, int col, int row) : base(provider, @".\temp.json", data, units, col, row)
-        { }
-        
-        public JsonMapSource2D(IServiceProvider provider, string filePath) : base(provider, filePath)
-        { }
-        
-        public JsonMapSource2D(IServiceProvider provider) : base(provider, @".\temp.json")
-        { }
+        protected virtual int[,] Get2DMap()
+        {
+            var map = new int[RowCount, ColumnCount];
+            var mapObjectList = MapObjects.ToList();
+            for (var i = 0; i < RowCount; i++)
+            {
+                for (var j = 0; j < ColumnCount; j++)
+                {
+                    var position = PositionFactory.CreatePosition(j, i);
+                    var tile = mapObjectList.FirstOrDefault(t => t.Position.X == position.X && t.Position.Y == position.Y);
+                    if (tile is null)
+                    {
+                        continue;
+                    }
+
+                    map[i, j] = ColorConverter.ConvertColorToTileId(tile.TileColor);
+                }
+            }
+            
+            return map;
+        }
+
+        protected int[,] GetDefaultMap()
+        {
+            var map = new int[RowCount, ColumnCount];
+            for (var i = 0; i < RowCount; i++)
+            {
+                for (var j = 0; j < ColumnCount; j++)
+                {
+                    map[i, j] = ColorConverter.ConvertColorToTileId(BgColor);
+                }
+            }
+            
+            return map;
+        }
     }
 }

@@ -1,4 +1,4 @@
-using BoardTemplate.Game.Game.Map;
+using BoardTemplate.Game.Visuals;
 
 namespace BoardTemplate.WPF.ViewModels
 {

@@ -11,7 +11,7 @@ namespace BoardTemplate.Forms.Views.Main
         {
             Presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
             var mapControl = new GameMapView();
-            var gameplay = new Gameplay(Program.Application, mapControl);
+            var gameplay = new Gameplay();
             
             Controls.Add(mapControl);
         }

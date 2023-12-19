@@ -28,7 +28,7 @@ namespace GameFramework.ManualTests.Desktop.WPF
             InitializeComponent();
             var data = new int[7, 7];
             var mapView = new TestMapView();
-            var mapSource = new TestMapSource(GameApp2D.Current.Services, @"C:\Users\Dev\Documents\test\test.json", data, new List<IInteractableObject2D>(), 7, 7);
+            var mapSource = new TestMapSource(@"C:\Users\Dev\Documents\test\test.json", GameApp2D.Current.Services, 7, 7);
             _map = new TestMap(mapSource, mapView, new PositionFactory(), GameApp2D.Current.ConfigurationService);
             Map.Content = _map.View;
             
@@ -39,6 +39,7 @@ namespace GameFramework.ManualTests.Desktop.WPF
         public void OnGameStarted(IGameplayFeedback feedback)
         {
             GameApp2D.Current.BoardService.SetActiveMap(_map);
+            _map.SaveProgress();
         }
     }
 }

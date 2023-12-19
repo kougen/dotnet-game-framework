@@ -1,4 +1,4 @@
-﻿using BoardTemplate.Game.Game.Map;
+﻿using BoardTemplate.Game.Map;
 using GameFramework.Board;
 
 namespace BoardTemplate.Forms.Views.Main
@@ -14,13 +14,8 @@ namespace BoardTemplate.Forms.Views.Main
         
         public void SaveMap()
         {
-            var map = _boardService.GetActiveMap<IGameMap>();
-            if (map == null)
-            {
-                return;
-            }
-            
-            map.SaveProgress();
+            var map = _boardService.GetActiveMap<GameMap>();
+            map?.SaveProgress();
         }
     }
 }

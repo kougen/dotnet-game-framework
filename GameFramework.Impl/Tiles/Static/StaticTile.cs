@@ -12,6 +12,7 @@ namespace GameFramework.Impl.Tiles.Static
     public class StaticTile : IStaticObject2D
     {
         public IObjectView2D View { get; }
+        public Color TileColor { get; }
         public IPosition2D Position { get; }
         public bool IsObstacle { get; }
 
@@ -30,6 +31,7 @@ namespace GameFramework.Impl.Tiles.Static
             IsObstacle = isObstacle;
             TileViewFactory2D = boardService.TileViewFactory2D;
             View = TileViewFactory2D.CreateTileView2D(position, fillColor, hasBorder);
+            TileColor = fillColor;
         }
     }
 }

@@ -1,4 +1,4 @@
-using BoardTemplate.Game.Game.Map;
+using BoardTemplate.Game.Visuals;
 using GameFramework.UI.Forms.Map;
 
 namespace BoardTemplate.Forms.Map

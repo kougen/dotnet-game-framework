@@ -1,4 +1,4 @@
-using BoardTemplate.Game.Game.Map;
+using BoardTemplate.Game.Visuals;
 using GameFramework.UI.Maui.Map;
 
 namespace BoardTemplate.Maui.Map;

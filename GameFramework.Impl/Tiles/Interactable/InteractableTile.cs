@@ -13,6 +13,7 @@ namespace GameFramework.Impl.Tiles.Interactable
     {
         public Guid Id { get; }
         public IObjectView2D View { get; }
+        public Color TileColor { get; }
         public IPosition2D Position { get; protected set; }
         public bool IsObstacle { get; }
 
@@ -27,6 +28,7 @@ namespace GameFramework.Impl.Tiles.Interactable
             TileViewFactory2D = boardService.TileViewFactory2D;
             IsObstacle = isObstacle;
             View = TileViewFactory2D.CreateTileView2D(position, fillColor, hasBorder);
+            TileColor = fillColor;
         }
         
         public virtual void SteppedOn(IInteractableObject2D interactableObject2D)

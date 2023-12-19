@@ -8,6 +8,7 @@ namespace GameFramework.Map.Source
         Guid Id { get; }
         int ColumnCount { get; set; }
         int RowCount { get; set; }
+        bool Initialized { get; }
         IEnumerable<IStaticObject2D> MapObjects { get; }
         ICollection<IInteractableObject2D> Interactables { get; }
 
